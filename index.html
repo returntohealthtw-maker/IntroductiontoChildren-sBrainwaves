@@ -838,318 +838,6 @@
         </div>
       </div>
 
-      <!-- all talent cards now use 3D images -->
-      <div style="display:none"><svg viewBox="0 0 1 1">
-          <defs><radialGradient id="tg1" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#6366f1" stop-opacity="0.3"/><stop offset="100%" stop-color="#020817" stop-opacity="0"/></radialGradient><filter id="tglow1"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
-          <rect width="220" height="130" fill="#040610"/>
-          <rect width="220" height="130" fill="url(#tg1)"/>
-          <!-- Open book -->
-          <path d="M70,85 L70,42 Q90,38 110,45 L110,88 Q90,82 70,85Z" fill="#6366f120" stroke="#6366f1" stroke-width="1.5" filter="url(#tglow1)"/>
-          <path d="M110,45 Q130,38 150,42 L150,85 Q130,82 110,88 L110,45Z" fill="#6366f115" stroke="#6366f1" stroke-width="1.5"/>
-          <!-- Book spine -->
-          <line x1="110" y1="45" x2="110" y2="88" stroke="#6366f1" stroke-width="1" opacity="0.6"/>
-          <!-- Text lines on left page -->
-          <line x1="78" y1="56" x2="102" y2="54" stroke="#a5b4fc" stroke-width="1.2" opacity="0.6"/>
-          <line x1="78" y1="63" x2="102" y2="61" stroke="#a5b4fc" stroke-width="1.2" opacity="0.5"/>
-          <line x1="78" y1="70" x2="96" y2="68" stroke="#a5b4fc" stroke-width="1.2" opacity="0.4"/>
-          <line x1="78" y1="77" x2="102" y2="75" stroke="#a5b4fc" stroke-width="1.2" opacity="0.35"/>
-          <!-- Text lines on right page -->
-          <line x1="118" y1="54" x2="142" y2="56" stroke="#a5b4fc" stroke-width="1.2" opacity="0.6"/>
-          <line x1="118" y1="61" x2="142" y2="63" stroke="#a5b4fc" stroke-width="1.2" opacity="0.5"/>
-          <line x1="118" y1="68" x2="138" y2="70" stroke="#a5b4fc" stroke-width="1.2" opacity="0.4"/>
-          <line x1="118" y1="75" x2="142" y2="77" stroke="#a5b4fc" stroke-width="1.2" opacity="0.35"/>
-          <!-- Wave above book = language rhythm -->
-          <path d="M80,35 Q90,28 100,35 Q110,42 120,35 Q130,28 140,35" stroke="#818cf8" stroke-width="1.5" fill="none" opacity="0.5" filter="url(#tglow1)"/>
-          <!-- Floating letters -->
-          <text x="58" y="42" fill="#6366f1" font-size="13" font-weight="bold" opacity="0.6" filter="url(#tglow1)">A</text>
-          <text x="155" y="45" fill="#6366f1" font-size="11" font-weight="bold" opacity="0.5">文</text>
-          <text x="162" y="72" fill="#6366f1" font-size="10" opacity="0.4">字</text>
-          <text x="120" y="118" text-anchor="middle" fill="#6366f1" font-size="8" font-weight="bold" letter-spacing="2" opacity="0.4" font-family="monospace">LINGUISTIC</text>
-        </svg>
-        <div class="p-5 pt-3">
-          <div class="flex justify-between text-xs font-bold mb-2"><span class="text-indigo-300">語言智能</span><span class="text-indigo-400 opacity-70">Theta+Alpha</span></div>
-          <div class="progress-bar mb-3"><div class="progress-bar-fill bg-gradient-to-r from-indigo-500 to-purple-500 w-4/5"></div></div>
-          <h5 class="font-black text-white mb-1">語言文字天賦</h5>
-          <p class="text-slate-500 text-xs leading-relaxed">Theta 波與 Alpha 波協調良好，擅長閱讀、寫作與語言表達。</p>
-          <div class="mt-3"><span class="talent-badge bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 text-[10px]">作家・律師・翻譯</span></div>
-        </div>
-      </div>
-
-      <!-- Talent 2: 數理邏輯 -->
-      <div class="glass rounded-[36px] border border-blue-500/20 hover:border-blue-500/50 transition-all group reveal card-glow overflow-hidden">
-        <svg viewBox="0 0 220 130" xmlns="http://www.w3.org/2000/svg" class="w-full">
-          <defs><radialGradient id="tg2" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#3b82f6" stop-opacity="0.28"/><stop offset="100%" stop-color="#020817" stop-opacity="0"/></radialGradient><filter id="tglow2"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
-          <rect width="220" height="130" fill="#030812"/>
-          <rect width="220" height="130" fill="url(#tg2)"/>
-          <!-- Circuit board grid -->
-          <g stroke="#3b82f6" stroke-width="0.8" opacity="0.2">
-            <line x1="40" y1="20" x2="40" y2="110"/><line x1="70" y1="20" x2="70" y2="110"/>
-            <line x1="100" y1="20" x2="100" y2="110"/><line x1="130" y1="20" x2="130" y2="110"/>
-            <line x1="160" y1="20" x2="160" y2="110"/><line x1="180" y1="20" x2="180" y2="110"/>
-            <line x1="30" y1="40" x2="190" y2="40"/><line x1="30" y1="65" x2="190" y2="65"/>
-            <line x1="30" y1="90" x2="190" y2="90"/>
-          </g>
-          <!-- Circuit nodes (highlighted intersections) -->
-          <g fill="#3b82f6" filter="url(#tglow2)" opacity="0.8">
-            <circle cx="70" cy="40" r="4"/><circle cx="130" cy="40" r="3"/>
-            <circle cx="100" cy="65" r="5"/><circle cx="160" cy="65" r="3.5"/>
-            <circle cx="70" cy="90" r="3"/><circle cx="140" cy="90" r="4"/>
-          </g>
-          <!-- Logic gate shapes -->
-          <path d="M85,57 L85,73 Q97,73 97,65 Q97,57 85,57Z" fill="#3b82f620" stroke="#60a5fa" stroke-width="1.2" opacity="0.7"/>
-          <!-- Formula text -->
-          <text x="115" y="52" fill="#93c5fd" font-size="11" font-weight="bold" opacity="0.65">Σ</text>
-          <text x="148" y="52" fill="#93c5fd" font-size="10" opacity="0.5">n²</text>
-          <text x="55" y="100" fill="#60a5fa" font-size="9" opacity="0.45">f(x)</text>
-          <text x="155" y="100" fill="#60a5fa" font-size="9" opacity="0.4">∞</text>
-          <!-- Connecting lines (highlighted) -->
-          <polyline points="70,40 100,65 140,90" stroke="#3b82f6" stroke-width="1.8" fill="none" opacity="0.7" filter="url(#tglow2)"/>
-          <text x="110" y="118" text-anchor="middle" fill="#3b82f6" font-size="8" font-weight="bold" letter-spacing="2" opacity="0.4" font-family="monospace">LOGICAL</text>
-        </svg>
-        <div class="p-5 pt-3">
-          <div class="flex justify-between text-xs font-bold mb-2"><span class="text-blue-300">邏輯智能</span><span class="text-blue-400 opacity-70">Beta+Gamma</span></div>
-          <div class="progress-bar mb-3"><div class="progress-bar-fill bg-gradient-to-r from-blue-500 to-cyan-500 w-3/4"></div></div>
-          <h5 class="font-black text-white mb-1">數理邏輯天賦</h5>
-          <p class="text-slate-500 text-xs leading-relaxed">邏輯推理超強，擅長解題、分析模式與系統性思考。</p>
-          <div class="mt-3"><span class="talent-badge bg-blue-500/10 text-blue-300 border border-blue-500/20 text-[10px]">工程師・科學家・分析師</span></div>
-        </div>
-      </div>
-
-      <!-- Talent 3: 視覺空間 -->
-      <div class="glass rounded-[36px] border border-purple-500/20 hover:border-purple-500/50 transition-all group reveal card-glow overflow-hidden">
-        <svg viewBox="0 0 220 130" xmlns="http://www.w3.org/2000/svg" class="w-full">
-          <defs><radialGradient id="tg3" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#a855f7" stop-opacity="0.28"/><stop offset="100%" stop-color="#020817" stop-opacity="0"/></radialGradient><filter id="tglow3"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
-          <rect width="220" height="130" fill="#07030f"/>
-          <rect width="220" height="130" fill="url(#tg3)"/>
-          <!-- Geometric shapes -->
-          <polygon points="110,25 140,70 80,70" stroke="#a855f7" stroke-width="1.8" fill="#a855f715" filter="url(#tglow3)" opacity="0.85"/>
-          <rect x="72" y="72" width="35" height="35" stroke="#c084fc" stroke-width="1.5" fill="#c084fc10" opacity="0.7" transform="rotate(15,90,89)"/>
-          <circle cx="148" cy="83" r="20" stroke="#d8b4fe" stroke-width="1.3" fill="#d8b4fe08" opacity="0.6"/>
-          <!-- Color palette dots -->
-          <circle cx="55" cy="35" r="7" fill="#ef4444" opacity="0.5"/>
-          <circle cx="55" cy="52" r="7" fill="#f97316" opacity="0.45"/>
-          <circle cx="55" cy="69" r="7" fill="#eab308" opacity="0.4"/>
-          <circle cx="55" cy="86" r="7" fill="#22c55e" opacity="0.45"/>
-          <circle cx="55" cy="103" r="7" fill="#a855f7" opacity="0.5" filter="url(#tglow3)"/>
-          <!-- Brush stroke -->
-          <path d="M168,25 Q178,38 172,50 Q165,62 170,72" stroke="#c084fc" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.4"/>
-          <!-- 3D perspective lines -->
-          <line x1="80" y1="70" x2="72" y2="107" stroke="#a855f7" stroke-width="0.8" opacity="0.35" stroke-dasharray="3,3"/>
-          <line x1="140" y1="70" x2="107" y2="107" stroke="#a855f7" stroke-width="0.8" opacity="0.35" stroke-dasharray="3,3"/>
-          <text x="110" y="118" text-anchor="middle" fill="#a855f7" font-size="8" font-weight="bold" letter-spacing="2" opacity="0.4" font-family="monospace">SPATIAL</text>
-        </svg>
-        <div class="p-5 pt-3">
-          <div class="flex justify-between text-xs font-bold mb-2"><span class="text-purple-300">空間智能</span><span class="text-purple-400 opacity-70">Theta+Gamma</span></div>
-          <div class="progress-bar mb-3"><div class="progress-bar-fill bg-gradient-to-r from-purple-500 to-pink-500 w-5/6"></div></div>
-          <h5 class="font-black text-white mb-1">視覺空間天賦</h5>
-          <p class="text-slate-500 text-xs leading-relaxed">對視覺藝術、空間想像有超常能力，創意思維活躍。</p>
-          <div class="mt-3"><span class="talent-badge bg-purple-500/10 text-purple-300 border border-purple-500/20 text-[10px]">設計師・建築師・藝術家</span></div>
-        </div>
-      </div>
-
-      <!-- Talent 4: 運動肢體 -->
-      <div class="glass rounded-[36px] border border-emerald-500/20 hover:border-emerald-500/50 transition-all group reveal card-glow overflow-hidden">
-        <svg viewBox="0 0 220 130" xmlns="http://www.w3.org/2000/svg" class="w-full">
-          <defs><radialGradient id="tg4" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#10b981" stop-opacity="0.25"/><stop offset="100%" stop-color="#020817" stop-opacity="0"/></radialGradient><filter id="tglow4"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
-          <rect width="220" height="130" fill="#030e09"/>
-          <rect width="220" height="130" fill="url(#tg4)"/>
-          <!-- Running figure (simplified stick figure in motion) -->
-          <!-- Head -->
-          <circle cx="118" cy="32" r="10" fill="#10b98120" stroke="#10b981" stroke-width="1.8" filter="url(#tglow4)"/>
-          <!-- Body -->
-          <line x1="118" y1="42" x2="115" y2="72" stroke="#10b981" stroke-width="2.2" stroke-linecap="round"/>
-          <!-- Left arm (forward) -->
-          <line x1="115" y1="52" x2="100" y2="62" stroke="#10b981" stroke-width="1.8" stroke-linecap="round"/>
-          <!-- Right arm (back) -->
-          <line x1="115" y1="52" x2="132" y2="45" stroke="#10b981" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
-          <!-- Left leg (forward / stepping) -->
-          <line x1="115" y1="72" x2="103" y2="90" stroke="#10b981" stroke-width="2" stroke-linecap="round"/>
-          <line x1="103" y1="90" x2="95" y2="100" stroke="#10b981" stroke-width="1.8" stroke-linecap="round"/>
-          <!-- Right leg (back) -->
-          <line x1="115" y1="72" x2="130" y2="88" stroke="#10b981" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
-          <line x1="130" y1="88" x2="140" y2="99" stroke="#10b981" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
-          <!-- Motion lines -->
-          <g stroke="#34d399" stroke-width="1.2" opacity="0.5" stroke-linecap="round">
-            <line x1="80" y1="48" x2="68" y2="48"/><line x1="78" y1="56" x2="65" y2="58"/>
-            <line x1="76" y1="64" x2="62" y2="67"/><line x1="80" y1="72" x2="66" y2="75"/>
-          </g>
-          <!-- Ground line -->
-          <line x1="60" y1="102" x2="175" y2="102" stroke="#10b981" stroke-width="0.8" opacity="0.25"/>
-          <!-- Pulse/heartbeat line (SMR wave) -->
-          <polyline points="150,58 158,58 162,45 166,72 170,58 178,58" stroke="#34d399" stroke-width="1.5" fill="none" opacity="0.6" filter="url(#tglow4)"/>
-          <text x="110" y="118" text-anchor="middle" fill="#10b981" font-size="8" font-weight="bold" letter-spacing="2" opacity="0.4" font-family="monospace">KINESTHETIC</text>
-        </svg>
-        <div class="p-5 pt-3">
-          <div class="flex justify-between text-xs font-bold mb-2"><span class="text-emerald-300">肢體智能</span><span class="text-emerald-400 opacity-70">SMR+Beta</span></div>
-          <div class="progress-bar mb-3"><div class="progress-bar-fill bg-gradient-to-r from-emerald-500 to-teal-500 w-4/5"></div></div>
-          <h5 class="font-black text-white mb-1">運動肢體天賦</h5>
-          <p class="text-slate-500 text-xs leading-relaxed">身體控制精準，反應速度快，運動、舞蹈領域卓越。</p>
-          <div class="mt-3"><span class="talent-badge bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 text-[10px]">運動員・舞蹈家・外科醫生</span></div>
-        </div>
-      </div>
-
-      <!-- Talent 5: 音樂節奏 -->
-      <div class="glass rounded-[36px] border border-amber-500/20 hover:border-amber-500/50 transition-all group reveal card-glow overflow-hidden">
-        <svg viewBox="0 0 220 130" xmlns="http://www.w3.org/2000/svg" class="w-full">
-          <defs><radialGradient id="tg5" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#f59e0b" stop-opacity="0.25"/><stop offset="100%" stop-color="#020817" stop-opacity="0"/></radialGradient><filter id="tglow5"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
-          <rect width="220" height="130" fill="#0d0902"/>
-          <rect width="220" height="130" fill="url(#tg5)"/>
-          <!-- Musical staff lines -->
-          <g stroke="#f59e0b" stroke-width="0.7" opacity="0.25">
-            <line x1="35" y1="42" x2="185" y2="42"/><line x1="35" y1="52" x2="185" y2="52"/>
-            <line x1="35" y1="62" x2="185" y2="62"/><line x1="35" y1="72" x2="185" y2="72"/>
-            <line x1="35" y1="82" x2="185" y2="82"/>
-          </g>
-          <!-- Treble clef (simplified) -->
-          <path d="M48,90 Q42,80 44,68 Q46,52 54,48 Q62,44 62,54 Q62,64 52,72 Q42,80 46,90 Q50,98 58,96" stroke="#fbbf24" stroke-width="2" fill="none" opacity="0.7" filter="url(#tglow5)"/>
-          <!-- Musical notes -->
-          <g fill="#f59e0b" filter="url(#tglow5)">
-            <ellipse cx="80" cy="80" rx="6" ry="4" transform="rotate(-20,80,80)"/>
-            <line x1="86" y1="78" x2="86" y2="48" stroke="#f59e0b" stroke-width="1.5"/>
-            <ellipse cx="108" cy="70" rx="6" ry="4" transform="rotate(-20,108,70)" opacity="0.85"/>
-            <line x1="114" y1="68" x2="114" y2="40" stroke="#f59e0b" stroke-width="1.5"/>
-            <ellipse cx="136" cy="75" rx="6" ry="4" transform="rotate(-20,136,75)" opacity="0.8"/>
-            <line x1="142" y1="73" x2="142" y2="44" stroke="#f59e0b" stroke-width="1.5"/>
-            <ellipse cx="162" cy="65" rx="6" ry="4" transform="rotate(-20,162,65)" opacity="0.7"/>
-            <line x1="168" y1="63" x2="168" y2="35" stroke="#f59e0b" stroke-width="1.5"/>
-          </g>
-          <!-- Sound wave emanating -->
-          <g stroke="#fbbf24" fill="none" opacity="0.4">
-            <path d="M30,62 Q22,52 22,62 Q22,72 30,62" stroke-width="1.5"/>
-            <path d="M25,57 Q14,47 14,62 Q14,77 25,67" stroke-width="1.2"/>
-          </g>
-          <!-- Beam connecting notes 1+2 -->
-          <line x1="86" y1="48" x2="114" y2="40" stroke="#f59e0b" stroke-width="2" opacity="0.6"/>
-          <text x="110" y="118" text-anchor="middle" fill="#f59e0b" font-size="8" font-weight="bold" letter-spacing="2" opacity="0.4" font-family="monospace">MUSICAL</text>
-        </svg>
-        <div class="p-5 pt-3">
-          <div class="flex justify-between text-xs font-bold mb-2"><span class="text-amber-300">音樂智能</span><span class="text-amber-400 opacity-70">Alpha+Theta</span></div>
-          <div class="progress-bar mb-3"><div class="progress-bar-fill bg-gradient-to-r from-amber-500 to-orange-500 w-3/4"></div></div>
-          <h5 class="font-black text-white mb-1">音樂節奏天賦</h5>
-          <p class="text-slate-500 text-xs leading-relaxed">對音調、節奏有天生的敏銳度，學習樂器事半功倍。</p>
-          <div class="mt-3"><span class="talent-badge bg-amber-500/10 text-amber-300 border border-amber-500/20 text-[10px]">音樂家・音效師・作曲家</span></div>
-        </div>
-      </div>
-
-      <!-- Talent 6: 人際溝通 -->
-      <div class="glass rounded-[36px] border border-rose-500/20 hover:border-rose-500/50 transition-all group reveal card-glow overflow-hidden">
-        <svg viewBox="0 0 220 130" xmlns="http://www.w3.org/2000/svg" class="w-full">
-          <defs><radialGradient id="tg6" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#f43f5e" stop-opacity="0.25"/><stop offset="100%" stop-color="#020817" stop-opacity="0"/></radialGradient><filter id="tglow6"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
-          <rect width="220" height="130" fill="#0d0307"/>
-          <rect width="220" height="130" fill="url(#tg6)"/>
-          <!-- Three person nodes -->
-          <circle cx="110" cy="45" r="16" fill="#f43f5e18" stroke="#f43f5e" stroke-width="1.8" filter="url(#tglow6)"/>
-          <circle cx="70" cy="88" r="13" fill="#f43f5e12" stroke="#fb7185" stroke-width="1.4" opacity="0.8"/>
-          <circle cx="150" cy="88" r="13" fill="#f43f5e12" stroke="#fb7185" stroke-width="1.4" opacity="0.8"/>
-          <!-- Person icons inside nodes -->
-          <circle cx="110" cy="40" r="5" fill="#f43f5e" opacity="0.7"/>
-          <path d="M100,55 Q110,48 120,55" stroke="#f43f5e" stroke-width="1.5" fill="none" opacity="0.6"/>
-          <circle cx="70" cy="83" r="4" fill="#fb7185" opacity="0.6"/>
-          <path d="M62,95 Q70,90 78,95" stroke="#fb7185" stroke-width="1.2" fill="none" opacity="0.5"/>
-          <circle cx="150" cy="83" r="4" fill="#fb7185" opacity="0.6"/>
-          <path d="M142,95 Q150,90 158,95" stroke="#fb7185" stroke-width="1.2" fill="none" opacity="0.5"/>
-          <!-- Connection lines with pulses -->
-          <line x1="96" y1="55" x2="79" y2="76" stroke="#f43f5e" stroke-width="1.3" stroke-dasharray="4,3" opacity="0.5"/>
-          <line x1="124" y1="55" x2="141" y2="76" stroke="#f43f5e" stroke-width="1.3" stroke-dasharray="4,3" opacity="0.5"/>
-          <line x1="83" y1="88" x2="137" y2="88" stroke="#f43f5e" stroke-width="1.3" stroke-dasharray="4,3" opacity="0.4"/>
-          <!-- Pulse dots on connections -->
-          <circle cx="87" cy="65" r="3" fill="#f43f5e" opacity="0.7" filter="url(#tglow6)"/>
-          <circle cx="133" cy="65" r="3" fill="#f43f5e" opacity="0.7" filter="url(#tglow6)"/>
-          <circle cx="110" cy="88" r="3" fill="#f43f5e" opacity="0.6" filter="url(#tglow6)"/>
-          <!-- Speech wave -->
-          <g stroke="#fda4af" fill="none" opacity="0.35">
-            <path d="M170,38 Q176,32 176,38 Q176,44 170,44" stroke-width="1.2"/>
-            <path d="M174,34 Q183,26 183,38 Q183,50 174,42" stroke-width="1"/>
-          </g>
-          <text x="110" y="118" text-anchor="middle" fill="#f43f5e" font-size="8" font-weight="bold" letter-spacing="2" opacity="0.4" font-family="monospace">INTERPERSONAL</text>
-        </svg>
-        <div class="p-5 pt-3">
-          <div class="flex justify-between text-xs font-bold mb-2"><span class="text-rose-300">人際智能</span><span class="text-rose-400 opacity-70">Alpha+Beta</span></div>
-          <div class="progress-bar mb-3"><div class="progress-bar-fill bg-gradient-to-r from-rose-500 to-pink-500 w-5/6"></div></div>
-          <h5 class="font-black text-white mb-1">人際溝通天賦</h5>
-          <p class="text-slate-500 text-xs leading-relaxed">同理心強、社交能力出色，天生懂得讀懂他人情緒。</p>
-          <div class="mt-3"><span class="talent-badge bg-rose-500/10 text-rose-300 border border-rose-500/20 text-[10px]">領導者・心理師・教育者</span></div>
-        </div>
-      </div>
-
-      <!-- Talent 7: 自然觀察 -->
-      <div class="glass rounded-[36px] border border-cyan-500/20 hover:border-cyan-500/50 transition-all group reveal card-glow overflow-hidden">
-        <svg viewBox="0 0 220 130" xmlns="http://www.w3.org/2000/svg" class="w-full">
-          <defs><radialGradient id="tg7" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#06b6d4" stop-opacity="0.22"/><stop offset="100%" stop-color="#020817" stop-opacity="0"/></radialGradient><filter id="tglow7"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
-          <rect width="220" height="130" fill="#020e0e"/>
-          <rect width="220" height="130" fill="url(#tg7)"/>
-          <!-- Large leaf shape -->
-          <path d="M110,100 Q78,85 72,58 Q68,35 100,25 Q122,18 138,35 Q155,55 148,78 Q140,98 110,100Z" fill="#06b6d415" stroke="#06b6d4" stroke-width="1.8" filter="url(#tglow7)"/>
-          <!-- Leaf central vein -->
-          <line x1="110" y1="100" x2="100" y2="28" stroke="#06b6d4" stroke-width="1.5" opacity="0.6"/>
-          <!-- Leaf side veins (neural-like branches) -->
-          <g stroke="#22d3ee" stroke-width="1" opacity="0.45">
-            <line x1="96" y1="45" x2="80" y2="38"/><line x1="94" y1="55" x2="76" y2="52"/>
-            <line x1="93" y1="65" x2="75" y2="66"/><line x1="95" y1="75" x2="78" y2="78"/>
-            <line x1="102" y1="38" x2="116" y2="32"/><line x1="103" y1="48" x2="120" y2="44"/>
-            <line x1="104" y1="58" x2="122" y2="58"/><line x1="105" y1="68" x2="124" y2="70"/>
-            <line x1="107" y1="78" x2="126" y2="82"/>
-          </g>
-          <!-- Small dots like nature data points -->
-          <g fill="#06b6d4" opacity="0.5">
-            <circle cx="78" cy="36" r="2"/><circle cx="74" cy="50" r="1.8"/><circle cx="73" cy="64" r="1.5"/>
-            <circle cx="118" cy="30" r="2"/><circle cx="122" cy="42" r="1.8"/><circle cx="124" cy="56" r="1.5"/>
-          </g>
-          <!-- Small butterfly -->
-          <g transform="translate(155,35)" opacity="0.5">
-            <path d="M0,0 Q-12,-8 -10,4 Q-6,10 0,6" fill="#22d3ee" opacity="0.6"/>
-            <path d="M0,0 Q12,-8 10,4 Q6,10 0,6" fill="#22d3ee" opacity="0.6"/>
-          </g>
-          <text x="110" y="118" text-anchor="middle" fill="#06b6d4" font-size="8" font-weight="bold" letter-spacing="2" opacity="0.4" font-family="monospace">NATURALIST</text>
-        </svg>
-        <div class="p-5 pt-3">
-          <div class="flex justify-between text-xs font-bold mb-2"><span class="text-cyan-300">自然智能</span><span class="text-cyan-400 opacity-70">Theta+Alpha</span></div>
-          <div class="progress-bar mb-3"><div class="progress-bar-fill bg-gradient-to-r from-cyan-500 to-teal-500 w-2/3"></div></div>
-          <h5 class="font-black text-white mb-1">自然觀察天賦</h5>
-          <p class="text-slate-500 text-xs leading-relaxed">對自然環境高度敏感，觀察力細膩，環境感知力天生。</p>
-          <div class="mt-3"><span class="talent-badge bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 text-[10px]">生物學家・環保・農業</span></div>
-        </div>
-      </div>
-
-      <!-- Talent 8: 內省覺察 -->
-      <div class="glass rounded-[36px] border border-violet-500/20 hover:border-violet-500/50 transition-all group reveal card-glow overflow-hidden">
-        <svg viewBox="0 0 220 130" xmlns="http://www.w3.org/2000/svg" class="w-full">
-          <defs><radialGradient id="tg8" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#7c3aed" stop-opacity="0.28"/><stop offset="100%" stop-color="#020817" stop-opacity="0"/></radialGradient><radialGradient id="tg8b" cx="50%" cy="50%" r="40%"><stop offset="0%" stop-color="#c4b5fd" stop-opacity="0.4"/><stop offset="100%" stop-color="#020817" stop-opacity="0"/></radialGradient><filter id="tglow8"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
-          <rect width="220" height="130" fill="#05030f"/>
-          <rect width="220" height="130" fill="url(#tg8)"/>
-          <!-- Concentric contemplation rings -->
-          <circle cx="110" cy="62" r="48" stroke="#7c3aed" stroke-width="0.8" fill="none" opacity="0.2" stroke-dasharray="2,5"/>
-          <circle cx="110" cy="62" r="36" stroke="#8b5cf6" stroke-width="1" fill="none" opacity="0.3" stroke-dasharray="3,4"/>
-          <circle cx="110" cy="62" r="24" stroke="#a78bfa" stroke-width="1.2" fill="none" opacity="0.45"/>
-          <circle cx="110" cy="62" r="13" fill="url(#tg8b)" stroke="#c4b5fd" stroke-width="1.5" filter="url(#tglow8)" opacity="0.8"/>
-          <!-- Eye iris -->
-          <ellipse cx="110" cy="62" rx="22" ry="14" stroke="#a78bfa" stroke-width="1.2" fill="#7c3aed10" opacity="0.6"/>
-          <circle cx="110" cy="62" r="7" fill="#7c3aed40" stroke="#c4b5fd" stroke-width="1" filter="url(#tglow8)"/>
-          <circle cx="110" cy="62" r="3" fill="#c4b5fd" opacity="0.9" filter="url(#tglow8)"/>
-          <!-- Reflection sparkle -->
-          <circle cx="114" cy="58" r="1.5" fill="white" opacity="0.7"/>
-          <!-- Inward-pointing arrows -->
-          <g stroke="#8b5cf6" stroke-width="1.2" opacity="0.4">
-            <line x1="72" y1="40" x2="88" y2="52"/><polygon points="88,52 82,48 84,54" fill="#8b5cf6"/>
-            <line x1="148" y1="40" x2="132" y2="52"/><polygon points="132,52 138,48 136,54" fill="#8b5cf6"/>
-            <line x1="110" y1="18" x2="110" y2="35"/><polygon points="110,35 106,29 114,29" fill="#8b5cf6"/>
-          </g>
-          <!-- Lotus petals (simplified) -->
-          <g stroke="#a78bfa" fill="#a78bfa08" stroke-width="0.8" opacity="0.35">
-            <ellipse cx="110" cy="95" rx="10" ry="15" transform="rotate(0,110,95)"/>
-            <ellipse cx="110" cy="95" rx="10" ry="15" transform="rotate(40,110,95)"/>
-            <ellipse cx="110" cy="95" rx="10" ry="15" transform="rotate(-40,110,95)"/>
-          </g>
-          <text x="110" y="118" text-anchor="middle" fill="#7c3aed" font-size="8" font-weight="bold" letter-spacing="2" opacity="0.4" font-family="monospace">INTRAPERSONAL</text>
-        </svg>
-        <div class="p-5 pt-3">
-          <div class="flex justify-between text-xs font-bold mb-2"><span class="text-violet-300">內省智能</span><span class="text-violet-400 opacity-70">Alpha+Theta</span></div>
-          <div class="progress-bar mb-3"><div class="progress-bar-fill bg-gradient-to-r from-violet-500 to-indigo-500 w-3/5"></div></div>
-          <h5 class="font-black text-white mb-1">內省自我覺察</h5>
-          <p class="text-slate-500 text-xs leading-relaxed">善於內省與自我調節，是未來心靈成長的核心能力。</p>
-          <div class="mt-3"><span class="talent-badge bg-violet-500/10 text-violet-300 border border-violet-500/20 text-[10px]">哲學家・冥想導師・作家</span></div>
-        </div>
-      </div>
 
     </div>
   </div>
@@ -1278,6 +966,7 @@
             <rect x="18" y="18" width="52" height="22" rx="6" fill="#3b82f620" stroke="#3b82f650" stroke-width="1"/>
             <text x="44" y="33" text-anchor="middle" fill="#60a5fa" font-size="11" font-weight="bold">1968</text>
           </svg>
+          </div>
           <div class="p-7 pt-5">
             <h5 class="font-black text-lg mb-2" style="color:#1e293b;">貓的 SMR 實驗</h5>
             <p class="text-sm leading-relaxed" style="color:#64748b;">Barry Sterman 教授發現貓透過訓練可產生 SMR 波，顯著提升神經系統穩定性，開啟神經反饋時代。</p>
@@ -1319,6 +1008,7 @@
             <rect x="14" y="18" width="58" height="22" rx="6" fill="#a855f720" stroke="#a855f750" stroke-width="1"/>
             <text x="43" y="33" text-anchor="middle" fill="#c4b5fd" font-size="11" font-weight="bold">1970s</text>
           </svg>
+          </div>
           <div class="p-7 pt-5">
             <h5 class="font-black text-lg mb-2" style="color:#1e293b;">NASA 太空人訓練</h5>
             <p class="text-sm leading-relaxed" style="color:#64748b;">NASA 委託 Sterman 測試 SMR 訓練效果，受訓者具備強大的抗壓與專注能力，開啟頂尖表現應用。</p>
@@ -1354,6 +1044,7 @@
             <rect x="14" y="18" width="58" height="22" rx="6" fill="#f59e0b20" stroke="#f59e0b50" stroke-width="1"/>
             <text x="43" y="33" text-anchor="middle" fill="#fbbf24" font-size="11" font-weight="bold">1980s</text>
           </svg>
+          </div>
           <div class="p-7 pt-5">
             <h5 class="font-black text-lg mb-2" style="color:#1e293b;">ADHD 非藥物療法</h5>
             <p class="text-sm leading-relaxed" style="color:#64748b;">腦波訓練正式進入臨床，成為 ADHD、癲癇的非藥物首選療法，幫助無數孩子重拾學習能力。</p>
@@ -1399,6 +1090,7 @@
             <rect x="14" y="18" width="40" height="22" rx="6" fill="#10b98120" stroke="#10b98150" stroke-width="1"/>
             <text x="34" y="33" text-anchor="middle" fill="#34d399" font-size="11" font-weight="bold">今日</text>
           </svg>
+          </div>
           <div class="p-7 pt-5">
             <h5 class="font-black text-lg mb-2" style="color:#1e293b;">兒童天賦解碼</h5>
             <p class="text-sm leading-relaxed" style="color:#64748b;">結合 AI 演算法與多元智能理論，腦波科技現可精準解碼兒童天賦，提供個性化教育藍圖。</p>
@@ -1563,6 +1255,7 @@
           <!-- Title area sparkle -->
           <g fill="#818cf8" opacity="0.5"><circle cx="60" cy="40" r="3"/><circle cx="72" cy="55" r="2.5"/><circle cx="55" cy="68" r="2"/><circle cx="78" cy="78" r="3"/><circle cx="60" cy="92" r="2.5"/></g>
         </svg>
+        </div>
         <div class="p-8 pt-5 flex flex-col flex-1">
           <h4 class="text-2xl font-black mb-3" style="color:#1e293b;">兒童天賦解碼</h4>
           <p class="leading-relaxed text-sm flex-1" style="color:#64748b;">精準量化孩子的天賦頻率特徵，識別八大智能優勢區域，提供個性化學習策略與才藝發展路線圖。</p>
@@ -1605,6 +1298,7 @@
           <path d="M50,90 Q80,50 110,80" stroke="#10b981" stroke-width="1.5" fill="none" stroke-dasharray="5,3" opacity="0.4"/>
           <polygon points="110,80 102,72 108,85" fill="#10b981" opacity="0.4"/>
         </svg>
+        </div>
         <div class="p-8 pt-5 flex flex-col flex-1">
           <h4 class="text-2xl font-black mb-3" style="color:#1e293b;">全腦開發訓練</h4>
           <p class="leading-relaxed text-sm flex-1" style="color:#64748b;">針對孩子腦波失衡頻段進行科學化神經反饋訓練，提升專注力、情緒調節能力與創意思維，不靠藥物。</p>
@@ -1648,6 +1342,7 @@
           <!-- Sync indicator -->
           <text x="150" y="130" text-anchor="middle" fill="#fda4af" font-size="8" opacity="0.4" letter-spacing="2" font-family="monospace">RESONANCE SYNC</text>
         </svg>
+        </div>
         <div class="p-8 pt-5 flex flex-col flex-1">
           <h4 class="text-2xl font-black mb-3" style="color:#1e293b;">親子關係共振</h4>
           <p class="leading-relaxed text-sm flex-1" style="color:#64748b;">同步量測親子雙方腦波頻率，找出溝通盲點與情感連結頻率，提供個性化親子溝通策略。</p>
@@ -1697,6 +1392,7 @@
           <circle cx="50" cy="75" r="10" stroke="#f59e0b" stroke-width="1" fill="none" opacity="0.4"/>
           <circle cx="50" cy="75" r="3" fill="#f59e0b" opacity="0.6" filter="url(#svg4)"/>
         </svg>
+        </div>
         <div class="p-8 pt-5 flex flex-col flex-1">
           <h4 class="text-2xl font-black mb-3" style="color:#1e293b;">學習策略優化</h4>
           <p class="leading-relaxed text-sm flex-1" style="color:#64748b;">依據孩子腦波特徵，量身設計最有效的學習時段、方式與環境，大幅提升學習效率與記憶力。</p>
@@ -1743,6 +1439,7 @@
           <line x1="220" y1="45" x2="225" y2="70" stroke="#c084fc" stroke-width="0.8" opacity="0.3"/>
           <line x1="225" y1="70" x2="215" y2="90" stroke="#c084fc" stroke-width="0.8" opacity="0.3"/>
         </svg>
+        </div>
         <div class="p-8 pt-5 flex flex-col flex-1">
           <h4 class="text-2xl font-black mb-3" style="color:#1e293b;">教育機構合作</h4>
           <p class="leading-relaxed text-sm flex-1" style="color:#64748b;">為學校、補習班、才藝中心提供班級整體腦波分析，協助老師理解學生差異，制定更有效的教學策略。</p>
@@ -1796,6 +1493,7 @@
           <line x1="155" y1="40" x2="155" y2="132" stroke="#06b6d420" stroke-width="1"/>
           <line x1="155" y1="132" x2="258" y2="132" stroke="#06b6d420" stroke-width="1"/>
         </svg>
+        </div>
         <div class="p-8 pt-5 flex flex-col flex-1">
           <h4 class="text-2xl font-black mb-3" style="color:#1e293b;">定期追蹤評估</h4>
           <p class="leading-relaxed text-sm flex-1" style="color:#64748b;">每季度追蹤孩子腦波發展變化，動態調整天賦培育策略，確保孩子在關鍵發展期獲得最佳支持。</p>
