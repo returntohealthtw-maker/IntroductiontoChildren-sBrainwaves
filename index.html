@@ -1685,9 +1685,11 @@
 
         <!-- FORM -->
         <form id="contact-form" novalidate>
-          <!-- Formspree hidden fields -->
-          <input type="hidden" name="_subject" value="【兒童腦波天賦解碼】新預約申請"/>
-          <input type="hidden" name="_language" value="zh-TW"/>
+          <!-- Web3Forms hidden fields -->
+          <input type="hidden" name="access_key" value="a6d26b20-cddb-4ce3-92b8-11251239df60"/>
+          <input type="hidden" name="subject" value="【兒童腦波天賦解碼】新預約申請"/>
+          <input type="hidden" name="from_name" value="兒童腦波天賦網站"/>
+          <input type="hidden" name="redirect" value="false"/>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
@@ -2108,19 +2110,18 @@ async function handleSubmit(btn) {
 
   try {
     const data = new FormData(form);
-    const res = await fetch('https://formspree.io/ReturntoHealth.tw@gmail.com', {
+    const res = await fetch('https://api.web3forms.com/submit', {
       method: 'POST',
-      body: data,
-      headers: { 'Accept': 'application/json' }
+      body: data
     });
+    const json = await res.json();
 
-    if (res.ok) {
+    if (json.success) {
       // Show success, hide form
       form.classList.add('hidden');
       successEl.classList.remove('hidden');
     } else {
-      const json = await res.json().catch(() => ({}));
-      throw new Error(json.error || '伺服器錯誤');
+      throw new Error(json.message || '伺服器錯誤');
     }
   } catch (err) {
     btn.innerHTML = '<i class="fas fa-brain mr-2"></i> 送出預約申請';
