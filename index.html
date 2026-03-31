@@ -1694,17 +1694,17 @@
           <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
               <label class="block text-xs font-bold mb-2 uppercase tracking-wider" style="color:rgba(255,255,255,0.7);">家長姓名 <span style="color:#fda4af;">*</span></label>
-              <input type="text" name="家長姓名" id="field-name" placeholder="請輸入姓名"
+              <input type="text" name="parent_name" id="field-name" placeholder="請輸入姓名"
                 class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-3.5 text-white placeholder-slate-400 focus:outline-none focus:border-indigo-400 transition-colors text-sm" />
             </div>
             <div>
               <label class="block text-xs font-bold mb-2 uppercase tracking-wider" style="color:rgba(255,255,255,0.7);">聯絡電話 <span style="color:#fda4af;">*</span></label>
-              <input type="tel" name="聯絡電話" id="field-phone" placeholder="09XX-XXX-XXX"
+              <input type="tel" name="phone" id="field-phone" placeholder="09XX-XXX-XXX"
                 class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-3.5 text-white placeholder-slate-400 focus:outline-none focus:border-indigo-400 transition-colors text-sm" />
             </div>
             <div>
               <label class="block text-xs font-bold mb-2 uppercase tracking-wider" style="color:rgba(255,255,255,0.7);">孩子年齡</label>
-              <select name="孩子年齡" class="w-full border border-white/10 rounded-2xl px-5 py-3.5 text-white focus:outline-none focus:border-indigo-400 transition-colors text-sm appearance-none" style="background:#1e1b4b;">
+              <select name="child_age" class="w-full border border-white/10 rounded-2xl px-5 py-3.5 text-white focus:outline-none focus:border-indigo-400 transition-colors text-sm appearance-none" style="background:#1e1b4b;">
                 <option value="">請選擇</option>
                 <option>3-5 歲（學前）</option>
                 <option>6-8 歲（低年級）</option>
@@ -1715,7 +1715,7 @@
             </div>
             <div>
               <label class="block text-xs font-bold mb-2 uppercase tracking-wider" style="color:rgba(255,255,255,0.7);">主要關注</label>
-              <select name="主要關注" class="w-full border border-white/10 rounded-2xl px-5 py-3.5 text-white focus:outline-none focus:border-indigo-400 transition-colors text-sm appearance-none" style="background:#1e1b4b;">
+              <select name="main_concern" class="w-full border border-white/10 rounded-2xl px-5 py-3.5 text-white focus:outline-none focus:border-indigo-400 transition-colors text-sm appearance-none" style="background:#1e1b4b;">
                 <option value="">請選擇</option>
                 <option>天賦發現與方向</option>
                 <option>注意力/ADHD</option>
@@ -1727,7 +1727,7 @@
             </div>
             <div class="md:col-span-2">
               <label class="block text-xs font-bold mb-2 uppercase tracking-wider" style="color:rgba(255,255,255,0.7);">補充說明（選填）</label>
-              <textarea name="補充說明" rows="3" placeholder="請簡述孩子目前狀況或您的疑問..."
+              <textarea name="notes" rows="3" placeholder="請簡述孩子目前狀況或您的疑問..."
                 class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-3.5 text-white placeholder-slate-400 focus:outline-none focus:border-indigo-400 transition-colors text-sm resize-none"></textarea>
             </div>
           </div>
@@ -2095,8 +2095,8 @@ async function handleSubmit(btn) {
   const successEl = document.getElementById('form-success');
 
   // Basic validation
-  const name  = form.querySelector('[name="家長姓名"]').value.trim();
-  const phone = form.querySelector('[name="聯絡電話"]').value.trim();
+  const name  = form.querySelector('[name="parent_name"]').value.trim();
+  const phone = form.querySelector('[name="phone"]').value.trim();
   if (!name || !phone) {
     errEl.textContent = '請填寫家長姓名和聯絡電話（必填）';
     errEl.classList.remove('hidden');
