@@ -1,0 +1,2307 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>兒童腦波天賦解碼 | 科學發掘孩子的無限潛能</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    :root {
+      --glow-blue: 0 0 40px rgba(59,130,246,0.4);
+      --glow-purple: 0 0 40px rgba(168,85,247,0.4);
+      --glow-amber: 0 0 40px rgba(245,158,11,0.4);
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700;900&display=swap');
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #020617;
+      color: #f1f5f9;
+      overflow-x: hidden;
+    }
+
+    .glass {
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    /* Animated brainwave canvas */
+    #waveCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: 0.25;
+    }
+
+    /* Particle dots */
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      animation: float linear infinite;
+      pointer-events: none;
+    }
+    @keyframes float {
+      0%   { transform: translateY(0) translateX(0) scale(1); opacity: 0.7; }
+      50%  { transform: translateY(-40px) translateX(20px) scale(1.2); opacity: 0.4; }
+      100% { transform: translateY(0) translateX(0) scale(1); opacity: 0.7; }
+    }
+
+    /* Wave tab active */
+    .wave-tab { cursor: pointer; transition: all 0.3s ease; }
+    .wave-tab.active { transform: scale(1.04); }
+
+    /* Pulsing ring */
+    @keyframes pulseRing {
+      0%   { transform: scale(0.9); opacity: 1; }
+      100% { transform: scale(1.4); opacity: 0; }
+    }
+    .pulse-ring::before {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      border: 2px solid currentColor;
+      animation: pulseRing 1.6s ease-out infinite;
+    }
+
+    /* Smooth scroll */
+    html { scroll-behavior: smooth; }
+
+    /* Section fade-in */
+    .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* Number counter animation */
+    @keyframes countUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+    /* Brain illustration gradient text */
+    .gradient-text {
+      background: linear-gradient(135deg, #60a5fa, #a78bfa, #f472b6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .gradient-text-gold {
+      background: linear-gradient(135deg, #fbbf24, #f59e0b, #d97706);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Neural line connector */
+    .connector-line {
+      position: absolute;
+      top: 50%;
+      right: -40px;
+      width: 40px;
+      height: 2px;
+      background: linear-gradient(to right, rgba(99,102,241,0.5), transparent);
+    }
+
+    /* Wave animation for visualizer */
+    @keyframes waveAnim {
+      0%   { d: path('M0,30 C80,10 160,50 240,30 C320,10 400,50 480,30'); }
+      50%  { d: path('M0,30 C80,50 160,10 240,30 C320,50 400,10 480,30'); }
+      100% { d: path('M0,30 C80,10 160,50 240,30 C320,10 400,50 480,30'); }
+    }
+
+    .wave-svg path { animation: waveAnim 3s ease-in-out infinite; }
+
+    /* Hover glow for cards */
+    .card-glow:hover {
+      box-shadow: 0 0 40px rgba(59,130,246,0.2);
+    }
+
+    /* Timeline dots */
+    .timeline-dot { position: relative; }
+    .timeline-dot::before {
+      content: '';
+      position: absolute;
+      left: -25px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #3b82f6;
+      box-shadow: 0 0 10px rgba(59,130,246,0.6);
+    }
+
+    /* Mobile nav */
+    #mobileMenu { display: none; }
+    #mobileMenu.open { display: flex; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #f0f4ff; }
+    ::-webkit-scrollbar-thumb { background: #7c3aed; border-radius: 3px; }
+
+    /* ================================================================
+       VIBRANT CHILDREN'S THEME — Light & Colorful
+    ================================================================ */
+    html { background: #f4f0ff; }
+    body {
+      background: linear-gradient(160deg, #f8f4ff 0%, #f0f9ff 30%, #f0fdf8 65%, #fffbf0 100%) !important;
+      color: #1e293b !important;
+    }
+
+    /* === HEADER: white glass === */
+    header.fixed {
+      background: rgba(255,255,255,0.96) !important;
+      border-bottom-color: rgba(124,58,237,0.1) !important;
+      box-shadow: 0 4px 20px rgba(124,58,237,0.08) !important;
+    }
+    header h1, header nav a, header .font-black { color: #1e293b !important; }
+    header .text-\[9px\] { color: #7c3aed !important; }
+    #mobileMenu { background: rgba(255,255,255,0.97) !important; }
+    #mobileMenu a { color: #475569 !important; }
+
+    /* === GLASS CARDS: bright white === */
+    .glass {
+      background: rgba(255,255,255,0.93) !important;
+      box-shadow: 0 8px 32px rgba(99,102,241,0.12) !important;
+    }
+
+    /* === SECTION backgrounds === */
+    .bg-slate-900\/20 { background: rgba(238,242,255,0.55) !important; }
+    .bg-slate-900\/10 { background: rgba(240,240,255,0.35) !important; }
+    .bg-indigo-900\/10 { background: rgba(237,233,254,0.4) !important; }
+    .bg-\[\#020617\] { background: transparent !important; }
+    .bg-\[#020617\] { background: transparent !important; }
+    .bg-\[#0f172a\]\/40 { background: rgba(248,244,255,0.7) !important; }
+
+    /* === TEXT OVERRIDES for light background === */
+    /* Dark section text → readable on light */
+    .text-slate-100 { color: #1e293b !important; }
+    .text-slate-200 { color: #334155 !important; }
+    .text-slate-300 { color: #475569 !important; }
+    .text-slate-400 { color: #64748b !important; }
+    .text-slate-500 { color: #94a3b8 !important; }
+    .text-white { color: #1e293b !important; }
+
+    /* Keep vibrant accent colors (more saturated for light bg) */
+    .text-indigo-400 { color: #6d28d9 !important; }
+    .text-indigo-300 { color: #7c3aed !important; }
+    .text-blue-400  { color: #2563eb !important; }
+    .text-blue-300  { color: #3b82f6 !important; }
+    .text-purple-400, .text-purple-300 { color: #7c3aed !important; }
+    .text-emerald-400, .text-emerald-300 { color: #059669 !important; }
+    .text-cyan-400, .text-cyan-300 { color: #0891b2 !important; }
+    .text-rose-400, .text-rose-300 { color: #e11d48 !important; }
+    .text-amber-400, .text-amber-300 { color: #d97706 !important; }
+    .text-orange-400 { color: #ea580c !important; }
+    .text-sky-400 { color: #0369a1 !important; }
+    .text-violet-400, .text-violet-300 { color: #6d28d9 !important; }
+    .text-teal-400 { color: #0d9488 !important; }
+    .text-pink-400  { color: #db2777 !important; }
+    .text-fuchsia-400 { color: #a21caf !important; }
+
+    /* Keep white text in hero + footer CTA buttons */
+    #hero .text-white, #hero .text-slate-100, #hero .text-slate-200,
+    #hero .text-slate-300, #hero h2, #hero p,
+    #hero .text-indigo-300, #hero .text-indigo-400,
+    #hero .gradient-text { color: inherit !important; }
+
+    #contact-cta .text-white,
+    button.bg-indigo-600 .text-white,
+    a.bg-indigo-600, a.bg-indigo-600 span,
+    .bg-gradient-to-r .text-white, footer .text-slate-400 { color: inherit !important; }
+
+    /* Footer */
+    footer { background: rgba(248,244,255,0.9) !important; border-top-color: rgba(124,58,237,0.1) !important; }
+    footer .text-slate-700 { color: #94a3b8 !important; }
+    footer .text-slate-800 { color: #94a3b8 !important; }
+
+    /* === BORDERS on light bg === */
+    .border-white\/5  { border-color: rgba(124,58,237,0.1) !important; }
+    .border-white\/10 { border-color: rgba(124,58,237,0.15) !important; }
+    .border-white\/20 { border-color: rgba(124,58,237,0.2) !important; }
+
+    /* === Input fields === */
+    input, select, textarea {
+      background: rgba(248,244,255,0.8) !important;
+      border-color: rgba(124,58,237,0.2) !important;
+      color: #1e293b !important;
+    }
+    input::placeholder, textarea::placeholder { color: #94a3b8 !important; }
+
+    /* === Waveform canvas tint for light bg === */
+    #waveCanvas { opacity: 0.12 !important; filter: hue-rotate(10deg) saturate(1.5) !important; }
+
+    /* === Wave tabs in science section === */
+    #waveTabs button { background: rgba(248,244,255,0.8) !important; }
+    #waveTabs button.active-wave { background: rgba(255,255,255,0.98) !important; box-shadow: 0 4px 20px rgba(99,102,241,0.2) !important; }
+    #waveDetail { background: rgba(255,255,255,0.95) !important; }
+
+    /* Card hover glows updated */
+    .card-glow:hover { box-shadow: 0 8px 40px rgba(124,58,237,0.18) !important; }
+
+    /* Process step cards - light theme */
+    .bg-indigo-600\/10 { background: rgba(237,233,254,0.5) !important; }
+    .bg-indigo-600\/5  { background: rgba(237,233,254,0.3) !important; }
+
+    /* Gradient text stays colorful */
+    .gradient-text {
+      background: linear-gradient(135deg, #7c3aed, #4f46e5, #ec4899) !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+      background-clip: text !important;
+    }
+    .gradient-text-gold {
+      background: linear-gradient(135deg, #d97706, #f59e0b, #f97316) !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+      background-clip: text !important;
+    }
+
+    /* Talent badges on light bg */
+    .talent-badge { font-weight: 700 !important; }
+
+    /* Progress bar track */
+    .progress-bar { background: rgba(124,58,237,0.08) !important; }
+
+    /* SVG card headers: override dark fills */
+    svg rect[fill="#040d1c"], svg rect[fill="#040610"],
+    svg rect[fill="#030812"], svg rect[fill="#07030f"],
+    svg rect[fill="#030c14"], svg rect[fill="#04050f"],
+    svg rect[fill="#030f09"], svg rect[fill="#0d0307"],
+    svg rect[fill="#0d0902"], svg rect[fill="#020e12"],
+    svg rect[fill="#020f09"], svg rect[fill="#020e0e"],
+    svg rect[fill="#08040f"], svg rect[fill="#03050d"],
+    svg rect[fill="#07040e"], svg rect[fill="#05030f"],
+    svg rect[fill="#06060e"] { fill: #f8f5ff !important; }
+
+    /* SVG radial gradient stops → more vibrant on light bg */
+    /* (Gradients overlay on top; their light fill ensures visibility) */
+
+    /* Milestone SVG dark rects */
+    svg rect[fill="#030812"] { fill: #f0f5ff !important; }
+    svg rect[fill="#07030f"] { fill: #faf5ff !important; }
+    svg rect[fill="#0d0902"] { fill: #fffbf0 !important; }
+    svg rect[fill="#020f09"] { fill: #f0fdf8 !important; }
+
+    /* Science section dark inner bg */
+    .bg-slate-900\/80 { background: rgba(248,244,255,0.85) !important; }
+    .bg-slate-900\/60 { background: rgba(248,244,255,0.7) !important; }
+
+    /* Prevent white-on-white in HERO section override — handled by #hero */
+    
+
+    /* Brain icon ring */
+    .brain-ring {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 35%, rgba(99,102,241,0.3), transparent 60%),
+                  linear-gradient(135deg, #1e1b4b, #0f172a);
+      border: 1px solid rgba(99,102,241,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+    }
+
+    /* Talent badge */
+    .talent-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+
+    /* Progress bar */
+    .progress-bar {
+      height: 6px;
+      border-radius: 999px;
+      position: relative;
+      overflow: hidden;
+      background: rgba(255,255,255,0.05);
+    }
+    .progress-bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      transition: width 1.5s ease;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="fixed top-0 left-0 w-full z-50 glass border-b border-white/5">
+  <div class="max-w-7xl mx-auto px-6 h-18 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-11 h-11 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
+        <i class="fas fa-brain text-white text-lg"></i>
+      </div>
+      <div>
+        <h1 class="text-base font-black tracking-tight leading-none">
+          兒童腦波<span class="text-indigo-400">天賦</span>解碼
+        </h1>
+        <p class="text-[9px] text-slate-500 font-bold uppercase tracking-widest mt-0.5">Child Brainwave Intelligence Lab</p>
+      </div>
+    </div>
+    <nav class="hidden lg:flex items-center gap-8 text-xs font-bold uppercase tracking-widest" style="color:#64748b;">
+      <a href="#problems"    class="transition-colors" style="color:#64748b;" onmouseover="this.style.color='#7c3aed'" onmouseout="this.style.color='#64748b'">孩子的困境</a>
+      <a href="#science"     class="transition-colors" style="color:#64748b;" onmouseover="this.style.color='#7c3aed'" onmouseout="this.style.color='#64748b'">腦波科學</a>
+      <a href="#talents"     class="transition-colors" style="color:#64748b;" onmouseover="this.style.color='#7c3aed'" onmouseout="this.style.color='#64748b'">天賦解碼</a>
+      <a href="#development" class="transition-colors" style="color:#64748b;" onmouseover="this.style.color='#7c3aed'" onmouseout="this.style.color='#64748b'">發展應用</a>
+      <a href="#services"    class="transition-colors" style="color:#64748b;" onmouseover="this.style.color='#7c3aed'" onmouseout="this.style.color='#64748b'">服務項目</a>
+      <a href="#contact"
+         class="px-5 py-2 rounded-full text-white hover:opacity-90 transition-all" style="background:linear-gradient(135deg,#7c3aed,#4f46e5);">
+        立即預約
+      </a>
+    </nav>
+    <button id="menuBtn" class="lg:hidden text-slate-400 hover:text-white text-xl">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+  <!-- Mobile Menu -->
+  <div id="mobileMenu" class="flex-col glass border-t border-white/5 px-6 py-4 gap-4 text-sm font-bold">
+    <a href="#problems"    class="text-slate-300 hover:text-indigo-400 transition-colors">孩子的困境</a>
+    <a href="#science"     class="text-slate-300 hover:text-indigo-400 transition-colors">腦波科學</a>
+    <a href="#talents"     class="text-slate-300 hover:text-indigo-400 transition-colors">天賦解碼</a>
+    <a href="#development" class="text-slate-300 hover:text-indigo-400 transition-colors">發展應用</a>
+    <a href="#services"    class="text-slate-300 hover:text-indigo-400 transition-colors">服務項目</a>
+    <a href="#contact"     class="text-indigo-400 font-black">立即預約 →</a>
+  </div>
+</header>
+
+<!-- ===== HERO SECTION ===== -->
+<section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20" style="background: linear-gradient(135deg, #6d28d9 0%, #4f46e5 38%, #0891b2 72%, #059669 100%) !important;">
+  <!-- Animated background canvas -->
+  <canvas id="waveCanvas"></canvas>
+
+  <!-- Floating particles -->
+  <div id="particles"></div>
+
+  <!-- Background gradient orbs -->
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-white/5 blur-[120px]"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full bg-white/5 blur-[120px]"></div>
+  </div>
+
+  <!-- 3D Brain Hero Image (right side) — dark background + screen blend makes bg transparent -->
+  <div class="absolute right-0 top-0 bottom-0 w-1/2 pointer-events-none hidden lg:flex items-center justify-end pr-4 overflow-hidden">
+    <img src="./images/hero-brain-dark-3d.png" alt="3D Brain Neural Network"
+         class="w-[600px] h-[600px] object-contain"
+         style="mix-blend-mode: screen; opacity: 0.9;" />
+  </div>
+
+  <!-- Hero Neural Brain SVG (floating background illustration) -->
+  <div class="absolute inset-0 flex items-center justify-end pr-8 pointer-events-none opacity-20 hidden lg:flex">
+    <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" class="w-[520px] h-[520px]">
+      <defs>
+        <radialGradient id="hbg" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#6366f1" stop-opacity="0.5"/>
+          <stop offset="60%" stop-color="#3b82f6" stop-opacity="0.2"/>
+          <stop offset="100%" stop-color="#020817" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="hglow"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <filter id="hglow2"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <!-- Central glow -->
+      <circle cx="250" cy="250" r="200" fill="url(#hbg)" opacity="0.6"/>
+      <!-- Brain outline (large) -->
+      <path d="M200,290 C180,265 182,225 200,205 C210,190 225,182 245,180 C250,168 260,168 265,180 C285,182 300,190 310,205 C328,225 320,265 300,290 C290,308 278,316 265,320 L250,325 L235,320 C222,316 210,308 200,290Z" stroke="#6366f1" stroke-width="2.5" fill="#6366f115" filter="url(#hglow2)"/>
+      <!-- Brain division -->
+      <line x1="250" y1="180" x2="250" y2="325" stroke="#6366f1" stroke-width="1.2" stroke-dasharray="6,5" opacity="0.4"/>
+      <!-- Brain convolutions left -->
+      <path d="M210,230 Q205,218 215,212 Q225,206 230,218" stroke="#818cf8" stroke-width="2" fill="none" opacity="0.5"/>
+      <path d="M205,252 Q198,240 210,235 Q222,230 224,242" stroke="#818cf8" stroke-width="1.8" fill="none" opacity="0.45"/>
+      <path d="M210,272 Q204,260 216,255 Q228,250 228,264" stroke="#818cf8" stroke-width="1.8" fill="none" opacity="0.4"/>
+      <!-- Brain convolutions right -->
+      <path d="M290,230 Q295,218 285,212 Q275,206 270,218" stroke="#a5b4fc" stroke-width="2" fill="none" opacity="0.5"/>
+      <path d="M295,252 Q302,240 290,235 Q278,230 276,242" stroke="#a5b4fc" stroke-width="1.8" fill="none" opacity="0.45"/>
+      <path d="M290,272 Q296,260 284,255 Q272,250 272,264" stroke="#a5b4fc" stroke-width="1.8" fill="none" opacity="0.4"/>
+      <!-- Neural connection nodes -->
+      <g filter="url(#hglow)">
+        <!-- Outer ring of nodes -->
+        <circle cx="160" cy="200" r="8" fill="#6366f1" opacity="0.8"/>
+        <circle cx="148" cy="260" r="6" fill="#3b82f6" opacity="0.7"/>
+        <circle cx="170" cy="320" r="7" fill="#8b5cf6" opacity="0.6"/>
+        <circle cx="220" cy="360" r="6" fill="#6366f1" opacity="0.7"/>
+        <circle cx="280" cy="362" r="7" fill="#3b82f6" opacity="0.6"/>
+        <circle cx="330" cy="322" r="6" fill="#8b5cf6" opacity="0.7"/>
+        <circle cx="352" cy="262" r="8" fill="#6366f1" opacity="0.8"/>
+        <circle cx="340" cy="200" r="6" fill="#3b82f6" opacity="0.7"/>
+        <circle cx="290" cy="158" r="7" fill="#8b5cf6" opacity="0.6"/>
+        <circle cx="210" cy="158" r="7" fill="#6366f1" opacity="0.7"/>
+        <!-- Middle ring -->
+        <circle cx="190" cy="230" r="5" fill="#60a5fa" opacity="0.6"/>
+        <circle cx="185" cy="285" r="5" fill="#818cf8" opacity="0.6"/>
+        <circle cx="210" cy="330" r="5" fill="#60a5fa" opacity="0.5"/>
+        <circle cx="290" cy="330" r="5" fill="#818cf8" opacity="0.5"/>
+        <circle cx="315" cy="285" r="5" fill="#60a5fa" opacity="0.6"/>
+        <circle cx="310" cy="230" r="5" fill="#818cf8" opacity="0.6"/>
+      </g>
+      <!-- Neural connection lines -->
+      <g stroke="#6366f1" stroke-width="1" fill="none" opacity="0.25">
+        <line x1="160" y1="200" x2="200" y2="210"/><line x1="160" y1="200" x2="190" y2="230"/>
+        <line x1="148" y1="260" x2="185" y2="255"/><line x1="148" y1="260" x2="190" y2="278"/>
+        <line x1="170" y1="320" x2="210" y2="310"/><line x1="170" y1="320" x2="200" y2="335"/>
+        <line x1="220" y1="360" x2="240" y2="335"/><line x1="280" y1="362" x2="260" y2="338"/>
+        <line x1="330" y1="322" x2="308" y2="308"/><line x1="352" y1="262" x2="316" y2="255"/>
+        <line x1="340" y1="200" x2="308" y2="215"/><line x1="290" y1="158" x2="275" y2="188"/>
+        <line x1="210" y1="158" x2="228" y2="188"/>
+        <!-- Brain connections -->
+        <line x1="190" y1="230" x2="310" y2="230"/><line x1="185" y1="285" x2="315" y2="285"/>
+        <line x1="200" y1="210" x2="300" y2="210"/><line x1="200" y1="260" x2="300" y2="260"/>
+        <line x1="205" y1="300" x2="295" y2="300"/>
+      </g>
+      <!-- Outer far nodes -->
+      <g filter="url(#hglow)" opacity="0.5">
+        <circle cx="95" cy="180" r="5" fill="#6366f1"/>
+        <circle cx="80" cy="260" r="4" fill="#3b82f6"/>
+        <circle cx="110" cy="340" r="5" fill="#8b5cf6"/>
+        <circle cx="405" cy="180" r="5" fill="#3b82f6"/>
+        <circle cx="420" cy="260" r="4" fill="#6366f1"/>
+        <circle cx="390" cy="340" r="5" fill="#8b5cf6"/>
+        <circle cx="230" cy="90" r="5" fill="#6366f1"/>
+        <circle cx="270" cy="88" r="4" fill="#8b5cf6"/>
+        <circle cx="250" cy="400" r="5" fill="#3b82f6"/>
+      </g>
+      <!-- Far connection lines -->
+      <g stroke="#3b82f6" stroke-width="0.7" fill="none" opacity="0.15">
+        <line x1="95" y1="180" x2="160" y2="200"/><line x1="80" y1="260" x2="148" y2="260"/>
+        <line x1="110" y1="340" x2="170" y2="320"/><line x1="405" y1="180" x2="340" y2="200"/>
+        <line x1="420" y1="260" x2="352" y2="262"/><line x1="390" y1="340" x2="330" y2="322"/>
+        <line x1="230" y1="90" x2="210" y2="158"/><line x1="270" y1="88" x2="290" y2="158"/>
+        <line x1="250" y1="400" x2="250" y2="330"/>
+      </g>
+      <!-- Central brain glow pulse -->
+      <circle cx="250" cy="250" r="40" stroke="#6366f1" stroke-width="1.5" fill="none" opacity="0.3" filter="url(#hglow2)"/>
+      <circle cx="250" cy="250" r="20" fill="#6366f130" filter="url(#hglow2)" opacity="0.6"/>
+    </svg>
+  </div>
+
+  <div class="relative z-10 max-w-6xl mx-auto px-6 text-center" style="color: white !important;">
+    <!-- Badge -->
+    <div class="inline-flex items-center gap-2 px-5 py-2 mb-8 rounded-full backdrop-blur-xl" style="background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.3);">
+      <span class="w-2 h-2 rounded-full bg-yellow-300 animate-pulse"></span>
+      <span class="text-[10px] font-black uppercase tracking-widest" style="color:rgba(255,255,255,0.9);">科學實證 · 非侵入性 · 精準量化</span>
+    </div>
+
+    <!-- Main title -->
+    <h2 class="text-5xl md:text-8xl font-black mb-6 leading-tight tracking-tighter" style="color:white !important;">
+      解碼孩子的<br/>
+      <span style="background:linear-gradient(135deg,#fde68a,#fbcfe8,#bfdbfe); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">腦波天賦</span>
+    </h2>
+
+    <p class="text-lg md:text-2xl mb-10 max-w-3xl mx-auto leading-relaxed font-light" style="color:rgba(255,255,255,0.88) !important;">
+      每個孩子的大腦都藏著獨一無二的頻率密碼。<br/>
+      透過 <span class="font-bold" style="color:#fde68a;">QEEG 腦波科技</span>，精準解讀孩子的天賦潛能、學習類型與發展方向，<br/>
+      讓教育不再靠猜測，讓天賦不再被埋沒。
+    </p>
+
+    <!-- CTA Buttons -->
+    <div class="flex flex-wrap justify-center gap-4 mb-16">
+      <a href="#contact"
+         class="group relative px-10 py-5 rounded-[28px] font-black text-lg overflow-hidden hover:scale-105 transition-all shadow-2xl"
+         style="background:white; color:#6d28d9 !important;">
+        <span class="relative z-10 flex items-center gap-2" style="color:#6d28d9 !important;">
+          <i class="fas fa-brain"></i> 預約兒童天賦解碼
+        </span>
+        <div class="absolute inset-0 bg-gradient-to-r from-white/0 via-purple-100/30 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+      </a>
+      <a href="#science"
+         class="px-10 py-5 rounded-[28px] font-bold text-lg hover:scale-105 transition-all"
+         style="border:2px solid rgba(255,255,255,0.5); color:white !important; background:rgba(255,255,255,0.1);">
+        了解腦波科學 <i class="fas fa-arrow-down ml-2 text-sm"></i>
+      </a>
+    </div>
+
+    <!-- Stats row -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto">
+      <div class="rounded-2xl p-4" style="background:rgba(255,255,255,0.18); border:1px solid rgba(255,255,255,0.25); backdrop-filter:blur(10px);">
+        <div class="text-3xl font-black mb-1" style="color:#fde68a;">5</div>
+        <div class="text-xs font-bold uppercase tracking-wider" style="color:rgba(255,255,255,0.75);">腦波頻段</div>
+      </div>
+      <div class="rounded-2xl p-4" style="background:rgba(255,255,255,0.18); border:1px solid rgba(255,255,255,0.25); backdrop-filter:blur(10px);">
+        <div class="text-3xl font-black mb-1" style="color:#fbcfe8;">24</div>
+        <div class="text-xs font-bold uppercase tracking-wider" style="color:rgba(255,255,255,0.75);">天賦維度</div>
+      </div>
+      <div class="rounded-2xl p-4" style="background:rgba(255,255,255,0.18); border:1px solid rgba(255,255,255,0.25); backdrop-filter:blur(10px);">
+        <div class="text-3xl font-black mb-1" style="color:#bfdbfe;">93%</div>
+        <div class="text-xs font-bold uppercase tracking-wider" style="color:rgba(255,255,255,0.75);">家長滿意度</div>
+      </div>
+      <div class="rounded-2xl p-4" style="background:rgba(255,255,255,0.18); border:1px solid rgba(255,255,255,0.25); backdrop-filter:blur(10px);">
+        <div class="text-3xl font-black mb-1" style="color:#a7f3d0;">40+</div>
+        <div class="text-xs font-bold uppercase tracking-wider" style="color:rgba(255,255,255,0.75);">年臨床實證</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40 animate-bounce">
+    <div class="text-[10px] font-bold uppercase tracking-widest text-slate-400">Scroll</div>
+    <i class="fas fa-chevron-down text-slate-400"></i>
+  </div>
+</section>
+
+<!-- ===== PROBLEMS SECTION ===== -->
+<section id="problems" class="py-28" style="background:linear-gradient(180deg,#f8f4ff 0%,#f0f9ff 100%);">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-16 reveal">
+      <p class="font-black uppercase tracking-[0.3em] text-xs mb-4" style="color:#7c3aed;">孩子的現實困境</p>
+      <h3 class="text-4xl md:text-6xl font-black tracking-tight leading-tight mb-4" style="color:#1e293b;">
+        這些困住了你的孩子？
+      </h3>
+      <p class="text-lg max-w-2xl mx-auto" style="color:#64748b;">許多孩子的潛能從未被正確發現，不是因為不夠聰明，而是因為從未找到屬於他的學習頻率。</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+      <!-- Problem 1: 注意力渙散 -->
+      <div class="glass rounded-[40px] border border-cyan-300/40 hover:border-cyan-400/60 card-glow transition-all duration-500 reveal group overflow-hidden" style="box-shadow:0 6px 24px rgba(6,182,212,0.1);">
+        <div class="relative overflow-hidden" style="height:200px; background:linear-gradient(135deg,#ecfeff,#cffafe);">
+          <img src="./images/problem-focus-3d.png" alt="注意力渙散" class="w-full h-full object-cover object-center" />
+          <div class="absolute bottom-3 right-3 px-2 py-1 rounded-lg text-xs font-bold text-white" style="background:#0891b2;">SMR 波不足</div>
+        </div>
+        <div class="p-8 pt-5">
+          <h4 class="text-2xl font-black mb-3 group-hover:text-cyan-600 transition-colors" style="color:#0e7490;">注意力渙散</h4>
+          <p class="leading-relaxed" style="color:#475569;">SMR 波不足導致大腦無法維持穩定的專注狀態，孩子並不是「不想學」，而是大腦的注意力節律需要調整。</p>
+          <div class="mt-5"><span class="talent-badge text-xs px-3 py-1 rounded-full font-bold" style="background:#cffafe; color:#0e7490; border:1px solid #a5f3fc;">SMR 波不足</span></div>
+        </div>
+      </div>
+
+      <!-- Problem 2: 情緒衝動易爆 -->
+      <div class="glass rounded-[40px] border border-orange-300/40 hover:border-orange-400/60 card-glow transition-all duration-500 reveal group overflow-hidden" style="box-shadow:0 6px 24px rgba(249,115,22,0.1);">
+        <div class="relative overflow-hidden" style="height:200px; background:linear-gradient(135deg,#fff7ed,#fed7aa);">
+          <img src="./images/problem-emotion-3d.png" alt="情緒衝動易爆" class="w-full h-full object-cover object-center" />
+          <div class="absolute bottom-3 right-3 px-2 py-1 rounded-lg text-xs font-bold text-white" style="background:#ea580c;">Beta 波過高</div>
+        </div>
+        <div class="p-8 pt-5">
+          <h4 class="text-2xl font-black mb-3 group-hover:text-orange-600 transition-colors" style="color:#c2410c;">情緒衝動易爆</h4>
+          <p class="leading-relaxed" style="color:#475569;">Beta 波過度活躍，孩子的情緒調節系統長期處於「過熱」狀態，容易爆發、難以冷靜，並非品格問題。</p>
+          <div class="mt-5"><span class="talent-badge text-xs px-3 py-1 rounded-full font-bold" style="background:#fed7aa; color:#c2410c; border:1px solid #fdba74;">Beta 波過高</span></div>
+        </div>
+      </div>
+
+      <!-- Problem 3: 學習動力低落 -->
+      <div class="glass rounded-[40px] border border-purple-300/40 hover:border-purple-400/60 card-glow transition-all duration-500 reveal group overflow-hidden" style="box-shadow:0 6px 24px rgba(168,85,247,0.1);">
+        <div class="relative overflow-hidden" style="height:200px; background:linear-gradient(135deg,#faf5ff,#e9d5ff);">
+          <img src="./images/problem-motivation-3d.png" alt="學習動力低落" class="w-full h-full object-cover object-center" />
+          <div class="absolute bottom-3 right-3 px-2 py-1 rounded-lg text-xs font-bold text-white" style="background:#7c3aed;">Alpha 波失衡</div>
+        </div>
+        <div class="p-8 pt-5">
+          <h4 class="text-2xl font-black mb-3 group-hover:text-purple-600 transition-colors" style="color:#6d28d9;">學習動力低落</h4>
+          <p class="leading-relaxed" style="color:#475569;">Alpha 波不足時，大腦無法在「放鬆-吸收」模式運作，導致學習效率低、興趣喪失，對知識缺乏熱情。</p>
+          <div class="mt-5"><span class="talent-badge text-xs px-3 py-1 rounded-full font-bold" style="background:#e9d5ff; color:#6d28d9; border:1px solid #d8b4fe;">Alpha 波失衡</span></div>
+        </div>
+      </div>
+
+      <!-- Problem 4: 過度白日夢 -->
+      <div class="glass rounded-[40px] border border-sky-300/40 hover:border-sky-400/60 card-glow transition-all duration-500 reveal group overflow-hidden" style="box-shadow:0 6px 24px rgba(56,189,248,0.1);">
+        <div class="relative overflow-hidden" style="height:200px; background:linear-gradient(135deg,#f0f9ff,#bae6fd);">
+          <img src="./images/problem-daydream-3d.png" alt="過度白日夢" class="w-full h-full object-cover object-center" />
+          <div class="absolute bottom-3 right-3 px-2 py-1 rounded-lg text-xs font-bold text-white" style="background:#0284c7;">Theta 波過高</div>
+        </div>
+        <div class="p-8 pt-5">
+          <h4 class="text-2xl font-black mb-3 group-hover:text-sky-600 transition-colors" style="color:#0369a1;">過度白日夢</h4>
+          <p class="leading-relaxed" style="color:#475569;">Theta 波過高時，孩子容易走神、活在幻想世界中，這不是懶惰，而是大腦創意天賦需要被正確引導。</p>
+          <div class="mt-5"><span class="talent-badge text-xs px-3 py-1 rounded-full font-bold" style="background:#bae6fd; color:#0369a1; border:1px solid #7dd3fc;">Theta 波過高</span></div>
+        </div>
+      </div>
+
+      <!-- Problem 5: 天賦方向不明 -->
+      <div class="glass rounded-[40px] border border-indigo-300/40 hover:border-indigo-400/60 card-glow transition-all duration-500 reveal group overflow-hidden" style="box-shadow:0 6px 24px rgba(99,102,241,0.1);">
+        <div class="relative overflow-hidden" style="height:200px; background:linear-gradient(135deg,#eef2ff,#c7d2fe);">
+          <img src="./images/problem-direction-3d.png" alt="天賦方向不明" class="w-full h-full object-cover object-center" />
+          <div class="absolute bottom-3 right-3 px-2 py-1 rounded-lg text-xs font-bold text-white" style="background:#4338ca;">頻率特徵未知</div>
+        </div>
+        <div class="p-8 pt-5">
+          <h4 class="text-2xl font-black mb-3 group-hover:text-indigo-600 transition-colors" style="color:#3730a3;">天賦方向不明</h4>
+          <p class="leading-relaxed" style="color:#475569;">孩子在哪些領域最有潛能？語言、邏輯、藝術還是運動？沒有腦波數據，所有選擇都只是隨機猜測。</p>
+          <div class="mt-5"><span class="talent-badge text-xs px-3 py-1 rounded-full font-bold" style="background:#c7d2fe; color:#3730a3; border:1px solid #a5b4fc;">頻率特徵未知</span></div>
+        </div>
+      </div>
+
+      <!-- Problem 6: 親子溝通斷層 -->
+      <div class="glass rounded-[40px] border border-emerald-300/40 hover:border-emerald-400/60 card-glow transition-all duration-500 reveal group overflow-hidden" style="box-shadow:0 6px 24px rgba(16,185,129,0.1);">
+        <div class="relative overflow-hidden" style="height:200px; background:linear-gradient(135deg,#f0fdf4,#a7f3d0);">
+          <img src="./images/problem-communication-3d.png" alt="親子溝通斷層" class="w-full h-full object-cover object-center" />
+          <div class="absolute bottom-3 right-3 px-2 py-1 rounded-lg text-xs font-bold text-white" style="background:#059669;">頻率不同步</div>
+        </div>
+        <div class="p-8 pt-5">
+          <h4 class="text-2xl font-black mb-3 group-hover:text-emerald-600 transition-colors" style="color:#065f46;">親子溝通斷層</h4>
+          <p class="leading-relaxed" style="color:#475569;">父母與孩子的腦波頻率不同步，導致溝通無效、關係對立。腦波數據能幫助雙方找到共振頻率。</p>
+          <div class="mt-5"><span class="talent-badge text-xs px-3 py-1 rounded-full font-bold" style="background:#a7f3d0; color:#065f46; border:1px solid #6ee7b7;">頻率不共振</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== SCIENCE SECTION ===== -->
+<section id="science" class="py-28" style="background:linear-gradient(180deg,#f0f9ff 0%,#faf5ff 100%)">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-20 reveal">
+      <p class="font-black uppercase tracking-[0.3em] text-xs mb-4" style="color:#2563eb;">The Science Behind It</p>
+      <h3 class="text-4xl md:text-6xl font-black tracking-tight leading-tight mb-4" style="color:#1e293b;">
+        大腦的五檔頻率
+      </h3>
+      <p class="text-lg max-w-2xl mx-auto" style="color:#64748b;">每個孩子的大腦都在不同頻率下運作，理解這些頻率，才能真正讀懂孩子的行為、情緒與天賦。</p>
+    </div>
+
+    <!-- Wave Selector + Detail Panel -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+      <!-- Wave Tabs -->
+      <div class="lg:col-span-4 space-y-3" id="waveTabs">
+        <!-- Tabs inserted by JS -->
+      </div>
+
+      <!-- Wave Detail -->
+      <div class="lg:col-span-8">
+        <div class="glass p-8 md:p-12 rounded-[56px] border border-white/10 shadow-2xl" id="waveDetail">
+          <!-- Filled by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- How it works -->
+    <div class="mt-24 reveal">
+      <h4 class="text-3xl font-black text-center mb-12">如何量測兒童腦波？</h4>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- How it works card 1 -->
+        <div class="glass rounded-[40px] border border-blue-300/40 flex flex-col items-center text-center overflow-hidden" style="box-shadow:0 8px 32px rgba(59,130,246,0.15);">
+          <div class="relative w-full overflow-hidden" style="background:linear-gradient(135deg,#eff6ff,#dbeafe); height:200px;">
+            <img src="./images/how-it-works-sensor-3d.png" alt="QEEG 穿戴式感測器" class="w-full h-full object-cover object-top" />
+            <div class="absolute top-3 left-3 px-3 py-1 rounded-xl font-black text-sm text-white" style="background:#3b82f6;">01</div>
+          </div>
+          <div class="p-8 pt-5">
+            <h5 class="text-xl font-black mb-3" style="color:#1d4ed8;">穿戴式感測器</h5>
+            <p class="text-sm leading-relaxed" style="color:#475569;">非侵入性的 QEEG 高精密傳感器輕鬆戴在頭部，全程安全舒適，適合兒童使用，採集時間僅需 3 分鐘。</p>
+          </div>
+        </div>
+        <!-- How it works card 2 -->
+        <div class="glass rounded-[40px] border border-purple-300/40 flex flex-col items-center text-center overflow-hidden" style="box-shadow:0 8px 32px rgba(168,85,247,0.15);">
+          <div class="relative w-full overflow-hidden" style="background:linear-gradient(135deg,#faf5ff,#ede9fe); height:200px;">
+            <img src="./images/how-it-works-algorithm-3d.png" alt="專利演算法分析" class="w-full h-full object-cover object-center" />
+            <div class="absolute top-3 left-3 px-3 py-1 rounded-xl font-black text-sm text-white" style="background:#a855f7;">02</div>
+          </div>
+          <div class="p-8 pt-5">
+            <h5 class="text-xl font-black mb-3" style="color:#7c3aed;">專利演算法分析</h5>
+            <p class="text-sm leading-relaxed" style="color:#475569;">運用專利演算法與專屬兒童天賦解碼模型，過濾雜訊，精準計算各頻段比率與特徵模式。</p>
+          </div>
+        </div>
+        <!-- How it works card 3 -->
+        <div class="glass rounded-[40px] border border-emerald-300/40 flex flex-col items-center text-center overflow-hidden" style="box-shadow:0 8px 32px rgba(16,185,129,0.15);">
+          <div class="relative w-full overflow-hidden" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7); height:200px;">
+            <img src="./images/how-it-works-report-3d.png" alt="天賦發展報告" class="w-full h-full object-cover object-center" />
+            <div class="absolute top-3 left-3 px-3 py-1 rounded-xl font-black text-sm text-white" style="background:#10b981;">03</div>
+          </div>
+          <div class="p-8 pt-5">
+            <h5 class="text-xl font-black mb-3" style="color:#059669;">天賦發展報告</h5>
+            <p class="text-sm leading-relaxed" style="color:#475569;">產出直觀的兒童大腦發展儀表板，量化天賦優勢、學習類型與發展建議，為家長提供科學育兒藍圖。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TALENTS SECTION ===== -->
+<section id="talents" class="py-28">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-20 reveal">
+      <p class="font-black uppercase tracking-[0.3em] text-xs mb-4" style="color:#7c3aed;">Talent Intelligence Mapping</p>
+      <h3 class="text-4xl md:text-6xl font-black tracking-tight leading-tight mb-4" style="color:#1e293b;">
+        腦波解碼的<span class="gradient-text">八大天賦</span>維度
+      </h3>
+      <p class="text-lg max-w-2xl mx-auto" style="color:#64748b;">根據哈佛大學霍華德·加德納博士的多元智能理論，結合腦波頻率特徵，精準定位孩子的優勢智能。</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+      <!-- Talent 1: 語言文字 -->
+      <div class="glass rounded-[36px] border border-indigo-300/40 hover:border-indigo-400/70 transition-all group reveal card-glow overflow-hidden" style="box-shadow:0 4px 20px rgba(99,102,241,0.1);">
+        <div class="relative overflow-hidden" style="height:160px; background:linear-gradient(135deg,#eef2ff,#e0e7ff);">
+          <img src="./images/talent-language-3d.png" alt="語言文字天賦" class="w-full h-full object-cover object-center"/>
+        </div>
+        <div class="p-5 pt-4">
+          <div class="flex justify-between text-xs font-bold mb-2"><span style="color:#4f46e5;">語言智能</span><span style="color:#6366f1; opacity:0.7;">Theta+Alpha</span></div>
+          <div class="progress-bar mb-3"><div class="progress-bar-fill bg-gradient-to-r from-indigo-500 to-purple-500 w-4/5"></div></div>
+          <h5 class="font-black mb-1" style="color:#1e293b;">語言文字天賦</h5>
+          <p class="text-xs leading-relaxed" style="color:#64748b;">Theta 波與 Alpha 波協調良好，擅長閱讀、寫作與語言表達。</p>
+          <div class="mt-3"><span style="background:#e0e7ff; color:#3730a3; border:1px solid #a5b4fc; padding:2px 8px; border-radius:999px; font-size:10px; font-weight:700;">作家・律師・翻譯</span></div>
+        </div>
+      </div>
+
+      <!-- Talent 2: 數理邏輯 (3D) -->
+      <div class="glass rounded-[36px] border border-blue-300/40 hover:border-blue-400/70 transition-all group reveal card-glow overflow-hidden" style="box-shadow:0 4px 20px rgba(59,130,246,0.1);">
+        <div class="relative overflow-hidden" style="height:160px; background:linear-gradient(135deg,#eff6ff,#dbeafe);">
+          <img src="./images/talent-logic-3d.png" alt="數理邏輯天賦" class="w-full h-full object-cover object-center"/>
+        </div>
+        <div class="p-5 pt-4">
+          <div class="flex justify-between text-xs font-bold mb-2"><span style="color:#1d4ed8;">邏輯智能</span><span style="color:#2563eb; opacity:0.7;">Beta+Gamma</span></div>
+          <div class="progress-bar mb-3"><div class="progress-bar-fill bg-gradient-to-r from-blue-500 to-cyan-500 w-3/4"></div></div>
+          <h5 class="font-black mb-1" style="color:#1e293b;">數理邏輯天賦</h5>
+          <p class="text-xs leading-relaxed" style="color:#64748b;">邏輯推理超強，擅長解題、分析模式與系統性思考。</p>
+          <div class="mt-3"><span style="background:#dbeafe; color:#1e40af; border:1px solid #93c5fd; padding:2px 8px; border-radius:999px; font-size:10px; font-weight:700;">工程師・科學家・分析師</span></div>
+        </div>
+      </div>
+
+      <!-- Talent 3: 視覺空間 (3D) -->
+      <div class="glass rounded-[36px] border border-purple-300/40 hover:border-purple-400/70 transition-all group reveal card-glow overflow-hidden" style="box-shadow:0 4px 20px rgba(168,85,247,0.1);">
+        <div class="relative overflow-hidden" style="height:160px; background:linear-gradient(135deg,#faf5ff,#ede9fe);">
+          <img src="./images/talent-spatial-3d.png" alt="視覺空間天賦" class="w-full h-full object-cover object-center"/>
+        </div>
+        <div class="p-5 pt-4">
+          <div class="flex justify-between text-xs font-bold mb-2"><span style="color:#7c3aed;">空間智能</span><span style="color:#8b5cf6; opacity:0.7;">Theta+Gamma</span></div>
+          <div class="progress-bar mb-3"><div class="progress-bar-fill bg-gradient-to-r from-purple-500 to-pink-500 w-5/6"></div></div>
+          <h5 class="font-black mb-1" style="color:#1e293b;">視覺空間天賦</h5>
+          <p class="text-xs leading-relaxed" style="color:#64748b;">對視覺藝術、空間想像有超常能力，創意思維活躍。</p>
+          <div class="mt-3"><span style="background:#ede9fe; color:#5b21b6; border:1px solid #c4b5fd; padding:2px 8px; border-radius:999px; font-size:10px; font-weight:700;">設計師・建築師・藝術家</span></div>
+        </div>
+      </div>
+
+      <!-- Talent 4: 運動肢體 (3D) -->
+      <div class="glass rounded-[36px] border border-emerald-300/40 hover:border-emerald-400/70 transition-all group reveal card-glow overflow-hidden" style="box-shadow:0 4px 20px rgba(16,185,129,0.1);">
+        <div class="relative overflow-hidden" style="height:160px; background:linear-gradient(135deg,#f0fdf4,#dcfce7);">
+          <img src="./images/talent-physical-3d.png" alt="運動肢體天賦" class="w-full h-full object-cover object-center"/>
+        </div>
+        <div class="p-5 pt-4">
+          <div class="flex justify-between text-xs font-bold mb-2"><span style="color:#059669;">肢體智能</span><span style="color:#10b981; opacity:0.7;">SMR+Beta</span></div>
+          <div class="progress-bar mb-3"><div class="progress-bar-fill bg-gradient-to-r from-emerald-500 to-teal-500 w-4/5"></div></div>
+          <h5 class="font-black mb-1" style="color:#1e293b;">運動肢體天賦</h5>
+          <p class="text-xs leading-relaxed" style="color:#64748b;">身體控制精準，反應速度快，運動、舞蹈領域卓越。</p>
+          <div class="mt-3"><span style="background:#dcfce7; color:#065f46; border:1px solid #6ee7b7; padding:2px 8px; border-radius:999px; font-size:10px; font-weight:700;">運動員・舞蹈家・外科醫生</span></div>
+        </div>
+      </div>
+
+      <!-- Talent 5: 音樂節奏 (3D) -->
+      <div class="glass rounded-[36px] border border-amber-300/40 hover:border-amber-400/70 transition-all group reveal card-glow overflow-hidden" style="box-shadow:0 4px 20px rgba(245,158,11,0.1);">
+        <div class="relative overflow-hidden" style="height:160px; background:linear-gradient(135deg,#fffbeb,#fef3c7);">
+          <img src="./images/talent-music-3d.png" alt="音樂節奏天賦" class="w-full h-full object-cover object-center"/>
+        </div>
+        <div class="p-5 pt-4">
+          <div class="flex justify-between text-xs font-bold mb-2"><span style="color:#d97706;">音樂智能</span><span style="color:#f59e0b; opacity:0.7;">Alpha+Theta</span></div>
+          <div class="progress-bar mb-3"><div class="progress-bar-fill bg-gradient-to-r from-amber-500 to-orange-500 w-3/4"></div></div>
+          <h5 class="font-black mb-1" style="color:#1e293b;">音樂節奏天賦</h5>
+          <p class="text-xs leading-relaxed" style="color:#64748b;">對音調、節奏有天生的敏銳度，學習樂器事半功倍。</p>
+          <div class="mt-3"><span style="background:#fef3c7; color:#92400e; border:1px solid #fcd34d; padding:2px 8px; border-radius:999px; font-size:10px; font-weight:700;">音樂家・音效師・作曲家</span></div>
+        </div>
+      </div>
+
+      <!-- Talent 6: 人際溝通 (3D) -->
+      <div class="glass rounded-[36px] border border-rose-300/40 hover:border-rose-400/70 transition-all group reveal card-glow overflow-hidden" style="box-shadow:0 4px 20px rgba(244,63,94,0.1);">
+        <div class="relative overflow-hidden" style="height:160px; background:linear-gradient(135deg,#fff1f2,#ffe4e6);">
+          <img src="./images/talent-social-3d.png" alt="人際溝通天賦" class="w-full h-full object-cover object-center"/>
+        </div>
+        <div class="p-5 pt-4">
+          <div class="flex justify-between text-xs font-bold mb-2"><span style="color:#e11d48;">人際智能</span><span style="color:#f43f5e; opacity:0.7;">Alpha+Beta</span></div>
+          <div class="progress-bar mb-3"><div class="progress-bar-fill bg-gradient-to-r from-rose-500 to-pink-500 w-5/6"></div></div>
+          <h5 class="font-black mb-1" style="color:#1e293b;">人際溝通天賦</h5>
+          <p class="text-xs leading-relaxed" style="color:#64748b;">同理心強、社交能力出色，天生懂得讀懂他人情緒。</p>
+          <div class="mt-3"><span style="background:#ffe4e6; color:#9f1239; border:1px solid #fda4af; padding:2px 8px; border-radius:999px; font-size:10px; font-weight:700;">領導者・心理師・教育者</span></div>
+        </div>
+      </div>
+
+      <!-- Talent 7: 自然觀察 (3D) -->
+      <div class="glass rounded-[36px] border border-cyan-300/40 hover:border-cyan-400/70 transition-all group reveal card-glow overflow-hidden" style="box-shadow:0 4px 20px rgba(6,182,212,0.1);">
+        <div class="relative overflow-hidden" style="height:160px; background:linear-gradient(135deg,#ecfeff,#cffafe);">
+          <img src="./images/talent-nature-3d.png" alt="自然觀察天賦" class="w-full h-full object-cover object-center"/>
+        </div>
+        <div class="p-5 pt-4">
+          <div class="flex justify-between text-xs font-bold mb-2"><span style="color:#0891b2;">自然智能</span><span style="color:#06b6d4; opacity:0.7;">Theta+Alpha</span></div>
+          <div class="progress-bar mb-3"><div class="progress-bar-fill bg-gradient-to-r from-cyan-500 to-teal-500 w-2/3"></div></div>
+          <h5 class="font-black mb-1" style="color:#1e293b;">自然觀察天賦</h5>
+          <p class="text-xs leading-relaxed" style="color:#64748b;">對自然環境高度敏感，觀察力細膩，環境感知力天生。</p>
+          <div class="mt-3"><span style="background:#cffafe; color:#164e63; border:1px solid #67e8f9; padding:2px 8px; border-radius:999px; font-size:10px; font-weight:700;">生物學家・環保・農業</span></div>
+        </div>
+      </div>
+
+      <!-- Talent 8: 內省覺察 (3D) -->
+      <div class="glass rounded-[36px] border border-violet-300/40 hover:border-violet-400/70 transition-all group reveal card-glow overflow-hidden" style="box-shadow:0 4px 20px rgba(124,58,237,0.1);">
+        <div class="relative overflow-hidden" style="height:160px; background:linear-gradient(135deg,#f5f3ff,#ede9fe);">
+          <img src="./images/talent-introspection-3d.png" alt="內省自我覺察" class="w-full h-full object-cover object-center"/>
+        </div>
+        <div class="p-5 pt-4">
+          <div class="flex justify-between text-xs font-bold mb-2"><span style="color:#6d28d9;">內省智能</span><span style="color:#7c3aed; opacity:0.7;">Alpha+Theta</span></div>
+          <div class="progress-bar mb-3"><div class="progress-bar-fill bg-gradient-to-r from-violet-500 to-indigo-500 w-3/5"></div></div>
+          <h5 class="font-black mb-1" style="color:#1e293b;">內省自我覺察</h5>
+          <p class="text-xs leading-relaxed" style="color:#64748b;">善於內省與自我調節，是未來心靈成長的核心能力。</p>
+          <div class="mt-3"><span style="background:#ede9fe; color:#4c1d95; border:1px solid #c4b5fd; padding:2px 8px; border-radius:999px; font-size:10px; font-weight:700;">哲學家・冥想導師・作家</span></div>
+        </div>
+      </div>
+
+      <!-- all talent cards now use 3D images -->
+      <div style="display:none"><svg viewBox="0 0 1 1">
+          <defs><radialGradient id="tg1" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#6366f1" stop-opacity="0.3"/><stop offset="100%" stop-color="#020817" stop-opacity="0"/></radialGradient><filter id="tglow1"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+          <rect width="220" height="130" fill="#040610"/>
+          <rect width="220" height="130" fill="url(#tg1)"/>
+          <!-- Open book -->
+          <path d="M70,85 L70,42 Q90,38 110,45 L110,88 Q90,82 70,85Z" fill="#6366f120" stroke="#6366f1" stroke-width="1.5" filter="url(#tglow1)"/>
+          <path d="M110,45 Q130,38 150,42 L150,85 Q130,82 110,88 L110,45Z" fill="#6366f115" stroke="#6366f1" stroke-width="1.5"/>
+          <!-- Book spine -->
+          <line x1="110" y1="45" x2="110" y2="88" stroke="#6366f1" stroke-width="1" opacity="0.6"/>
+          <!-- Text lines on left page -->
+          <line x1="78" y1="56" x2="102" y2="54" stroke="#a5b4fc" stroke-width="1.2" opacity="0.6"/>
+          <line x1="78" y1="63" x2="102" y2="61" stroke="#a5b4fc" stroke-width="1.2" opacity="0.5"/>
+          <line x1="78" y1="70" x2="96" y2="68" stroke="#a5b4fc" stroke-width="1.2" opacity="0.4"/>
+          <line x1="78" y1="77" x2="102" y2="75" stroke="#a5b4fc" stroke-width="1.2" opacity="0.35"/>
+          <!-- Text lines on right page -->
+          <line x1="118" y1="54" x2="142" y2="56" stroke="#a5b4fc" stroke-width="1.2" opacity="0.6"/>
+          <line x1="118" y1="61" x2="142" y2="63" stroke="#a5b4fc" stroke-width="1.2" opacity="0.5"/>
+          <line x1="118" y1="68" x2="138" y2="70" stroke="#a5b4fc" stroke-width="1.2" opacity="0.4"/>
+          <line x1="118" y1="75" x2="142" y2="77" stroke="#a5b4fc" stroke-width="1.2" opacity="0.35"/>
+          <!-- Wave above book = language rhythm -->
+          <path d="M80,35 Q90,28 100,35 Q110,42 120,35 Q130,28 140,35" stroke="#818cf8" stroke-width="1.5" fill="none" opacity="0.5" filter="url(#tglow1)"/>
+          <!-- Floating letters -->
+          <text x="58" y="42" fill="#6366f1" font-size="13" font-weight="bold" opacity="0.6" filter="url(#tglow1)">A</text>
+          <text x="155" y="45" fill="#6366f1" font-size="11" font-weight="bold" opacity="0.5">文</text>
+          <text x="162" y="72" fill="#6366f1" font-size="10" opacity="0.4">字</text>
+          <text x="120" y="118" text-anchor="middle" fill="#6366f1" font-size="8" font-weight="bold" letter-spacing="2" opacity="0.4" font-family="monospace">LINGUISTIC</text>
+        </svg>
+        <div class="p-5 pt-3">
+          <div class="flex justify-between text-xs font-bold mb-2"><span class="text-indigo-300">語言智能</span><span class="text-indigo-400 opacity-70">Theta+Alpha</span></div>
+          <div class="progress-bar mb-3"><div class="progress-bar-fill bg-gradient-to-r from-indigo-500 to-purple-500 w-4/5"></div></div>
+          <h5 class="font-black text-white mb-1">語言文字天賦</h5>
+          <p class="text-slate-500 text-xs leading-relaxed">Theta 波與 Alpha 波協調良好，擅長閱讀、寫作與語言表達。</p>
+          <div class="mt-3"><span class="talent-badge bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 text-[10px]">作家・律師・翻譯</span></div>
+        </div>
+      </div>
+
+      <!-- Talent 2: 數理邏輯 -->
+      <div class="glass rounded-[36px] border border-blue-500/20 hover:border-blue-500/50 transition-all group reveal card-glow overflow-hidden">
+        <svg viewBox="0 0 220 130" xmlns="http://www.w3.org/2000/svg" class="w-full">
+          <defs><radialGradient id="tg2" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#3b82f6" stop-opacity="0.28"/><stop offset="100%" stop-color="#020817" stop-opacity="0"/></radialGradient><filter id="tglow2"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+          <rect width="220" height="130" fill="#030812"/>
+          <rect width="220" height="130" fill="url(#tg2)"/>
+          <!-- Circuit board grid -->
+          <g stroke="#3b82f6" stroke-width="0.8" opacity="0.2">
+            <line x1="40" y1="20" x2="40" y2="110"/><line x1="70" y1="20" x2="70" y2="110"/>
+            <line x1="100" y1="20" x2="100" y2="110"/><line x1="130" y1="20" x2="130" y2="110"/>
+            <line x1="160" y1="20" x2="160" y2="110"/><line x1="180" y1="20" x2="180" y2="110"/>
+            <line x1="30" y1="40" x2="190" y2="40"/><line x1="30" y1="65" x2="190" y2="65"/>
+            <line x1="30" y1="90" x2="190" y2="90"/>
+          </g>
+          <!-- Circuit nodes (highlighted intersections) -->
+          <g fill="#3b82f6" filter="url(#tglow2)" opacity="0.8">
+            <circle cx="70" cy="40" r="4"/><circle cx="130" cy="40" r="3"/>
+            <circle cx="100" cy="65" r="5"/><circle cx="160" cy="65" r="3.5"/>
+            <circle cx="70" cy="90" r="3"/><circle cx="140" cy="90" r="4"/>
+          </g>
+          <!-- Logic gate shapes -->
+          <path d="M85,57 L85,73 Q97,73 97,65 Q97,57 85,57Z" fill="#3b82f620" stroke="#60a5fa" stroke-width="1.2" opacity="0.7"/>
+          <!-- Formula text -->
+          <text x="115" y="52" fill="#93c5fd" font-size="11" font-weight="bold" opacity="0.65">Σ</text>
+          <text x="148" y="52" fill="#93c5fd" font-size="10" opacity="0.5">n²</text>
+          <text x="55" y="100" fill="#60a5fa" font-size="9" opacity="0.45">f(x)</text>
+          <text x="155" y="100" fill="#60a5fa" font-size="9" opacity="0.4">∞</text>
+          <!-- Connecting lines (highlighted) -->
+          <polyline points="70,40 100,65 140,90" stroke="#3b82f6" stroke-width="1.8" fill="none" opacity="0.7" filter="url(#tglow2)"/>
+          <text x="110" y="118" text-anchor="middle" fill="#3b82f6" font-size="8" font-weight="bold" letter-spacing="2" opacity="0.4" font-family="monospace">LOGICAL</text>
+        </svg>
+        <div class="p-5 pt-3">
+          <div class="flex justify-between text-xs font-bold mb-2"><span class="text-blue-300">邏輯智能</span><span class="text-blue-400 opacity-70">Beta+Gamma</span></div>
+          <div class="progress-bar mb-3"><div class="progress-bar-fill bg-gradient-to-r from-blue-500 to-cyan-500 w-3/4"></div></div>
+          <h5 class="font-black text-white mb-1">數理邏輯天賦</h5>
+          <p class="text-slate-500 text-xs leading-relaxed">邏輯推理超強，擅長解題、分析模式與系統性思考。</p>
+          <div class="mt-3"><span class="talent-badge bg-blue-500/10 text-blue-300 border border-blue-500/20 text-[10px]">工程師・科學家・分析師</span></div>
+        </div>
+      </div>
+
+      <!-- Talent 3: 視覺空間 -->
+      <div class="glass rounded-[36px] border border-purple-500/20 hover:border-purple-500/50 transition-all group reveal card-glow overflow-hidden">
+        <svg viewBox="0 0 220 130" xmlns="http://www.w3.org/2000/svg" class="w-full">
+          <defs><radialGradient id="tg3" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#a855f7" stop-opacity="0.28"/><stop offset="100%" stop-color="#020817" stop-opacity="0"/></radialGradient><filter id="tglow3"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+          <rect width="220" height="130" fill="#07030f"/>
+          <rect width="220" height="130" fill="url(#tg3)"/>
+          <!-- Geometric shapes -->
+          <polygon points="110,25 140,70 80,70" stroke="#a855f7" stroke-width="1.8" fill="#a855f715" filter="url(#tglow3)" opacity="0.85"/>
+          <rect x="72" y="72" width="35" height="35" stroke="#c084fc" stroke-width="1.5" fill="#c084fc10" opacity="0.7" transform="rotate(15,90,89)"/>
+          <circle cx="148" cy="83" r="20" stroke="#d8b4fe" stroke-width="1.3" fill="#d8b4fe08" opacity="0.6"/>
+          <!-- Color palette dots -->
+          <circle cx="55" cy="35" r="7" fill="#ef4444" opacity="0.5"/>
+          <circle cx="55" cy="52" r="7" fill="#f97316" opacity="0.45"/>
+          <circle cx="55" cy="69" r="7" fill="#eab308" opacity="0.4"/>
+          <circle cx="55" cy="86" r="7" fill="#22c55e" opacity="0.45"/>
+          <circle cx="55" cy="103" r="7" fill="#a855f7" opacity="0.5" filter="url(#tglow3)"/>
+          <!-- Brush stroke -->
+          <path d="M168,25 Q178,38 172,50 Q165,62 170,72" stroke="#c084fc" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.4"/>
+          <!-- 3D perspective lines -->
+          <line x1="80" y1="70" x2="72" y2="107" stroke="#a855f7" stroke-width="0.8" opacity="0.35" stroke-dasharray="3,3"/>
+          <line x1="140" y1="70" x2="107" y2="107" stroke="#a855f7" stroke-width="0.8" opacity="0.35" stroke-dasharray="3,3"/>
+          <text x="110" y="118" text-anchor="middle" fill="#a855f7" font-size="8" font-weight="bold" letter-spacing="2" opacity="0.4" font-family="monospace">SPATIAL</text>
+        </svg>
+        <div class="p-5 pt-3">
+          <div class="flex justify-between text-xs font-bold mb-2"><span class="text-purple-300">空間智能</span><span class="text-purple-400 opacity-70">Theta+Gamma</span></div>
+          <div class="progress-bar mb-3"><div class="progress-bar-fill bg-gradient-to-r from-purple-500 to-pink-500 w-5/6"></div></div>
+          <h5 class="font-black text-white mb-1">視覺空間天賦</h5>
+          <p class="text-slate-500 text-xs leading-relaxed">對視覺藝術、空間想像有超常能力，創意思維活躍。</p>
+          <div class="mt-3"><span class="talent-badge bg-purple-500/10 text-purple-300 border border-purple-500/20 text-[10px]">設計師・建築師・藝術家</span></div>
+        </div>
+      </div>
+
+      <!-- Talent 4: 運動肢體 -->
+      <div class="glass rounded-[36px] border border-emerald-500/20 hover:border-emerald-500/50 transition-all group reveal card-glow overflow-hidden">
+        <svg viewBox="0 0 220 130" xmlns="http://www.w3.org/2000/svg" class="w-full">
+          <defs><radialGradient id="tg4" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#10b981" stop-opacity="0.25"/><stop offset="100%" stop-color="#020817" stop-opacity="0"/></radialGradient><filter id="tglow4"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+          <rect width="220" height="130" fill="#030e09"/>
+          <rect width="220" height="130" fill="url(#tg4)"/>
+          <!-- Running figure (simplified stick figure in motion) -->
+          <!-- Head -->
+          <circle cx="118" cy="32" r="10" fill="#10b98120" stroke="#10b981" stroke-width="1.8" filter="url(#tglow4)"/>
+          <!-- Body -->
+          <line x1="118" y1="42" x2="115" y2="72" stroke="#10b981" stroke-width="2.2" stroke-linecap="round"/>
+          <!-- Left arm (forward) -->
+          <line x1="115" y1="52" x2="100" y2="62" stroke="#10b981" stroke-width="1.8" stroke-linecap="round"/>
+          <!-- Right arm (back) -->
+          <line x1="115" y1="52" x2="132" y2="45" stroke="#10b981" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
+          <!-- Left leg (forward / stepping) -->
+          <line x1="115" y1="72" x2="103" y2="90" stroke="#10b981" stroke-width="2" stroke-linecap="round"/>
+          <line x1="103" y1="90" x2="95" y2="100" stroke="#10b981" stroke-width="1.8" stroke-linecap="round"/>
+          <!-- Right leg (back) -->
+          <line x1="115" y1="72" x2="130" y2="88" stroke="#10b981" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+          <line x1="130" y1="88" x2="140" y2="99" stroke="#10b981" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
+          <!-- Motion lines -->
+          <g stroke="#34d399" stroke-width="1.2" opacity="0.5" stroke-linecap="round">
+            <line x1="80" y1="48" x2="68" y2="48"/><line x1="78" y1="56" x2="65" y2="58"/>
+            <line x1="76" y1="64" x2="62" y2="67"/><line x1="80" y1="72" x2="66" y2="75"/>
+          </g>
+          <!-- Ground line -->
+          <line x1="60" y1="102" x2="175" y2="102" stroke="#10b981" stroke-width="0.8" opacity="0.25"/>
+          <!-- Pulse/heartbeat line (SMR wave) -->
+          <polyline points="150,58 158,58 162,45 166,72 170,58 178,58" stroke="#34d399" stroke-width="1.5" fill="none" opacity="0.6" filter="url(#tglow4)"/>
+          <text x="110" y="118" text-anchor="middle" fill="#10b981" font-size="8" font-weight="bold" letter-spacing="2" opacity="0.4" font-family="monospace">KINESTHETIC</text>
+        </svg>
+        <div class="p-5 pt-3">
+          <div class="flex justify-between text-xs font-bold mb-2"><span class="text-emerald-300">肢體智能</span><span class="text-emerald-400 opacity-70">SMR+Beta</span></div>
+          <div class="progress-bar mb-3"><div class="progress-bar-fill bg-gradient-to-r from-emerald-500 to-teal-500 w-4/5"></div></div>
+          <h5 class="font-black text-white mb-1">運動肢體天賦</h5>
+          <p class="text-slate-500 text-xs leading-relaxed">身體控制精準，反應速度快，運動、舞蹈領域卓越。</p>
+          <div class="mt-3"><span class="talent-badge bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 text-[10px]">運動員・舞蹈家・外科醫生</span></div>
+        </div>
+      </div>
+
+      <!-- Talent 5: 音樂節奏 -->
+      <div class="glass rounded-[36px] border border-amber-500/20 hover:border-amber-500/50 transition-all group reveal card-glow overflow-hidden">
+        <svg viewBox="0 0 220 130" xmlns="http://www.w3.org/2000/svg" class="w-full">
+          <defs><radialGradient id="tg5" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#f59e0b" stop-opacity="0.25"/><stop offset="100%" stop-color="#020817" stop-opacity="0"/></radialGradient><filter id="tglow5"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+          <rect width="220" height="130" fill="#0d0902"/>
+          <rect width="220" height="130" fill="url(#tg5)"/>
+          <!-- Musical staff lines -->
+          <g stroke="#f59e0b" stroke-width="0.7" opacity="0.25">
+            <line x1="35" y1="42" x2="185" y2="42"/><line x1="35" y1="52" x2="185" y2="52"/>
+            <line x1="35" y1="62" x2="185" y2="62"/><line x1="35" y1="72" x2="185" y2="72"/>
+            <line x1="35" y1="82" x2="185" y2="82"/>
+          </g>
+          <!-- Treble clef (simplified) -->
+          <path d="M48,90 Q42,80 44,68 Q46,52 54,48 Q62,44 62,54 Q62,64 52,72 Q42,80 46,90 Q50,98 58,96" stroke="#fbbf24" stroke-width="2" fill="none" opacity="0.7" filter="url(#tglow5)"/>
+          <!-- Musical notes -->
+          <g fill="#f59e0b" filter="url(#tglow5)">
+            <ellipse cx="80" cy="80" rx="6" ry="4" transform="rotate(-20,80,80)"/>
+            <line x1="86" y1="78" x2="86" y2="48" stroke="#f59e0b" stroke-width="1.5"/>
+            <ellipse cx="108" cy="70" rx="6" ry="4" transform="rotate(-20,108,70)" opacity="0.85"/>
+            <line x1="114" y1="68" x2="114" y2="40" stroke="#f59e0b" stroke-width="1.5"/>
+            <ellipse cx="136" cy="75" rx="6" ry="4" transform="rotate(-20,136,75)" opacity="0.8"/>
+            <line x1="142" y1="73" x2="142" y2="44" stroke="#f59e0b" stroke-width="1.5"/>
+            <ellipse cx="162" cy="65" rx="6" ry="4" transform="rotate(-20,162,65)" opacity="0.7"/>
+            <line x1="168" y1="63" x2="168" y2="35" stroke="#f59e0b" stroke-width="1.5"/>
+          </g>
+          <!-- Sound wave emanating -->
+          <g stroke="#fbbf24" fill="none" opacity="0.4">
+            <path d="M30,62 Q22,52 22,62 Q22,72 30,62" stroke-width="1.5"/>
+            <path d="M25,57 Q14,47 14,62 Q14,77 25,67" stroke-width="1.2"/>
+          </g>
+          <!-- Beam connecting notes 1+2 -->
+          <line x1="86" y1="48" x2="114" y2="40" stroke="#f59e0b" stroke-width="2" opacity="0.6"/>
+          <text x="110" y="118" text-anchor="middle" fill="#f59e0b" font-size="8" font-weight="bold" letter-spacing="2" opacity="0.4" font-family="monospace">MUSICAL</text>
+        </svg>
+        <div class="p-5 pt-3">
+          <div class="flex justify-between text-xs font-bold mb-2"><span class="text-amber-300">音樂智能</span><span class="text-amber-400 opacity-70">Alpha+Theta</span></div>
+          <div class="progress-bar mb-3"><div class="progress-bar-fill bg-gradient-to-r from-amber-500 to-orange-500 w-3/4"></div></div>
+          <h5 class="font-black text-white mb-1">音樂節奏天賦</h5>
+          <p class="text-slate-500 text-xs leading-relaxed">對音調、節奏有天生的敏銳度，學習樂器事半功倍。</p>
+          <div class="mt-3"><span class="talent-badge bg-amber-500/10 text-amber-300 border border-amber-500/20 text-[10px]">音樂家・音效師・作曲家</span></div>
+        </div>
+      </div>
+
+      <!-- Talent 6: 人際溝通 -->
+      <div class="glass rounded-[36px] border border-rose-500/20 hover:border-rose-500/50 transition-all group reveal card-glow overflow-hidden">
+        <svg viewBox="0 0 220 130" xmlns="http://www.w3.org/2000/svg" class="w-full">
+          <defs><radialGradient id="tg6" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#f43f5e" stop-opacity="0.25"/><stop offset="100%" stop-color="#020817" stop-opacity="0"/></radialGradient><filter id="tglow6"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+          <rect width="220" height="130" fill="#0d0307"/>
+          <rect width="220" height="130" fill="url(#tg6)"/>
+          <!-- Three person nodes -->
+          <circle cx="110" cy="45" r="16" fill="#f43f5e18" stroke="#f43f5e" stroke-width="1.8" filter="url(#tglow6)"/>
+          <circle cx="70" cy="88" r="13" fill="#f43f5e12" stroke="#fb7185" stroke-width="1.4" opacity="0.8"/>
+          <circle cx="150" cy="88" r="13" fill="#f43f5e12" stroke="#fb7185" stroke-width="1.4" opacity="0.8"/>
+          <!-- Person icons inside nodes -->
+          <circle cx="110" cy="40" r="5" fill="#f43f5e" opacity="0.7"/>
+          <path d="M100,55 Q110,48 120,55" stroke="#f43f5e" stroke-width="1.5" fill="none" opacity="0.6"/>
+          <circle cx="70" cy="83" r="4" fill="#fb7185" opacity="0.6"/>
+          <path d="M62,95 Q70,90 78,95" stroke="#fb7185" stroke-width="1.2" fill="none" opacity="0.5"/>
+          <circle cx="150" cy="83" r="4" fill="#fb7185" opacity="0.6"/>
+          <path d="M142,95 Q150,90 158,95" stroke="#fb7185" stroke-width="1.2" fill="none" opacity="0.5"/>
+          <!-- Connection lines with pulses -->
+          <line x1="96" y1="55" x2="79" y2="76" stroke="#f43f5e" stroke-width="1.3" stroke-dasharray="4,3" opacity="0.5"/>
+          <line x1="124" y1="55" x2="141" y2="76" stroke="#f43f5e" stroke-width="1.3" stroke-dasharray="4,3" opacity="0.5"/>
+          <line x1="83" y1="88" x2="137" y2="88" stroke="#f43f5e" stroke-width="1.3" stroke-dasharray="4,3" opacity="0.4"/>
+          <!-- Pulse dots on connections -->
+          <circle cx="87" cy="65" r="3" fill="#f43f5e" opacity="0.7" filter="url(#tglow6)"/>
+          <circle cx="133" cy="65" r="3" fill="#f43f5e" opacity="0.7" filter="url(#tglow6)"/>
+          <circle cx="110" cy="88" r="3" fill="#f43f5e" opacity="0.6" filter="url(#tglow6)"/>
+          <!-- Speech wave -->
+          <g stroke="#fda4af" fill="none" opacity="0.35">
+            <path d="M170,38 Q176,32 176,38 Q176,44 170,44" stroke-width="1.2"/>
+            <path d="M174,34 Q183,26 183,38 Q183,50 174,42" stroke-width="1"/>
+          </g>
+          <text x="110" y="118" text-anchor="middle" fill="#f43f5e" font-size="8" font-weight="bold" letter-spacing="2" opacity="0.4" font-family="monospace">INTERPERSONAL</text>
+        </svg>
+        <div class="p-5 pt-3">
+          <div class="flex justify-between text-xs font-bold mb-2"><span class="text-rose-300">人際智能</span><span class="text-rose-400 opacity-70">Alpha+Beta</span></div>
+          <div class="progress-bar mb-3"><div class="progress-bar-fill bg-gradient-to-r from-rose-500 to-pink-500 w-5/6"></div></div>
+          <h5 class="font-black text-white mb-1">人際溝通天賦</h5>
+          <p class="text-slate-500 text-xs leading-relaxed">同理心強、社交能力出色，天生懂得讀懂他人情緒。</p>
+          <div class="mt-3"><span class="talent-badge bg-rose-500/10 text-rose-300 border border-rose-500/20 text-[10px]">領導者・心理師・教育者</span></div>
+        </div>
+      </div>
+
+      <!-- Talent 7: 自然觀察 -->
+      <div class="glass rounded-[36px] border border-cyan-500/20 hover:border-cyan-500/50 transition-all group reveal card-glow overflow-hidden">
+        <svg viewBox="0 0 220 130" xmlns="http://www.w3.org/2000/svg" class="w-full">
+          <defs><radialGradient id="tg7" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#06b6d4" stop-opacity="0.22"/><stop offset="100%" stop-color="#020817" stop-opacity="0"/></radialGradient><filter id="tglow7"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+          <rect width="220" height="130" fill="#020e0e"/>
+          <rect width="220" height="130" fill="url(#tg7)"/>
+          <!-- Large leaf shape -->
+          <path d="M110,100 Q78,85 72,58 Q68,35 100,25 Q122,18 138,35 Q155,55 148,78 Q140,98 110,100Z" fill="#06b6d415" stroke="#06b6d4" stroke-width="1.8" filter="url(#tglow7)"/>
+          <!-- Leaf central vein -->
+          <line x1="110" y1="100" x2="100" y2="28" stroke="#06b6d4" stroke-width="1.5" opacity="0.6"/>
+          <!-- Leaf side veins (neural-like branches) -->
+          <g stroke="#22d3ee" stroke-width="1" opacity="0.45">
+            <line x1="96" y1="45" x2="80" y2="38"/><line x1="94" y1="55" x2="76" y2="52"/>
+            <line x1="93" y1="65" x2="75" y2="66"/><line x1="95" y1="75" x2="78" y2="78"/>
+            <line x1="102" y1="38" x2="116" y2="32"/><line x1="103" y1="48" x2="120" y2="44"/>
+            <line x1="104" y1="58" x2="122" y2="58"/><line x1="105" y1="68" x2="124" y2="70"/>
+            <line x1="107" y1="78" x2="126" y2="82"/>
+          </g>
+          <!-- Small dots like nature data points -->
+          <g fill="#06b6d4" opacity="0.5">
+            <circle cx="78" cy="36" r="2"/><circle cx="74" cy="50" r="1.8"/><circle cx="73" cy="64" r="1.5"/>
+            <circle cx="118" cy="30" r="2"/><circle cx="122" cy="42" r="1.8"/><circle cx="124" cy="56" r="1.5"/>
+          </g>
+          <!-- Small butterfly -->
+          <g transform="translate(155,35)" opacity="0.5">
+            <path d="M0,0 Q-12,-8 -10,4 Q-6,10 0,6" fill="#22d3ee" opacity="0.6"/>
+            <path d="M0,0 Q12,-8 10,4 Q6,10 0,6" fill="#22d3ee" opacity="0.6"/>
+          </g>
+          <text x="110" y="118" text-anchor="middle" fill="#06b6d4" font-size="8" font-weight="bold" letter-spacing="2" opacity="0.4" font-family="monospace">NATURALIST</text>
+        </svg>
+        <div class="p-5 pt-3">
+          <div class="flex justify-between text-xs font-bold mb-2"><span class="text-cyan-300">自然智能</span><span class="text-cyan-400 opacity-70">Theta+Alpha</span></div>
+          <div class="progress-bar mb-3"><div class="progress-bar-fill bg-gradient-to-r from-cyan-500 to-teal-500 w-2/3"></div></div>
+          <h5 class="font-black text-white mb-1">自然觀察天賦</h5>
+          <p class="text-slate-500 text-xs leading-relaxed">對自然環境高度敏感，觀察力細膩，環境感知力天生。</p>
+          <div class="mt-3"><span class="talent-badge bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 text-[10px]">生物學家・環保・農業</span></div>
+        </div>
+      </div>
+
+      <!-- Talent 8: 內省覺察 -->
+      <div class="glass rounded-[36px] border border-violet-500/20 hover:border-violet-500/50 transition-all group reveal card-glow overflow-hidden">
+        <svg viewBox="0 0 220 130" xmlns="http://www.w3.org/2000/svg" class="w-full">
+          <defs><radialGradient id="tg8" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#7c3aed" stop-opacity="0.28"/><stop offset="100%" stop-color="#020817" stop-opacity="0"/></radialGradient><radialGradient id="tg8b" cx="50%" cy="50%" r="40%"><stop offset="0%" stop-color="#c4b5fd" stop-opacity="0.4"/><stop offset="100%" stop-color="#020817" stop-opacity="0"/></radialGradient><filter id="tglow8"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+          <rect width="220" height="130" fill="#05030f"/>
+          <rect width="220" height="130" fill="url(#tg8)"/>
+          <!-- Concentric contemplation rings -->
+          <circle cx="110" cy="62" r="48" stroke="#7c3aed" stroke-width="0.8" fill="none" opacity="0.2" stroke-dasharray="2,5"/>
+          <circle cx="110" cy="62" r="36" stroke="#8b5cf6" stroke-width="1" fill="none" opacity="0.3" stroke-dasharray="3,4"/>
+          <circle cx="110" cy="62" r="24" stroke="#a78bfa" stroke-width="1.2" fill="none" opacity="0.45"/>
+          <circle cx="110" cy="62" r="13" fill="url(#tg8b)" stroke="#c4b5fd" stroke-width="1.5" filter="url(#tglow8)" opacity="0.8"/>
+          <!-- Eye iris -->
+          <ellipse cx="110" cy="62" rx="22" ry="14" stroke="#a78bfa" stroke-width="1.2" fill="#7c3aed10" opacity="0.6"/>
+          <circle cx="110" cy="62" r="7" fill="#7c3aed40" stroke="#c4b5fd" stroke-width="1" filter="url(#tglow8)"/>
+          <circle cx="110" cy="62" r="3" fill="#c4b5fd" opacity="0.9" filter="url(#tglow8)"/>
+          <!-- Reflection sparkle -->
+          <circle cx="114" cy="58" r="1.5" fill="white" opacity="0.7"/>
+          <!-- Inward-pointing arrows -->
+          <g stroke="#8b5cf6" stroke-width="1.2" opacity="0.4">
+            <line x1="72" y1="40" x2="88" y2="52"/><polygon points="88,52 82,48 84,54" fill="#8b5cf6"/>
+            <line x1="148" y1="40" x2="132" y2="52"/><polygon points="132,52 138,48 136,54" fill="#8b5cf6"/>
+            <line x1="110" y1="18" x2="110" y2="35"/><polygon points="110,35 106,29 114,29" fill="#8b5cf6"/>
+          </g>
+          <!-- Lotus petals (simplified) -->
+          <g stroke="#a78bfa" fill="#a78bfa08" stroke-width="0.8" opacity="0.35">
+            <ellipse cx="110" cy="95" rx="10" ry="15" transform="rotate(0,110,95)"/>
+            <ellipse cx="110" cy="95" rx="10" ry="15" transform="rotate(40,110,95)"/>
+            <ellipse cx="110" cy="95" rx="10" ry="15" transform="rotate(-40,110,95)"/>
+          </g>
+          <text x="110" y="118" text-anchor="middle" fill="#7c3aed" font-size="8" font-weight="bold" letter-spacing="2" opacity="0.4" font-family="monospace">INTRAPERSONAL</text>
+        </svg>
+        <div class="p-5 pt-3">
+          <div class="flex justify-between text-xs font-bold mb-2"><span class="text-violet-300">內省智能</span><span class="text-violet-400 opacity-70">Alpha+Theta</span></div>
+          <div class="progress-bar mb-3"><div class="progress-bar-fill bg-gradient-to-r from-violet-500 to-indigo-500 w-3/5"></div></div>
+          <h5 class="font-black text-white mb-1">內省自我覺察</h5>
+          <p class="text-slate-500 text-xs leading-relaxed">善於內省與自我調節，是未來心靈成長的核心能力。</p>
+          <div class="mt-3"><span class="talent-badge bg-violet-500/10 text-violet-300 border border-violet-500/20 text-[10px]">哲學家・冥想導師・作家</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== DEVELOPMENT SECTION ===== -->
+<section id="development" class="py-28" style="background:linear-gradient(180deg,#faf5ff 0%,#f0f4ff 100%)">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-20 reveal">
+      <p class="font-black uppercase tracking-[0.3em] text-xs mb-4" style="color:#059669;">Development Applications</p>
+      <h3 class="text-4xl md:text-6xl font-black tracking-tight leading-tight mb-4" style="color:#1e293b;">
+        腦波科技如何改變<br/><span class="gradient-text">兒童發展</span>
+      </h3>
+    </div>
+
+    <!-- Comparison: Traditional vs Brainwave -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-20">
+      <!-- Traditional -->
+      <div class="space-y-5">
+        <h4 class="text-2xl font-black text-slate-500 flex items-center gap-3 italic uppercase mb-8">
+          <i class="fas fa-times-circle text-slate-600"></i> 傳統教育方式
+        </h4>
+        <div class="flex gap-5 items-start glass p-6 rounded-[28px] border border-white/5 opacity-60">
+          <div class="w-10 h-10 rounded-xl bg-slate-700 flex items-center justify-center flex-shrink-0">
+            <i class="fas fa-graduation-cap text-slate-400"></i>
+          </div>
+          <div>
+            <h5 class="font-black text-slate-300 mb-1">一刀切式教學</h5>
+            <p class="text-slate-500 text-sm">所有孩子用同樣方式學習，忽視個體腦波差異，優勢被掩蓋，劣勢被放大。</p>
+          </div>
+        </div>
+        <div class="flex gap-5 items-start glass p-6 rounded-[28px] border border-white/5 opacity-60">
+          <div class="w-10 h-10 rounded-xl bg-slate-700 flex items-center justify-center flex-shrink-0">
+            <i class="fas fa-eye-slash text-slate-400"></i>
+          </div>
+          <div>
+            <h5 class="font-black text-slate-300 mb-1">靠觀察猜測天賦</h5>
+            <p class="text-slate-500 text-sm">主觀判斷孩子的興趣與能力，容易因偏見而錯失真正的天賦方向。</p>
+          </div>
+        </div>
+        <div class="flex gap-5 items-start glass p-6 rounded-[28px] border border-white/5 opacity-60">
+          <div class="w-10 h-10 rounded-xl bg-slate-700 flex items-center justify-center flex-shrink-0">
+            <i class="fas fa-pills text-slate-400"></i>
+          </div>
+          <div>
+            <h5 class="font-black text-slate-300 mb-1">行為問題用藥物解決</h5>
+            <p class="text-slate-500 text-sm">ADHD、情緒問題等直接藥物介入，忽略了腦波調整的根本解法。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Brainwave approach -->
+      <div class="space-y-5 glass p-8 rounded-[48px] border border-indigo-500/20 ring-1 ring-indigo-400/10 bg-indigo-600/5">
+        <h4 class="text-2xl font-black text-indigo-400 flex items-center gap-3 italic uppercase mb-8">
+          <i class="fas fa-brain text-indigo-400"></i> 腦波科技教育
+        </h4>
+        <div class="flex gap-5 items-start bg-indigo-600/10 p-6 rounded-[28px] border border-indigo-500/20 hover:scale-[1.02] transition-all">
+          <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center flex-shrink-0">
+            <i class="fas fa-fingerprint text-white"></i>
+          </div>
+          <div>
+            <h5 class="font-black text-indigo-300 mb-1">個性化學習方案</h5>
+            <p class="text-slate-400 text-sm">依據每個孩子獨特的腦波特徵，量身設計最適合的學習策略與節奏。</p>
+          </div>
+        </div>
+        <div class="flex gap-5 items-start bg-indigo-600/10 p-6 rounded-[28px] border border-indigo-500/20 hover:scale-[1.02] transition-all">
+          <div class="w-10 h-10 rounded-xl bg-purple-600 flex items-center justify-center flex-shrink-0">
+            <i class="fas fa-chart-bar text-white"></i>
+          </div>
+          <div>
+            <h5 class="font-black text-indigo-300 mb-1">數據化天賦定位</h5>
+            <p class="text-slate-400 text-sm">以腦波數據科學量化天賦維度，消除猜測，讓每個決定都有神經科學依據。</p>
+          </div>
+        </div>
+        <div class="flex gap-5 items-start bg-indigo-600/10 p-6 rounded-[28px] border border-indigo-500/20 hover:scale-[1.02] transition-all">
+          <div class="w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center flex-shrink-0">
+            <i class="fas fa-seedling text-white"></i>
+          </div>
+          <div>
+            <h5 class="font-black text-indigo-300 mb-1">腦波調頻訓練</h5>
+            <p class="text-slate-400 text-sm">針對失衡頻段進行科學化神經反饋訓練，從根本改善注意力、情緒與學習能力。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Timeline: History & Milestones -->
+    <div class="reveal">
+      <h4 class="text-3xl font-black text-center mb-14">神經科學的里程碑</h4>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        <!-- Milestone 1968 -->
+        <div class="glass rounded-[36px] border border-blue-300/40 overflow-hidden hover:border-blue-400/70 transition-all" style="box-shadow:0 4px 16px rgba(59,130,246,0.1);">
+          <div style="height:150px; background:linear-gradient(135deg,#eff6ff,#dbeafe); overflow:hidden;">
+            <img src="./images/milestone-1968-3d.png" alt="1968 貓的SMR實驗" class="w-full h-full object-cover object-center"/>
+          </div>
+          <div style="display:none"><svg viewBox="0 0 1 1"><defs><radialGradient id="mg1"><stop/></radialGradient></defs>
+            <rect width="260" height="140" fill="#030812"/>
+            <rect width="260" height="140" fill="url(#mg1)"/>
+            <!-- Lab bench / table -->
+            <rect x="30" y="100" width="200" height="8" rx="2" fill="#3b82f620" stroke="#3b82f640" stroke-width="1"/>
+            <!-- Cat silhouette (simplified) -->
+            <g fill="#3b82f6" opacity="0.7" filter="url(#mglow1)">
+              <!-- Body -->
+              <ellipse cx="130" cy="90" rx="32" ry="18"/>
+              <!-- Head -->
+              <circle cx="162" cy="76" r="16"/>
+              <!-- Ears -->
+              <polygon points="152,62 157,50 165,62"/>
+              <polygon points="162,60 168,49 174,61"/>
+              <!-- Tail -->
+              <path d="M98,88 Q70,80 72,65 Q74,55 84,58" fill="none" stroke="#3b82f6" stroke-width="5" stroke-linecap="round" opacity="0.8"/>
+              <!-- Eye -->
+              <circle cx="166" cy="74" r="3" fill="#020817" opacity="0.9"/>
+            </g>
+            <!-- EEG electrodes on cat head -->
+            <g stroke="#60a5fa" stroke-width="1" opacity="0.6">
+              <line x1="163" y1="62" x2="163" y2="48"/>
+              <circle cx="163" cy="46" r="2.5" fill="#60a5fa" filter="url(#mglow1)"/>
+              <line x1="155" y1="64" x2="148" y2="50"/>
+              <circle cx="147" cy="48" r="2" fill="#60a5fa"/>
+            </g>
+            <!-- Brain wave coming from head -->
+            <polyline points="48,75 60,75 66,62 72,88 78,68 84,80 90,75 96,75" stroke="#3b82f6" stroke-width="1.5" fill="none" opacity="0.55" filter="url(#mglow1)"/>
+            <!-- Year badge -->
+            <rect x="18" y="18" width="52" height="22" rx="6" fill="#3b82f620" stroke="#3b82f650" stroke-width="1"/>
+            <text x="44" y="33" text-anchor="middle" fill="#60a5fa" font-size="11" font-weight="bold">1968</text>
+          </svg>
+          <div class="p-7 pt-5">
+            <h5 class="font-black text-lg mb-2" style="color:#1e293b;">貓的 SMR 實驗</h5>
+            <p class="text-sm leading-relaxed" style="color:#64748b;">Barry Sterman 教授發現貓透過訓練可產生 SMR 波，顯著提升神經系統穩定性，開啟神經反饋時代。</p>
+          </div>
+        </div>
+
+        <!-- Milestone 1970s -->
+        <div class="glass rounded-[36px] border border-purple-300/40 overflow-hidden hover:border-purple-400/70 transition-all" style="box-shadow:0 4px 16px rgba(168,85,247,0.1);">
+          <div style="height:150px; background:linear-gradient(135deg,#faf5ff,#ede9fe); overflow:hidden;">
+            <img src="./images/milestone-1970s-3d.png" alt="1970s NASA訓練" class="w-full h-full object-cover object-center"/>
+          </div>
+          <div style="display:none"><svg viewBox="0 0 1 1"><defs><radialGradient id="mg2"><stop/></radialGradient></defs>
+            <rect width="260" height="140" fill="#07030f"/>
+            <rect width="260" height="140" fill="url(#mg2)"/>
+            <!-- Stars background -->
+            <g fill="#c4b5fd" opacity="0.4">
+              <circle cx="50" cy="25" r="1.5"/><circle cx="80" cy="15" r="1"/><circle cx="110" cy="20" r="1.5"/>
+              <circle cx="145" cy="12" r="1"/><circle cx="180" cy="22" r="1.5"/><circle cx="210" cy="16" r="1"/>
+              <circle cx="35" cy="50" r="1"/><circle cx="225" cy="45" r="1.2"/>
+            </g>
+            <!-- Rocket body -->
+            <g filter="url(#mglow2)">
+              <path d="M130,20 L145,60 L140,75 L120,75 L115,60 Z" fill="#a855f730" stroke="#a855f7" stroke-width="1.8"/>
+              <!-- Nose cone -->
+              <path d="M120,60 Q122,52 130,20 Q138,52 140,60Z" fill="#a855f740" stroke="#a855f7" stroke-width="1.5"/>
+              <!-- Window -->
+              <circle cx="130" cy="50" r="8" fill="#020817" stroke="#c4b5fd" stroke-width="1.5"/>
+              <circle cx="130" cy="50" r="5" fill="#a855f720"/>
+              <!-- Fins -->
+              <path d="M115,70 L105,85 L120,78Z" fill="#a855f730" stroke="#a855f7" stroke-width="1"/>
+              <path d="M145,70 L155,85 L140,78Z" fill="#a855f730" stroke="#a855f7" stroke-width="1"/>
+              <!-- Exhaust flames -->
+              <path d="M122,75 Q130,95 138,75" fill="#f97316" opacity="0.5"/>
+              <path d="M125,75 Q130,85 135,75" fill="#fbbf24" opacity="0.7"/>
+            </g>
+            <!-- Brain wave emanating from rocket -->
+            <polyline points="50,50 65,50 70,40 76,60 82,45 88,55 95,50" stroke="#a855f7" stroke-width="1.2" fill="none" opacity="0.45"/>
+            <!-- Year badge -->
+            <rect x="14" y="18" width="58" height="22" rx="6" fill="#a855f720" stroke="#a855f750" stroke-width="1"/>
+            <text x="43" y="33" text-anchor="middle" fill="#c4b5fd" font-size="11" font-weight="bold">1970s</text>
+          </svg>
+          <div class="p-7 pt-5">
+            <h5 class="font-black text-lg mb-2" style="color:#1e293b;">NASA 太空人訓練</h5>
+            <p class="text-sm leading-relaxed" style="color:#64748b;">NASA 委託 Sterman 測試 SMR 訓練效果，受訓者具備強大的抗壓與專注能力，開啟頂尖表現應用。</p>
+          </div>
+        </div>
+
+        <!-- Milestone 1980s -->
+        <div class="glass rounded-[36px] border border-amber-300/40 overflow-hidden hover:border-amber-400/70 transition-all" style="box-shadow:0 4px 16px rgba(245,158,11,0.1);">
+          <div style="height:150px; background:linear-gradient(135deg,#fffbeb,#fef3c7); overflow:hidden;">
+            <img src="./images/milestone-1980s-3d.png" alt="1980s ADHD非藥物療法" class="w-full h-full object-cover object-center"/>
+          </div>
+          <div style="display:none"><svg viewBox="0 0 1 1"><defs><radialGradient id="mg3"><stop/></radialGradient></defs>
+            <rect width="260" height="140" fill="#0d0902"/>
+            <rect width="260" height="140" fill="url(#mg3)"/>
+            <!-- Medical cross -->
+            <rect x="116" y="30" width="28" height="80" rx="4" fill="#f59e0b20" stroke="#f59e0b" stroke-width="2" filter="url(#mglow3)"/>
+            <rect x="90" y="56" width="80" height="28" rx="4" fill="#f59e0b20" stroke="#f59e0b" stroke-width="2" filter="url(#mglow3)"/>
+            <!-- Cross highlight -->
+            <rect x="116" y="30" width="28" height="80" rx="4" fill="#f59e0b08"/>
+            <rect x="90" y="56" width="80" height="28" rx="4" fill="#f59e0b08"/>
+            <!-- Brain outline inside cross -->
+            <path d="M120,60 Q118,52 124,50 Q130,48 136,50 Q142,52 140,60 Q142,68 136,72 L130,74 L124,72 Q118,68 120,60Z" fill="#f59e0b15" stroke="#fbbf24" stroke-width="1.2" opacity="0.7"/>
+            <!-- Neural feedback lines -->
+            <path d="M50,52 Q60,45 70,52 Q80,59 90,52" stroke="#f59e0b" stroke-width="1.2" fill="none" opacity="0.45"/>
+            <path d="M170,52 Q180,45 190,52 Q200,59 210,52" stroke="#f59e0b" stroke-width="1.2" fill="none" opacity="0.45"/>
+            <!-- Pill/capsule icon -->
+            <rect x="200" y="28" width="14" height="28" rx="7" fill="#f59e0b30" stroke="#f59e0b" stroke-width="1.2" opacity="0.6"/>
+            <line x1="200" y1="42" x2="214" y2="42" stroke="#f59e0b" stroke-width="1" opacity="0.5"/>
+            <!-- Cancel/no-pill icon -->
+            <circle cx="207" cy="42" r="12" stroke="#ef4444" stroke-width="1.5" fill="none" opacity="0.5"/>
+            <line x1="199" y1="34" x2="215" y2="50" stroke="#ef4444" stroke-width="1.5" opacity="0.5"/>
+            <!-- Year badge -->
+            <rect x="14" y="18" width="58" height="22" rx="6" fill="#f59e0b20" stroke="#f59e0b50" stroke-width="1"/>
+            <text x="43" y="33" text-anchor="middle" fill="#fbbf24" font-size="11" font-weight="bold">1980s</text>
+          </svg>
+          <div class="p-7 pt-5">
+            <h5 class="font-black text-lg mb-2" style="color:#1e293b;">ADHD 非藥物療法</h5>
+            <p class="text-sm leading-relaxed" style="color:#64748b;">腦波訓練正式進入臨床，成為 ADHD、癲癇的非藥物首選療法，幫助無數孩子重拾學習能力。</p>
+          </div>
+        </div>
+
+        <!-- Milestone Today -->
+        <div class="glass rounded-[36px] border border-emerald-300/40 overflow-hidden hover:border-emerald-400/70 transition-all" style="box-shadow:0 4px 16px rgba(16,185,129,0.1);">
+          <div style="height:150px; background:linear-gradient(135deg,#f0fdf4,#dcfce7); overflow:hidden;">
+            <img src="./images/milestone-today-3d.png" alt="今日 AI兒童天賦解碼" class="w-full h-full object-cover object-center"/>
+          </div>
+          <div style="display:none"><svg viewBox="0 0 1 1"><defs><radialGradient id="mg4"><stop/></radialGradient></defs>
+            <rect width="260" height="140" fill="#020f09"/>
+            <rect width="260" height="140" fill="url(#mg4)"/>
+            <!-- AI chip -->
+            <rect x="98" y="35" width="64" height="64" rx="8" fill="#10b98115" stroke="#10b981" stroke-width="1.8" filter="url(#mglow4)"/>
+            <!-- Chip inner grid -->
+            <rect x="108" y="45" width="44" height="44" rx="4" fill="#10b98110" stroke="#34d399" stroke-width="1" opacity="0.6"/>
+            <!-- Chip pins left -->
+            <g stroke="#10b981" stroke-width="1.5" opacity="0.6">
+              <line x1="88" y1="50" x2="98" y2="50"/><line x1="88" y1="60" x2="98" y2="60"/>
+              <line x1="88" y1="70" x2="98" y2="70"/><line x1="88" y1="80" x2="98" y2="80"/><line x1="88" y1="90" x2="98" y2="90"/>
+            </g>
+            <!-- Chip pins right -->
+            <g stroke="#10b981" stroke-width="1.5" opacity="0.6">
+              <line x1="162" y1="50" x2="172" y2="50"/><line x1="162" y1="60" x2="172" y2="60"/>
+              <line x1="162" y1="70" x2="172" y2="70"/><line x1="162" y1="80" x2="172" y2="80"/><line x1="162" y1="90" x2="172" y2="90"/>
+            </g>
+            <!-- Brain inside chip -->
+            <path d="M118,70 C116,63 118,56 124,54 Q130,51 136,54 Q142,56 142,63 C144,70 142,76 136,79 L130,81 L124,79 C118,76 118,70 118,70Z" fill="#10b98120" stroke="#34d399" stroke-width="1.2" opacity="0.8"/>
+            <line x1="130" y1="54" x2="130" y2="81" stroke="#34d399" stroke-width="0.8" stroke-dasharray="2,2" opacity="0.4"/>
+            <!-- Connecting neural dots outside chip -->
+            <g fill="#10b981" opacity="0.6" filter="url(#mglow4)">
+              <circle cx="80" cy="50" r="3"/><circle cx="80" cy="70" r="3"/><circle cx="180" cy="60" r="3"/><circle cx="180" cy="80" r="3"/>
+            </g>
+            <!-- Child figure beside chip -->
+            <circle cx="205" cy="52" r="9" fill="#10b98115" stroke="#10b981" stroke-width="1.2" opacity="0.7"/>
+            <line x1="205" y1="61" x2="205" y2="80" stroke="#10b981" stroke-width="1.5" opacity="0.6"/>
+            <line x1="198" y1="70" x2="212" y2="70" stroke="#10b981" stroke-width="1.2" opacity="0.5"/>
+            <line x1="205" y1="80" x2="198" y2="92" stroke="#10b981" stroke-width="1.2" opacity="0.5"/>
+            <line x1="205" y1="80" x2="212" y2="92" stroke="#10b981" stroke-width="1.2" opacity="0.5"/>
+            <!-- Year badge -->
+            <rect x="14" y="18" width="40" height="22" rx="6" fill="#10b98120" stroke="#10b98150" stroke-width="1"/>
+            <text x="34" y="33" text-anchor="middle" fill="#34d399" font-size="11" font-weight="bold">今日</text>
+          </svg>
+          <div class="p-7 pt-5">
+            <h5 class="font-black text-lg mb-2" style="color:#1e293b;">兒童天賦解碼</h5>
+            <p class="text-sm leading-relaxed" style="color:#64748b;">結合 AI 演算法與多元智能理論，腦波科技現可精準解碼兒童天賦，提供個性化教育藍圖。</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROCESS SECTION ===== -->
+<section class="py-28">
+  <div class="max-w-5xl mx-auto px-6">
+    <div class="text-center mb-16 reveal">
+      <p class="font-black uppercase tracking-[0.3em] text-xs mb-4" style="color:#d97706;">Our Process</p>
+      <h3 class="text-4xl md:text-5xl font-black tracking-tight leading-tight mb-4" style="color:#1e293b;">
+        四步驟完成<span class="gradient-text-gold">天賦解碼</span>
+      </h3>
+    </div>
+
+    <div class="relative">
+      <!-- Vertical line for desktop -->
+      <div class="hidden md:block absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-indigo-500/30 to-transparent"></div>
+
+      <div class="space-y-12">
+        <!-- Step 1 -->
+        <div class="flex flex-col md:flex-row gap-8 items-center reveal">
+          <div class="md:w-1/2 md:text-right">
+            <div class="inline-flex items-center gap-2 mb-3">
+              <span class="talent-badge bg-indigo-600/20 text-indigo-300 border border-indigo-500/30">Step 01</span>
+            </div>
+            <h4 class="text-2xl font-black mb-3">預約 & 初步諮詢</h4>
+            <p class="text-slate-400 leading-relaxed">填寫孩子的基本資料與目前觀察到的學習及行為特徵，由專業顧問進行初步評估與建議。</p>
+          </div>
+          <div class="hidden md:flex w-14 h-14 rounded-full bg-indigo-600 items-center justify-center font-black text-xl z-10 flex-shrink-0 shadow-lg shadow-indigo-600/40">1</div>
+          <div class="md:w-1/2">
+            <div class="glass p-6 rounded-[28px] border border-indigo-500/20 flex items-center gap-4">
+              <div class="text-3xl">📋</div>
+              <div>
+                <div class="font-bold text-indigo-300 text-sm">約需時間</div>
+                <div class="font-black text-white">15 分鐘線上諮詢</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="flex flex-col md:flex-row-reverse gap-8 items-center reveal">
+          <div class="md:w-1/2">
+            <div class="inline-flex items-center gap-2 mb-3">
+              <span class="talent-badge bg-purple-600/20 text-purple-300 border border-purple-500/30">Step 02</span>
+            </div>
+            <h4 class="text-2xl font-black mb-3">腦波採集</h4>
+            <p class="text-slate-400 leading-relaxed">孩子佩戴舒適的 QEEG 傳感器，在輕鬆環境中進行腦波採集。全程無痛、無侵入，孩子感受舒適。</p>
+          </div>
+          <div class="hidden md:flex w-14 h-14 rounded-full bg-purple-600 items-center justify-center font-black text-xl z-10 flex-shrink-0 shadow-lg shadow-purple-600/40">2</div>
+          <div class="md:w-1/2 md:text-right">
+            <div class="glass p-6 rounded-[28px] border border-purple-500/20 flex items-center gap-4 md:justify-end">
+              <div class="text-3xl">🧠</div>
+              <div>
+                <div class="font-bold text-purple-300 text-sm">約需時間</div>
+                <div class="font-black text-white">3 分鐘採集</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="flex flex-col md:flex-row gap-8 items-center reveal">
+          <div class="md:w-1/2 md:text-right">
+            <div class="inline-flex items-center gap-2 mb-3">
+              <span class="talent-badge bg-blue-600/20 text-blue-300 border border-blue-500/30">Step 03</span>
+            </div>
+            <h4 class="text-2xl font-black mb-3">AI 演算法分析</h4>
+            <p class="text-slate-400 leading-relaxed">專利 AI 演算法對腦波數據進行深度分析，識別各頻段特徵模式，對應八大天賦維度與發展建議。</p>
+          </div>
+          <div class="hidden md:flex w-14 h-14 rounded-full bg-blue-600 items-center justify-center font-black text-xl z-10 flex-shrink-0 shadow-lg shadow-blue-600/40">3</div>
+          <div class="md:w-1/2">
+            <div class="glass p-6 rounded-[28px] border border-blue-500/20 flex items-center gap-4">
+              <div class="text-3xl">⚡</div>
+              <div>
+                <div class="font-bold text-blue-300 text-sm">約需時間</div>
+                <div class="font-black text-white">60 分鐘運算分析</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="flex flex-col md:flex-row-reverse gap-8 items-center reveal">
+          <div class="md:w-1/2">
+            <div class="inline-flex items-center gap-2 mb-3">
+              <span class="talent-badge bg-emerald-600/20 text-emerald-300 border border-emerald-500/30">Step 04</span>
+            </div>
+            <h4 class="text-2xl font-black mb-3">報告解讀 & 發展規劃</h4>
+            <p class="text-slate-400 leading-relaxed">專業顧問詳細解讀天賦發展報告，提供個性化學習策略、才藝方向建議及親子溝通指南。</p>
+          </div>
+          <div class="hidden md:flex w-14 h-14 rounded-full bg-emerald-600 items-center justify-center font-black text-xl z-10 flex-shrink-0 shadow-lg shadow-emerald-600/40">4</div>
+          <div class="md:w-1/2 md:text-right">
+            <div class="glass p-6 rounded-[28px] border border-emerald-500/20 flex items-center gap-4 md:justify-end">
+              <div class="text-3xl">📊</div>
+              <div>
+                <div class="font-bold text-emerald-300 text-sm">約需時間</div>
+                <div class="font-black text-white">30 分鐘深度解析</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SERVICES SECTION ===== -->
+<section id="services" class="py-28" style="background:linear-gradient(180deg,#f0fdf4 0%,#f8f4ff 100%)">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-16 reveal">
+      <p class="font-black uppercase tracking-[0.3em] text-xs mb-4" style="color:#2563eb;">Service Portfolio</p>
+      <h3 class="text-4xl md:text-6xl font-black tracking-tight leading-tight mb-4" style="color:#1e293b;">
+        專業腦波服務項目
+      </h3>
+      <p class="text-lg max-w-2xl mx-auto" style="color:#64748b;">從孩子個人天賦解碼到全家腦波共振，我們提供最完整的兒童神經科學服務。</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Service 1: 兒童天賦解碼 -->
+      <div class="glass rounded-[48px] border border-indigo-300/40 hover:-translate-y-3 hover:border-indigo-400/70 transition-all duration-500 flex flex-col reveal overflow-hidden" style="box-shadow:0 6px 24px rgba(99,102,241,0.1);">
+        <div style="height:180px; background:linear-gradient(135deg,#eef2ff,#dbeafe); overflow:hidden;">
+          <img src="./images/service-talent-decode-3d.png" alt="兒童天賦解碼" class="w-full h-full object-cover object-center"/>
+        </div>
+        <!-- (old SVG removed) -->
+        <div style="display:none"><svg viewBox="0 0 1 1"><defs><radialGradient id="sv1"><stop/></radialGradient></defs>
+          <rect width="300" height="160" fill="#040610"/>
+          <rect width="300" height="160" fill="url(#sv1)"/>
+          <!-- DNA double helix -->
+          <g filter="url(#svg1)">
+            <path d="M120,20 Q140,40 120,60 Q100,80 120,100 Q140,120 120,140" stroke="#6366f1" stroke-width="2" fill="none" opacity="0.8"/>
+            <path d="M148,20 Q128,40 148,60 Q168,80 148,100 Q128,120 148,140" stroke="#818cf8" stroke-width="2" fill="none" opacity="0.7"/>
+          </g>
+          <!-- DNA rungs -->
+          <g stroke="#a5b4fc" stroke-width="1.5" opacity="0.55">
+            <line x1="121" y1="30" x2="147" y2="30"/><line x1="127" y1="42" x2="141" y2="42"/>
+            <line x1="134" y1="54" x2="134" y2="54"/><line x1="127" y1="66" x2="141" y2="66"/>
+            <line x1="121" y1="78" x2="147" y2="78"/><line x1="127" y1="90" x2="141" y2="90"/>
+            <line x1="121" y1="102" x2="147" y2="102"/><line x1="127" y1="114" x2="141" y2="114"/>
+            <line x1="121" y1="126" x2="147" y2="126"/>
+          </g>
+          <!-- Brain with nodes on right side -->
+          <path d="M190,85 C183,70 186,55 196,52 Q205,48 214,52 Q223,55 222,68 C224,82 218,92 208,96 L200,98 L192,96 C186,92 190,85 190,85Z" fill="#6366f120" stroke="#6366f1" stroke-width="1.5" filter="url(#svg1)" opacity="0.8"/>
+          <!-- Talent nodes around brain -->
+          <g fill="#818cf8" filter="url(#svg1)" opacity="0.7">
+            <circle cx="172" cy="58" r="4.5"/><circle cx="172" cy="75" r="4"/><circle cx="172" cy="92" r="4"/>
+            <circle cx="230" cy="58" r="4"/><circle cx="232" cy="75" r="4.5"/><circle cx="230" cy="90" r="3.5"/>
+          </g>
+          <!-- Connecting lines brain to nodes -->
+          <g stroke="#6366f1" stroke-width="1" stroke-dasharray="3,3" opacity="0.4">
+            <line x1="192" y1="62" x2="176" y2="58"/><line x1="191" y1="74" x2="176" y2="75"/>
+            <line x1="192" y1="86" x2="176" y2="92"/><line x1="218" y1="62" x2="226" y2="58"/>
+            <line x1="220" y1="74" x2="228" y2="75"/><line x1="218" y1="86" x2="226" y2="90"/>
+          </g>
+          <!-- Title area sparkle -->
+          <g fill="#818cf8" opacity="0.5"><circle cx="60" cy="40" r="3"/><circle cx="72" cy="55" r="2.5"/><circle cx="55" cy="68" r="2"/><circle cx="78" cy="78" r="3"/><circle cx="60" cy="92" r="2.5"/></g>
+        </svg>
+        <div class="p-8 pt-5 flex flex-col flex-1">
+          <h4 class="text-2xl font-black mb-3" style="color:#1e293b;">兒童天賦解碼</h4>
+          <p class="leading-relaxed text-sm flex-1" style="color:#64748b;">精準量化孩子的天賦頻率特徵，識別八大智能優勢區域，提供個性化學習策略與才藝發展路線圖。</p>
+          <div class="mt-5 flex flex-wrap gap-2">
+            <span style="background:#e0e7ff; color:#3730a3; border:1px solid #a5b4fc; padding:2px 8px; border-radius:999px; font-size:10px; font-weight:700;">天賦定位</span>
+            <span style="background:#e0e7ff; color:#3730a3; border:1px solid #a5b4fc; padding:2px 8px; border-radius:999px; font-size:10px; font-weight:700;">學習類型</span>
+            <span style="background:#e0e7ff; color:#3730a3; border:1px solid #a5b4fc; padding:2px 8px; border-radius:999px; font-size:10px; font-weight:700;">發展藍圖</span>
+          </div>
+          <a href="#contact" class="mt-5 w-full py-3 rounded-2xl text-xs font-bold uppercase tracking-widest transition-all text-center block" style="background:#eef2ff; border:1px solid #c7d2fe; color:#4f46e5;" onmouseover="this.style.background='#4f46e5';this.style.color='white';" onmouseout="this.style.background='#eef2ff';this.style.color='#4f46e5';">詳細諮詢</a>
+        </div>
+      </div>
+
+      <!-- Service 2: 全腦開發訓練 -->
+      <div class="glass rounded-[48px] border border-emerald-300/40 hover:-translate-y-3 hover:border-emerald-400/70 transition-all duration-500 flex flex-col reveal overflow-hidden" style="box-shadow:0 6px 24px rgba(16,185,129,0.1);">
+        <div style="height:180px; background:linear-gradient(135deg,#f0fdf4,#dcfce7); overflow:hidden;">
+          <img src="./images/service-brain-training-3d.png" alt="全腦開發訓練" class="w-full h-full object-cover object-center"/>
+        </div>
+        <div style="display:none"><svg viewBox="0 0 1 1"><defs><radialGradient id="sv2"><stop/></radialGradient></defs>
+          <rect width="300" height="160" fill="#030f09"/>
+          <rect width="300" height="160" fill="url(#sv2)"/>
+          <!-- Growing brain / sprout from pot -->
+          <!-- Pot -->
+          <path d="M120,135 L132,108 L168,108 L180,135Z" fill="#10b98120" stroke="#10b981" stroke-width="1.5" opacity="0.6"/>
+          <ellipse cx="150" cy="108" rx="18" ry="6" fill="#10b98130" stroke="#10b981" stroke-width="1.2"/>
+          <!-- Brain growing as plant on stem -->
+          <line x1="150" y1="108" x2="150" y2="85" stroke="#34d399" stroke-width="2.5" stroke-linecap="round" filter="url(#svg2)"/>
+          <!-- Leaves on stem -->
+          <path d="M150,100 Q135,92 138,82 Q145,85 150,95" fill="#10b98135" stroke="#10b981" stroke-width="1.2" filter="url(#svg2)" opacity="0.8"/>
+          <path d="M150,93 Q165,85 162,75 Q155,78 150,88" fill="#10b98135" stroke="#10b981" stroke-width="1.2" filter="url(#svg2)" opacity="0.7"/>
+          <!-- Brain flower on top -->
+          <path d="M136,78 C130,68 132,55 140,52 Q148,48 156,52 Q164,55 162,65 C164,75 160,82 152,86 L146,88 L140,86 C134,82 136,78 136,78Z" fill="#10b98125" stroke="#10b981" stroke-width="1.8" filter="url(#svg2)"/>
+          <line x1="146" y1="52" x2="146" y2="88" stroke="#34d399" stroke-width="0.8" stroke-dasharray="2,3" opacity="0.5"/>
+          <!-- Up-arrows (growth) -->
+          <g stroke="#34d399" stroke-width="1.5" opacity="0.5">
+            <line x1="200" y1="100" x2="200" y2="70"/><polygon points="200,62 195,74 205,74" fill="#34d399" opacity="0.7"/>
+            <line x1="220" y1="110" x2="220" y2="85"/><polygon points="220,77 215,89 225,89" fill="#34d399" opacity="0.6"/>
+            <line x1="240" y1="105" x2="240" y2="78"/><polygon points="240,70 235,82 245,82" fill="#34d399" opacity="0.55"/>
+          </g>
+          <!-- Neural feedback loop arc -->
+          <path d="M50,90 Q80,50 110,80" stroke="#10b981" stroke-width="1.5" fill="none" stroke-dasharray="5,3" opacity="0.4"/>
+          <polygon points="110,80 102,72 108,85" fill="#10b981" opacity="0.4"/>
+        </svg>
+        <div class="p-8 pt-5 flex flex-col flex-1">
+          <h4 class="text-2xl font-black mb-3" style="color:#1e293b;">全腦開發訓練</h4>
+          <p class="leading-relaxed text-sm flex-1" style="color:#64748b;">針對孩子腦波失衡頻段進行科學化神經反饋訓練，提升專注力、情緒調節能力與創意思維，不靠藥物。</p>
+          <div class="mt-5 flex flex-wrap gap-2">
+            <span style="background:#dcfce7; color:#065f46; border:1px solid #6ee7b7; padding:2px 8px; border-radius:999px; font-size:10px; font-weight:700;">神經反饋</span>
+            <span style="background:#dcfce7; color:#065f46; border:1px solid #6ee7b7; padding:2px 8px; border-radius:999px; font-size:10px; font-weight:700;">ADHD 改善</span>
+            <span style="background:#dcfce7; color:#065f46; border:1px solid #6ee7b7; padding:2px 8px; border-radius:999px; font-size:10px; font-weight:700;">情緒穩定</span>
+          </div>
+          <a href="#contact" class="mt-5 w-full py-3 rounded-2xl text-xs font-bold uppercase tracking-widest transition-all text-center block" style="background:#dcfce7; border:1px solid #6ee7b7; color:#059669;" onmouseover="this.style.background='#059669';this.style.color='white';" onmouseout="this.style.background='#dcfce7';this.style.color='#059669';">詳細諮詢</a>
+        </div>
+      </div>
+
+      <!-- Service 3: 親子關係共振 -->
+      <div class="glass rounded-[48px] border border-rose-300/40 hover:-translate-y-3 hover:border-rose-400/70 transition-all duration-500 flex flex-col reveal overflow-hidden" style="box-shadow:0 6px 24px rgba(244,63,94,0.1);">
+        <div style="height:180px; background:linear-gradient(135deg,#fff1f2,#ffe4e6); overflow:hidden;">
+          <img src="./images/service-family-resonance-3d.png" alt="親子關係共振" class="w-full h-full object-cover object-center"/>
+        </div>
+        <div style="display:none"><svg viewBox="0 0 1 1"><defs><radialGradient id="sv3"><stop/></radialGradient></defs>
+          <rect width="300" height="160" fill="#0d0307"/>
+          <rect width="300" height="160" fill="url(#sv3)"/>
+          <!-- Two hearts connected -->
+          <g filter="url(#svg3)">
+            <path d="M88,80 C88,68 76,60 70,68 C64,76 70,86 88,98 C106,86 112,76 106,68 C100,60 88,68 88,80Z" fill="#f43f5e25" stroke="#f43f5e" stroke-width="1.8" opacity="0.85"/>
+            <path d="M212,80 C212,68 200,60 194,68 C188,76 194,86 212,98 C230,86 236,76 230,68 C224,60 212,68 212,80Z" fill="#f43f5e20" stroke="#fb7185" stroke-width="1.5" opacity="0.75"/>
+          </g>
+          <!-- Resonance wave between the two hearts -->
+          <path d="M110,80 Q120,65 130,80 Q140,95 150,80 Q160,65 170,80 Q180,95 190,80" stroke="#f43f5e" stroke-width="2" fill="none" opacity="0.6" filter="url(#svg3)"/>
+          <!-- Additional harmonic waves -->
+          <path d="M110,80 Q120,72 130,80 Q140,88 150,80 Q160,72 170,80 Q180,88 190,80" stroke="#fda4af" stroke-width="1.2" fill="none" opacity="0.35"/>
+          <!-- Inner heart glow dots -->
+          <circle cx="88" cy="80" r="5" fill="#f43f5e" opacity="0.6" filter="url(#svg3)"/>
+          <circle cx="212" cy="80" r="5" fill="#fb7185" opacity="0.55" filter="url(#svg3)"/>
+          <!-- Frequency lines from hearts -->
+          <g stroke="#fda4af" stroke-width="1" opacity="0.25">
+            <line x1="62" y1="68" x2="48" y2="60"/><line x1="64" y1="80" x2="46" y2="80"/>
+            <line x1="238" y1="68" x2="252" y2="60"/><line x1="236" y1="80" x2="254" y2="80"/>
+          </g>
+          <!-- Parent + Child labels -->
+          <text x="88" y="115" text-anchor="middle" fill="#f43f5e" font-size="8" font-weight="bold" opacity="0.5">父母</text>
+          <text x="212" y="115" text-anchor="middle" fill="#fb7185" font-size="8" font-weight="bold" opacity="0.5">孩子</text>
+          <!-- Sync indicator -->
+          <text x="150" y="130" text-anchor="middle" fill="#fda4af" font-size="8" opacity="0.4" letter-spacing="2" font-family="monospace">RESONANCE SYNC</text>
+        </svg>
+        <div class="p-8 pt-5 flex flex-col flex-1">
+          <h4 class="text-2xl font-black mb-3" style="color:#1e293b;">親子關係共振</h4>
+          <p class="leading-relaxed text-sm flex-1" style="color:#64748b;">同步量測親子雙方腦波頻率，找出溝通盲點與情感連結頻率，提供個性化親子溝通策略。</p>
+          <div class="mt-5 flex flex-wrap gap-2">
+            <span style="background:#ffe4e6; color:#9f1239; border:1px solid #fda4af; padding:2px 8px; border-radius:999px; font-size:10px; font-weight:700;">親子共振</span>
+            <span style="background:#ffe4e6; color:#9f1239; border:1px solid #fda4af; padding:2px 8px; border-radius:999px; font-size:10px; font-weight:700;">溝通優化</span>
+            <span style="background:#ffe4e6; color:#9f1239; border:1px solid #fda4af; padding:2px 8px; border-radius:999px; font-size:10px; font-weight:700;">情感連結</span>
+          </div>
+          <a href="#contact" class="mt-5 w-full py-3 rounded-2xl text-xs font-bold uppercase tracking-widest transition-all text-center block" style="background:#ffe4e6; border:1px solid #fda4af; color:#e11d48;" onmouseover="this.style.background='#e11d48';this.style.color='white';" onmouseout="this.style.background='#ffe4e6';this.style.color='#e11d48';">詳細諮詢</a>
+        </div>
+      </div>
+
+      <!-- Service 4: 學習策略優化 -->
+      <div class="glass rounded-[48px] border border-amber-300/40 hover:-translate-y-3 hover:border-amber-400/70 transition-all duration-500 flex flex-col reveal overflow-hidden" style="box-shadow:0 6px 24px rgba(245,158,11,0.1);">
+        <div style="height:180px; background:linear-gradient(135deg,#fffbeb,#fef3c7); overflow:hidden;">
+          <img src="./images/service-learning-strategy-3d.png" alt="學習策略優化" class="w-full h-full object-cover object-center"/>
+        </div>
+        <div style="display:none"><svg viewBox="0 0 1 1"><defs><radialGradient id="sv4"><stop/></radialGradient></defs>
+          <rect width="300" height="160" fill="#0d0902"/>
+          <rect width="300" height="160" fill="url(#sv4)"/>
+          <!-- Open book -->
+          <path d="M75,120 L75,50 Q105,44 130,52 L130,122 Q105,115 75,120Z" fill="#f59e0b15" stroke="#f59e0b" stroke-width="1.5" filter="url(#svg4)" opacity="0.8"/>
+          <path d="M130,52 Q155,44 185,50 L185,120 Q155,115 130,122 L130,52Z" fill="#f59e0b10" stroke="#fbbf24" stroke-width="1.3" opacity="0.7"/>
+          <line x1="130" y1="52" x2="130" y2="122" stroke="#f59e0b" stroke-width="1.2" opacity="0.5"/>
+          <!-- Lines on book pages -->
+          <g stroke="#fbbf24" stroke-width="1" opacity="0.3">
+            <line x1="85" y1="70" x2="122" y2="68"/><line x1="85" y1="80" x2="122" y2="78"/>
+            <line x1="85" y1="90" x2="118" y2="88"/><line x1="85" y1="100" x2="122" y2="98"/>
+            <line x1="138" y1="68" x2="175" y2="70"/><line x1="138" y1="78" x2="175" y2="80"/>
+            <line x1="138" y1="88" x2="172" y2="90"/><line x1="138" y1="98" x2="175" y2="100"/>
+          </g>
+          <!-- Lightbulb above book -->
+          <circle cx="215" cy="55" r="22" fill="#f59e0b20" stroke="#f59e0b" stroke-width="1.8" filter="url(#svg4)"/>
+          <!-- Bulb filament -->
+          <path d="M207,52 Q215,48 215,56 Q215,64 222,66 L208,66 Q215,64 215,56" stroke="#fbbf24" stroke-width="1.5" fill="none" opacity="0.7"/>
+          <!-- Bulb base -->
+          <rect x="208" y="76" width="14" height="4" rx="2" fill="#f59e0b" opacity="0.5"/>
+          <rect x="210" y="80" width="10" height="3" rx="1" fill="#f59e0b" opacity="0.4"/>
+          <!-- Light rays from bulb -->
+          <g stroke="#fbbf24" stroke-width="1.2" opacity="0.35" stroke-linecap="round">
+            <line x1="215" y1="28" x2="215" y2="18"/><line x1="233" y1="38" x2="240" y2="31"/>
+            <line x1="238" y1="55" x2="248" y2="55"/><line x1="197" y1="38" x2="190" y2="31"/>
+            <line x1="192" y1="55" x2="182" y2="55"/>
+          </g>
+          <!-- Target/accuracy mark -->
+          <circle cx="50" cy="75" r="18" stroke="#f59e0b" stroke-width="1.2" fill="none" opacity="0.3"/>
+          <circle cx="50" cy="75" r="10" stroke="#f59e0b" stroke-width="1" fill="none" opacity="0.4"/>
+          <circle cx="50" cy="75" r="3" fill="#f59e0b" opacity="0.6" filter="url(#svg4)"/>
+        </svg>
+        <div class="p-8 pt-5 flex flex-col flex-1">
+          <h4 class="text-2xl font-black mb-3" style="color:#1e293b;">學習策略優化</h4>
+          <p class="leading-relaxed text-sm flex-1" style="color:#64748b;">依據孩子腦波特徵，量身設計最有效的學習時段、方式與環境，大幅提升學習效率與記憶力。</p>
+          <div class="mt-5 flex flex-wrap gap-2">
+            <span style="background:#fef3c7; color:#92400e; border:1px solid #fcd34d; padding:2px 8px; border-radius:999px; font-size:10px; font-weight:700;">學習風格</span>
+            <span style="background:#fef3c7; color:#92400e; border:1px solid #fcd34d; padding:2px 8px; border-radius:999px; font-size:10px; font-weight:700;">記憶優化</span>
+            <span style="background:#fef3c7; color:#92400e; border:1px solid #fcd34d; padding:2px 8px; border-radius:999px; font-size:10px; font-weight:700;">時間管理</span>
+          </div>
+          <a href="#contact" class="mt-5 w-full py-3 rounded-2xl text-xs font-bold uppercase tracking-widest transition-all text-center block" style="background:#fef3c7; border:1px solid #fcd34d; color:#d97706;" onmouseover="this.style.background='#d97706';this.style.color='white';" onmouseout="this.style.background='#fef3c7';this.style.color='#d97706';">詳細諮詢</a>
+        </div>
+      </div>
+
+      <!-- Service 5: 教育機構合作 -->
+      <div class="glass rounded-[48px] border border-purple-300/40 hover:-translate-y-3 hover:border-purple-400/70 transition-all duration-500 flex flex-col reveal overflow-hidden" style="box-shadow:0 6px 24px rgba(168,85,247,0.1);">
+        <div style="height:180px; background:linear-gradient(135deg,#faf5ff,#ede9fe); overflow:hidden;">
+          <img src="./images/service-institution-3d.png" alt="教育機構合作" class="w-full h-full object-cover object-center"/>
+        </div>
+        <div style="display:none"><svg viewBox="0 0 1 1"><defs><radialGradient id="sv5"><stop/></radialGradient></defs>
+          <rect width="300" height="160" fill="#07030f"/>
+          <rect width="300" height="160" fill="url(#sv5)"/>
+          <!-- School building -->
+          <rect x="55" y="80" width="120" height="65" rx="3" fill="#a855f715" stroke="#a855f7" stroke-width="1.5" opacity="0.7"/>
+          <!-- Roof / triangle -->
+          <polygon points="45,82 115,42 185,82" fill="#a855f720" stroke="#a855f7" stroke-width="1.8" filter="url(#svg5)" opacity="0.8"/>
+          <!-- Flag on top -->
+          <line x1="115" y1="20" x2="115" y2="44" stroke="#c084fc" stroke-width="1.5" opacity="0.6"/>
+          <polygon points="115,20 135,28 115,36" fill="#a855f7" opacity="0.6" filter="url(#svg5)"/>
+          <!-- Windows -->
+          <g fill="#a855f720" stroke="#a855f7" stroke-width="1" opacity="0.6">
+            <rect x="68" y="92" width="18" height="18" rx="2"/><rect x="96" y="92" width="18" height="18" rx="2"/>
+            <rect x="148" y="92" width="18" height="18" rx="2"/>
+          </g>
+          <!-- Door -->
+          <rect x="118" y="110" width="18" height="35" rx="2" fill="#a855f720" stroke="#a855f7" stroke-width="1.2" opacity="0.7"/>
+          <!-- Neural network overlay on school -->
+          <g stroke="#c084fc" stroke-width="1" stroke-dasharray="3,3" opacity="0.35">
+            <line x1="200" y1="60" x2="220" y2="45"/><line x1="200" y1="60" x2="225" y2="70"/>
+            <line x1="200" y1="60" x2="215" y2="90"/>
+          </g>
+          <g fill="#a855f7" filter="url(#svg5)" opacity="0.6">
+            <circle cx="200" cy="60" r="5"/><circle cx="220" cy="45" r="4"/><circle cx="225" cy="70" r="3.5"/><circle cx="215" cy="90" r="4"/>
+          </g>
+          <!-- Connecting between nodes -->
+          <line x1="220" y1="45" x2="225" y2="70" stroke="#c084fc" stroke-width="0.8" opacity="0.3"/>
+          <line x1="225" y1="70" x2="215" y2="90" stroke="#c084fc" stroke-width="0.8" opacity="0.3"/>
+        </svg>
+        <div class="p-8 pt-5 flex flex-col flex-1">
+          <h4 class="text-2xl font-black mb-3" style="color:#1e293b;">教育機構合作</h4>
+          <p class="leading-relaxed text-sm flex-1" style="color:#64748b;">為學校、補習班、才藝中心提供班級整體腦波分析，協助老師理解學生差異，制定更有效的教學策略。</p>
+          <div class="mt-5 flex flex-wrap gap-2">
+            <span style="background:#ede9fe; color:#5b21b6; border:1px solid #c4b5fd; padding:2px 8px; border-radius:999px; font-size:10px; font-weight:700;">學校合作</span>
+            <span style="background:#ede9fe; color:#5b21b6; border:1px solid #c4b5fd; padding:2px 8px; border-radius:999px; font-size:10px; font-weight:700;">教師培訓</span>
+            <span style="background:#ede9fe; color:#5b21b6; border:1px solid #c4b5fd; padding:2px 8px; border-radius:999px; font-size:10px; font-weight:700;">班級分析</span>
+          </div>
+          <a href="#contact" class="mt-5 w-full py-3 rounded-2xl text-xs font-bold uppercase tracking-widest transition-all text-center block" style="background:#ede9fe; border:1px solid #c4b5fd; color:#7c3aed;" onmouseover="this.style.background='#7c3aed';this.style.color='white';" onmouseout="this.style.background='#ede9fe';this.style.color='#7c3aed';">詳細諮詢</a>
+        </div>
+      </div>
+
+      <!-- Service 6: 定期追蹤評估 -->
+      <div class="glass rounded-[48px] border border-cyan-300/40 hover:-translate-y-3 hover:border-cyan-400/70 transition-all duration-500 flex flex-col reveal overflow-hidden" style="box-shadow:0 6px 24px rgba(6,182,212,0.1);">
+        <div style="height:180px; background:linear-gradient(135deg,#ecfeff,#cffafe); overflow:hidden;">
+          <img src="./images/service-tracking-3d.png" alt="定期追蹤評估" class="w-full h-full object-cover object-center"/>
+        </div>
+        <div style="display:none"><svg viewBox="0 0 1 1"><defs><radialGradient id="sv6"><stop/></radialGradient></defs>
+          <rect width="300" height="160" fill="#020e12"/>
+          <rect width="300" height="160" fill="url(#sv6)"/>
+          <!-- Calendar icon -->
+          <rect x="45" y="40" width="90" height="90" rx="8" fill="#06b6d415" stroke="#06b6d4" stroke-width="1.5" opacity="0.7"/>
+          <rect x="45" y="40" width="90" height="22" rx="8" fill="#06b6d430"/>
+          <rect x="45" y="50" width="90" height="12" fill="#06b6d430"/>
+          <!-- Calendar header details -->
+          <line x1="75" y1="30" x2="75" y2="50" stroke="#06b6d4" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
+          <line x1="105" y1="30" x2="105" y2="50" stroke="#06b6d4" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
+          <!-- Calendar grid -->
+          <g fill="#06b6d4" opacity="0.5">
+            <circle cx="62" cy="82" r="3"/><circle cx="77" cy="82" r="3"/><circle cx="92" cy="82" r="4" opacity="0.8"/>
+            <circle cx="107" cy="82" r="3" opacity="0.6"/><circle cx="122" cy="82" r="3" opacity="0.5"/>
+            <circle cx="62" cy="97" r="3"/><circle cx="77" cy="97" r="4" opacity="0.8"/>
+            <circle cx="92" cy="97" r="3"/><circle cx="107" cy="97" r="3"/>
+            <circle cx="62" cy="112" r="4" opacity="0.8" filter="url(#svg6)"/><circle cx="77" cy="112" r="3"/>
+          </g>
+          <!-- Check marks on calendar -->
+          <g stroke="#22d3ee" stroke-width="1.5" fill="none" opacity="0.7">
+            <polyline points="57,80 60,83 67,77"/><polyline points="72,96 75,99 82,93"/>
+          </g>
+          <!-- Growth chart -->
+          <polyline points="160,130 175,118 190,108 205,96 220,80 235,62 250,44" stroke="#06b6d4" stroke-width="2.2" fill="none" filter="url(#svg6)" opacity="0.8"/>
+          <!-- Chart area fill -->
+          <polygon points="160,130 175,118 190,108 205,96 220,80 235,62 250,44 250,130" fill="#06b6d415" opacity="0.5"/>
+          <!-- Data dots -->
+          <g fill="#22d3ee" filter="url(#svg6)" opacity="0.8">
+            <circle cx="175" cy="118" r="4"/><circle cx="190" cy="108" r="4"/>
+            <circle cx="205" cy="96" r="4"/><circle cx="220" cy="80" r="4.5"/>
+            <circle cx="235" cy="62" r="4"/><circle cx="250" cy="44" r="5"/>
+          </g>
+          <!-- Axis -->
+          <line x1="155" y1="40" x2="155" y2="132" stroke="#06b6d420" stroke-width="1"/>
+          <line x1="155" y1="132" x2="258" y2="132" stroke="#06b6d420" stroke-width="1"/>
+        </svg>
+        <div class="p-8 pt-5 flex flex-col flex-1">
+          <h4 class="text-2xl font-black mb-3" style="color:#1e293b;">定期追蹤評估</h4>
+          <p class="leading-relaxed text-sm flex-1" style="color:#64748b;">每季度追蹤孩子腦波發展變化，動態調整天賦培育策略，確保孩子在關鍵發展期獲得最佳支持。</p>
+          <div class="mt-5 flex flex-wrap gap-2">
+            <span style="background:#cffafe; color:#164e63; border:1px solid #67e8f9; padding:2px 8px; border-radius:999px; font-size:10px; font-weight:700;">定期追蹤</span>
+            <span style="background:#cffafe; color:#164e63; border:1px solid #67e8f9; padding:2px 8px; border-radius:999px; font-size:10px; font-weight:700;">成長報告</span>
+            <span style="background:#cffafe; color:#164e63; border:1px solid #67e8f9; padding:2px 8px; border-radius:999px; font-size:10px; font-weight:700;">策略調整</span>
+          </div>
+          <a href="#contact" class="mt-5 w-full py-3 rounded-2xl text-xs font-bold uppercase tracking-widest transition-all text-center block" style="background:#cffafe; border:1px solid #67e8f9; color:#0891b2;" onmouseover="this.style.background='#0891b2';this.style.color='white';" onmouseout="this.style.background='#cffafe';this.style.color='#0891b2';">詳細諮詢</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TESTIMONIALS SECTION ===== -->
+<section class="py-28">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-16 reveal">
+      <p class="font-black uppercase tracking-[0.3em] text-xs mb-4" style="color:#e11d48;">Parent Stories</p>
+      <h3 class="text-4xl md:text-5xl font-black tracking-tight mb-4" style="color:#1e293b;">家長真實見證</h3>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="glass p-8 rounded-[40px] border border-white/5 hover:border-indigo-500/20 transition-all reveal">
+        <div class="flex gap-1 mb-5">
+          <i class="fas fa-star text-amber-400 text-sm" style="5"></i>
+          <i class="fas fa-star text-amber-400 text-sm"></i>
+          <i class="fas fa-star text-amber-400 text-sm"></i>
+          <i class="fas fa-star text-amber-400 text-sm"></i>
+          <i class="fas fa-star text-amber-400 text-sm"></i>
+        </div>
+        <p class="text-slate-300 leading-relaxed mb-6 italic">"我家小孩被老師說是問題學生，做完腦波解碼後才發現他的 Theta 波極高，是有天賦的創意型孩子。現在改用視覺化教學，成績進步了 40%！"</p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center font-black text-white">陳</div>
+          <div>
+            <div class="font-black text-white text-sm">陳小姐</div>
+            <div class="text-xs text-slate-500">8歲孩子家長 · 台北</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass p-8 rounded-[40px] border border-white/5 hover:border-emerald-500/20 transition-all reveal">
+        <div class="flex gap-1 mb-5">
+          <i class="fas fa-star text-amber-400 text-sm"></i>
+          <i class="fas fa-star text-amber-400 text-sm"></i>
+          <i class="fas fa-star text-amber-400 text-sm"></i>
+          <i class="fas fa-star text-amber-400 text-sm"></i>
+          <i class="fas fa-star text-amber-400 text-sm"></i>
+        </div>
+        <p class="text-slate-300 leading-relaxed mb-6 italic">"孩子的 ADHD 一直靠藥物控制，但副作用讓我很擔心。透過腦波訓練調整 SMR 波後，專注力明顯改善，現在已經減少了藥量！"</p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center font-black text-white">林</div>
+          <div>
+            <div class="font-black text-white text-sm">林先生</div>
+            <div class="text-xs text-slate-500">11歲孩子家長 · 高雄</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass p-8 rounded-[40px] border border-white/5 hover:border-rose-500/20 transition-all reveal">
+        <div class="flex gap-1 mb-5">
+          <i class="fas fa-star text-amber-400 text-sm"></i>
+          <i class="fas fa-star text-amber-400 text-sm"></i>
+          <i class="fas fa-star text-amber-400 text-sm"></i>
+          <i class="fas fa-star text-amber-400 text-sm"></i>
+          <i class="fas fa-star text-amber-400 text-sm"></i>
+        </div>
+        <p class="text-slate-300 leading-relaxed mb-6 italic">"親子共振分析讓我明白為什麼我和女兒總是吵架。原來我們的溝通頻率完全不同！按照建議調整溝通方式後，關係改善非常多。"</p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-rose-500 to-pink-600 flex items-center justify-center font-black text-white">王</div>
+          <div>
+            <div class="font-black text-white text-sm">王太太</div>
+            <div class="text-xs text-slate-500">13歲孩子家長 · 台中</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA / CONTACT SECTION ===== -->
+<section id="contact" class="py-28 relative overflow-hidden" style="background:linear-gradient(135deg,#6d28d9 0%,#4f46e5 45%,#0891b2 100%);">
+  <!-- BG Orbs -->
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute top-0 left-1/3 w-[400px] h-[400px] rounded-full" style="background:rgba(255,255,255,0.08); filter:blur(80px);"></div>
+    <div class="absolute bottom-0 right-1/3 w-[400px] h-[400px] rounded-full" style="background:rgba(255,255,255,0.06); filter:blur(80px);"></div>
+  </div>
+
+  <div class="relative z-10 max-w-4xl mx-auto px-6 text-center">
+    <div class="reveal">
+      <p class="font-black uppercase tracking-[0.3em] text-xs mb-4" style="color:rgba(255,255,255,0.7);">Start Today</p>
+      <h3 class="text-4xl md:text-7xl font-black tracking-tighter leading-tight mb-6" style="color:white;">
+        讓孩子的天賦<br/><span style="background:linear-gradient(135deg,#fde68a,#fbcfe8); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">被看見</span>
+      </h3>
+      <p class="text-xl mb-12 max-w-2xl mx-auto leading-relaxed" style="color:rgba(255,255,255,0.82);">
+        每個孩子都是獨一無二的。腦波解碼不是尋找完美，而是找到屬於他的那條最光明的路。
+      </p>
+
+      <div class="rounded-[48px] p-10 md:p-14 mb-10 text-left" style="background:rgba(255,255,255,0.15); backdrop-filter:blur(20px); border:1px solid rgba(255,255,255,0.25);">
+        <h4 class="text-2xl font-black mb-8 text-center" style="color:white;">立即預約免費初步諮詢</h4>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div>
+            <label class="block text-xs font-bold text-slate-400 mb-2 uppercase tracking-wider">家長姓名</label>
+            <input type="text" placeholder="請輸入姓名" class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-3.5 text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500 transition-colors text-sm" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-400 mb-2 uppercase tracking-wider">聯絡電話</label>
+            <input type="tel" placeholder="09XX-XXX-XXX" class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-3.5 text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500 transition-colors text-sm" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-400 mb-2 uppercase tracking-wider">孩子年齡</label>
+            <select class="w-full bg-[#0f172a] border border-white/10 rounded-2xl px-5 py-3.5 text-white focus:outline-none focus:border-indigo-500 transition-colors text-sm appearance-none">
+              <option value="">請選擇</option>
+              <option>3-5 歲（學前）</option>
+              <option>6-8 歲（低年級）</option>
+              <option>9-11 歲（中年級）</option>
+              <option>12-15 歲（青春期）</option>
+              <option>16-18 歲（高中）</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-400 mb-2 uppercase tracking-wider">主要關注</label>
+            <select class="w-full bg-[#0f172a] border border-white/10 rounded-2xl px-5 py-3.5 text-white focus:outline-none focus:border-indigo-500 transition-colors text-sm appearance-none">
+              <option value="">請選擇</option>
+              <option>天賦發現與方向</option>
+              <option>注意力/ADHD</option>
+              <option>學習效率提升</option>
+              <option>情緒管理</option>
+              <option>親子關係</option>
+              <option>才藝選擇</option>
+            </select>
+          </div>
+          <div class="md:col-span-2">
+            <label class="block text-xs font-bold text-slate-400 mb-2 uppercase tracking-wider">補充說明（選填）</label>
+            <textarea rows="3" placeholder="請簡述孩子目前狀況或您的疑問..." class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-3.5 text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500 transition-colors text-sm resize-none"></textarea>
+          </div>
+        </div>
+        <button
+          onclick="handleSubmit()"
+          class="w-full mt-8 py-5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-[28px] font-black text-lg hover:scale-[1.02] transition-all shadow-2xl shadow-indigo-600/40"
+        >
+          <i class="fas fa-brain mr-2"></i> 送出預約申請
+        </button>
+      </div>
+
+      <!-- Alternative contact -->
+      <div class="flex flex-wrap justify-center gap-6">
+        <a href="https://lin.ee/lJ5dgyx" target="_blank"
+           class="flex items-center gap-3 px-8 py-4 glass rounded-2xl border border-white/10 hover:border-green-500/40 hover:bg-green-500/5 transition-all">
+          <i class="fab fa-line text-green-400 text-xl"></i>
+          <div class="text-left">
+            <div class="text-xs text-slate-500 font-bold uppercase">LINE 諮詢</div>
+            <div class="text-sm font-black text-white">即時線上諮詢</div>
+          </div>
+        </a>
+        <div class="flex items-center gap-3 px-8 py-4 glass rounded-2xl border border-white/10">
+          <i class="fas fa-phone text-indigo-400 text-xl"></i>
+          <div class="text-left">
+            <div class="text-xs text-slate-500 font-bold uppercase">電話預約</div>
+            <div class="text-sm font-black text-white">週一至週六 10:00–19:00</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="py-20" style="background:linear-gradient(180deg,#f8f4ff 0%,#f0f4ff 100%); border-top:1px solid rgba(124,58,237,0.1);"  id="contact-cta">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+      <div class="md:col-span-2">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center">
+            <i class="fas fa-brain text-white"></i>
+          </div>
+          <div>
+            <div class="font-black tracking-tight">兒童腦波天賦解碼</div>
+            <div class="text-[9px] text-slate-500 uppercase tracking-widest">Child Brainwave Intelligence Lab</div>
+          </div>
+        </div>
+        <p class="text-slate-500 text-sm leading-relaxed max-w-xs">運用 QEEG 腦波科技與 AI 演算法，科學解碼每個孩子獨特的天賦頻率，為家長提供最精準的育兒科學藍圖。</p>
+      </div>
+      <div>
+        <h5 class="font-black text-sm uppercase tracking-widest mb-5 text-slate-300">快速連結</h5>
+        <ul class="space-y-3">
+          <li><a href="#problems"    class="text-slate-500 hover:text-white text-sm transition-colors">孩子的困境</a></li>
+          <li><a href="#science"     class="text-slate-500 hover:text-white text-sm transition-colors">腦波科學</a></li>
+          <li><a href="#talents"     class="text-slate-500 hover:text-white text-sm transition-colors">天賦解碼</a></li>
+          <li><a href="#development" class="text-slate-500 hover:text-white text-sm transition-colors">發展應用</a></li>
+          <li><a href="#services"    class="text-slate-500 hover:text-white text-sm transition-colors">服務項目</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 class="font-black text-sm uppercase tracking-widest mb-5 text-slate-300">核心優勢</h5>
+        <ul class="space-y-3">
+          <li class="flex items-center gap-2 text-sm text-slate-500"><i class="fas fa-check text-indigo-500 text-xs"></i>40+ 年神經科學實證</li>
+          <li class="flex items-center gap-2 text-sm text-slate-500"><i class="fas fa-check text-indigo-500 text-xs"></i>非侵入性安全採集</li>
+          <li class="flex items-center gap-2 text-sm text-slate-500"><i class="fas fa-check text-indigo-500 text-xs"></i>專利 AI 分析演算法</li>
+          <li class="flex items-center gap-2 text-sm text-slate-500"><i class="fas fa-check text-indigo-500 text-xs"></i>兒童專屬評估系統</li>
+          <li class="flex items-center gap-2 text-sm text-slate-500"><i class="fas fa-check text-indigo-500 text-xs"></i>持續追蹤發展進度</li>
+        </ul>
+      </div>
+    </div>
+    <div class="pt-8 flex flex-col md:flex-row items-center justify-between gap-4" style="border-top:1px solid rgba(124,58,237,0.1);">
+      <p class="text-xs font-bold uppercase tracking-widest" style="color:#94a3b8;">© 2024 兒童腦波天賦解碼. Powered by Advanced Neuroscience & AI.</p>
+      <div class="flex gap-6 text-[10px] font-black uppercase tracking-widest" style="color:#94a3b8;">
+        <span>科學實證</span>
+        <span>非侵入性</span>
+        <span>精準量化</span>
+        <span>兒童專屬</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+// ---- Brainwave data ----
+const WAVES = {
+  Theta: {
+    label: 'θ Theta',
+    freq: '4 – 8 Hz',
+    color: '#06b6d4',
+    nickname: '潛意識檔',
+    state: '直覺・創意・深度修復',
+    desc: 'Theta 波是通往深層記憶與創造力的大門。兒童在入睡前和剛醒時 Theta 波最活躍，這段時間是最佳的學習記憶黃金窗口。',
+    childFocus: 'Theta 波豐富的孩子通常擁有豐富的想像力與直覺力，是天生的創意者。若 Theta 過高，則需要引導其保持適度清醒專注。',
+    benefits: ['想像力豐富', '直覺力強', '藝術天賦', '深度學習', '創意思維'],
+    emoji: '🌊'
+  },
+  Alpha: {
+    label: 'α Alpha',
+    freq: '8 – 12 Hz',
+    color: '#3b82f6',
+    nickname: '充電橋接檔',
+    state: '放鬆・橋樑・復原',
+    desc: 'Alpha 波是身心最舒適的狀態，連結意識與潛意識。孩子在 Alpha 狀態下，吸收新知的效率最高，是最理想的「接收學習模式」。',
+    childFocus: 'Alpha 波穩定的孩子情緒平穩、容易進入學習狀態。缺乏 Alpha 波的孩子往往容易緊張焦慮，無法放鬆學習。',
+    benefits: ['情緒穩定', '高效學習', '抗壓能力', '創造力', '身心平衡'],
+    emoji: '🌤'
+  },
+  SMR: {
+    label: 'σ SMR',
+    freq: '12 – 15 Hz',
+    color: '#f59e0b',
+    nickname: '高效巡航檔',
+    state: '心流・警覺且冷靜',
+    desc: 'SMR 波（感覺運動節律）是「身體放鬆但大腦高度敏銳」的黃金狀態。源自 NASA 著名的貓實驗，是訓練兒童持久專注的關鍵頻段。',
+    childFocus: 'SMR 波強的孩子能長時間保持專注、不易衝動，是運動員與音樂家的黃金頻率。ADHD 兒童通常 SMR 波偏低，這正是訓練的目標。',
+    benefits: ['持久專注', '抗壓穩定', '情緒控制', '運動能力', '衝動抑制'],
+    emoji: '⚡'
+  },
+  Beta: {
+    label: 'β Beta',
+    freq: '15 – 30 Hz',
+    color: '#ef4444',
+    nickname: '戰鬥分析檔',
+    state: '邏輯分析・外部警覺',
+    desc: 'Beta 波負責邏輯思考、快速反應與問題解決。是孩子考試、解題時的主要腦波狀態。但若 Beta 波長期過高，大腦會像過熱的引擎，引發焦慮。',
+    childFocus: '高 Beta 波的孩子思維敏捷、邏輯能力強，適合數理科學。但需注意過度活躍的 Beta 波可能導致情緒焦躁、睡眠困難。',
+    benefits: ['邏輯推理', '快速應變', '數理天賦', '分析能力', '執行力'],
+    emoji: '🔥'
+  },
+  Gamma: {
+    label: 'γ Gamma',
+    freq: '30 – 45 Hz',
+    color: '#a855f7',
+    nickname: '巔峰整合檔',
+    state: '頓悟・資訊整合・意識飛躍',
+    desc: 'Gamma 波是大腦最高階的整合模式，與「Aha! 頓悟時刻」高度相關。當孩子突然理解一個複雜概念時，Gamma 波會急速升高。',
+    childFocus: 'Gamma 波活躍的孩子具有跨領域整合能力，能快速連結不同知識點，在高階學習、創新思維上表現卓越。',
+    benefits: ['極速學習', '意識飛躍', '知識整合', '跨域連結', '頓悟能力'],
+    emoji: '✨'
+  }
+};
+
+let activeWave = 'Alpha';
+
+// ---- Render wave tabs ----
+function renderWaveTabs() {
+  const container = document.getElementById('waveTabs');
+  container.innerHTML = Object.entries(WAVES).map(([key, w]) => `
+    <button class="wave-tab w-full text-left p-6 rounded-[32px] border transition-all flex items-center justify-between ${
+      activeWave === key
+        ? 'bg-slate-800 border-white/20 shadow-2xl scale-[1.03]'
+        : 'bg-transparent border-white/5 opacity-50 hover:opacity-80'
+    }" onclick="setWave('${key}')">
+      <div class="flex items-center gap-4">
+        <div class="w-4 h-4 rounded-full shadow-lg" style="background:${w.color}; box-shadow: 0 0 12px ${w.color}80"></div>
+        <div>
+          <div class="font-black text-xl italic lowercase">${w.label}</div>
+          <div class="text-xs text-slate-500 font-bold uppercase tracking-widest">${w.state}</div>
+        </div>
+      </div>
+      <div class="text-xs font-mono opacity-40">${w.freq}</div>
+    </button>
+  `).join('');
+}
+
+// ---- Render wave detail ----
+function renderWaveDetail() {
+  const w = WAVES[activeWave];
+  const container = document.getElementById('waveDetail');
+
+  // Build SVG wave
+  const svgColor = w.color;
+  const freqMap = { Theta: 0.4, Alpha: 0.6, SMR: 0.9, Beta: 1.4, Gamma: 2.2 };
+  const freq = freqMap[activeWave] || 1;
+
+  container.innerHTML = `
+    <div class="mb-8 flex items-start justify-between flex-wrap gap-4">
+      <div>
+        <div class="flex items-center gap-3 mb-2">
+          <div class="text-4xl">${w.emoji}</div>
+          <div>
+            <div class="text-3xl font-black italic" style="color:${w.color}">${w.label}</div>
+            <div class="text-xs text-slate-500 font-bold uppercase tracking-widest">${w.nickname} · ${w.freq}</div>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-wrap gap-2">
+        ${w.benefits.map(b => `<span class="talent-badge text-[10px]" style="background:${w.color}15; color:${w.color}; border: 1px solid ${w.color}40">${b}</span>`).join('')}
+      </div>
+    </div>
+
+    <!-- Animated Wave Visualizer -->
+    <div class="rounded-2xl bg-slate-900/60 border border-white/5 overflow-hidden mb-6 p-4 relative" style="height: 90px">
+      <svg id="waveSVG" width="100%" height="100%" viewBox="0 0 480 60" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="wg" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:${w.color};stop-opacity:0"/>
+            <stop offset="50%" style="stop-color:${w.color};stop-opacity:1"/>
+            <stop offset="100%" style="stop-color:${w.color};stop-opacity:0"/>
+          </linearGradient>
+        </defs>
+        <path id="animWave" stroke="url(#wg)" stroke-width="2.5" fill="none" d="M0,30 L480,30"/>
+      </svg>
+    </div>
+
+    <div class="space-y-5">
+      <div class="p-6 rounded-[28px] bg-slate-900/60 border border-white/5">
+        <h6 class="text-xs font-black uppercase tracking-widest mb-3" style="color:${w.color}">
+          <i class="fas fa-microscope mr-2"></i>腦波特徵
+        </h6>
+        <p class="text-slate-300 leading-relaxed">${w.desc}</p>
+      </div>
+      <div class="p-6 rounded-[28px] border" style="background:${w.color}08; border-color:${w.color}30">
+        <h6 class="text-xs font-black uppercase tracking-widest mb-3" style="color:${w.color}">
+          <i class="fas fa-child mr-2"></i>兒童天賦關聯
+        </h6>
+        <p class="text-slate-300 leading-relaxed">${w.childFocus}</p>
+      </div>
+    </div>
+  `;
+
+  // Animate wave
+  animateWave(activeWave);
+}
+
+function animateWave(waveKey) {
+  const svg = document.getElementById('animWave');
+  if (!svg) return;
+
+  const freqMap = { Theta: 0.5, Alpha: 0.8, SMR: 1.2, Beta: 1.8, Gamma: 2.8 };
+  const ampMap  = { Theta: 22, Alpha: 18, SMR: 14, Beta: 10, Gamma: 6 };
+  const freq = freqMap[waveKey] || 1;
+  const amp  = ampMap[waveKey] || 15;
+  let t = 0;
+
+  function frame() {
+    t += 0.04;
+    const pts = [];
+    for (let x = 0; x <= 480; x += 4) {
+      const y = 30 + amp * Math.sin(freq * x * 0.05 + t);
+      pts.push(`${x},${y.toFixed(2)}`);
+    }
+    svg.setAttribute('d', 'M' + pts.join(' L'));
+    requestAnimationFrame(frame);
+  }
+  frame();
+}
+
+function setWave(key) {
+  activeWave = key;
+  renderWaveTabs();
+  renderWaveDetail();
+}
+
+// ---- Hero canvas ----
+function initCanvas() {
+  const canvas = document.getElementById('waveCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  function resize() {
+    canvas.width  = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const waves = [
+    { color: '#3b82f6', freq: 0.003, amp: 30, speed: 0.4, y: 0.4 },
+    { color: '#6366f1', freq: 0.005, amp: 20, speed: 0.6, y: 0.55 },
+    { color: '#a855f7', freq: 0.004, amp: 25, speed: 0.3, y: 0.7  },
+  ];
+
+  let t = 0;
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    waves.forEach(w => {
+      ctx.beginPath();
+      ctx.strokeStyle = w.color + '60';
+      ctx.lineWidth = 1.5;
+      for (let x = 0; x <= canvas.width; x++) {
+        const y = canvas.height * w.y + w.amp * Math.sin(w.freq * x + t * w.speed);
+        x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+    });
+    t += 0.02;
+    requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+// ---- Particles ----
+function initParticles() {
+  const container = document.getElementById('particles');
+  if (!container) return;
+  const colors = ['#3b82f6','#6366f1','#a855f7','#06b6d4','#f59e0b'];
+  for (let i = 0; i < 25; i++) {
+    const el = document.createElement('div');
+    el.className = 'particle';
+    const size = Math.random() * 4 + 2;
+    el.style.cssText = `
+      width: ${size}px; height: ${size}px;
+      background: ${colors[Math.floor(Math.random() * colors.length)]};
+      left: ${Math.random() * 100}%;
+      top: ${Math.random() * 100}%;
+      animation-duration: ${4 + Math.random() * 8}s;
+      animation-delay: ${Math.random() * 4}s;
+      opacity: 0.5;
+      box-shadow: 0 0 6px currentColor;
+    `;
+    container.appendChild(el);
+  }
+}
+
+// ---- Scroll reveal ----
+function initReveal() {
+  const els = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.1 });
+  els.forEach(el => observer.observe(el));
+}
+
+// ---- Progress bars ----
+function initProgressBars() {
+  const bars = document.querySelectorAll('.progress-bar-fill');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const el = e.target;
+        const w = el.style.width;
+        el.style.width = '0';
+        setTimeout(() => { el.style.width = w; }, 100);
+        observer.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+  bars.forEach(b => observer.observe(b));
+}
+
+// ---- Mobile menu ----
+document.getElementById('menuBtn').addEventListener('click', () => {
+  const menu = document.getElementById('mobileMenu');
+  menu.classList.toggle('open');
+});
+document.querySelectorAll('#mobileMenu a').forEach(a => {
+  a.addEventListener('click', () => document.getElementById('mobileMenu').classList.remove('open'));
+});
+
+// ---- Submit handler ----
+function handleSubmit() {
+  const btn = event.target;
+  btn.innerHTML = '<i class="fas fa-check mr-2"></i> 預約申請已送出！我們將盡快與您聯繫';
+  btn.style.background = 'linear-gradient(to right, #059669, #10b981)';
+  btn.disabled = true;
+}
+
+// ---- Init ----
+document.addEventListener('DOMContentLoaded', () => {
+  initCanvas();
+  initParticles();
+  renderWaveTabs();
+  renderWaveDetail();
+  initReveal();
+  initProgressBars();
+});
+</script>
+
+</body>
+</html>
