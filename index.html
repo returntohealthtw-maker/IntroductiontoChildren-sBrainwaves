@@ -1602,49 +1602,73 @@
 
       <div class="rounded-[48px] p-10 md:p-14 mb-10 text-left" style="background:rgba(255,255,255,0.15); backdrop-filter:blur(20px); border:1px solid rgba(255,255,255,0.25);">
         <h4 class="text-2xl font-black mb-8 text-center" style="color:white;">立即預約免費初步諮詢</h4>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <div>
-            <label class="block text-xs font-bold text-slate-400 mb-2 uppercase tracking-wider">家長姓名</label>
-            <input type="text" placeholder="請輸入姓名" class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-3.5 text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500 transition-colors text-sm" />
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-slate-400 mb-2 uppercase tracking-wider">聯絡電話</label>
-            <input type="tel" placeholder="09XX-XXX-XXX" class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-3.5 text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500 transition-colors text-sm" />
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-slate-400 mb-2 uppercase tracking-wider">孩子年齡</label>
-            <select class="w-full bg-[#0f172a] border border-white/10 rounded-2xl px-5 py-3.5 text-white focus:outline-none focus:border-indigo-500 transition-colors text-sm appearance-none">
-              <option value="">請選擇</option>
-              <option>3-5 歲（學前）</option>
-              <option>6-8 歲（低年級）</option>
-              <option>9-11 歲（中年級）</option>
-              <option>12-15 歲（青春期）</option>
-              <option>16-18 歲（高中）</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-slate-400 mb-2 uppercase tracking-wider">主要關注</label>
-            <select class="w-full bg-[#0f172a] border border-white/10 rounded-2xl px-5 py-3.5 text-white focus:outline-none focus:border-indigo-500 transition-colors text-sm appearance-none">
-              <option value="">請選擇</option>
-              <option>天賦發現與方向</option>
-              <option>注意力/ADHD</option>
-              <option>學習效率提升</option>
-              <option>情緒管理</option>
-              <option>親子關係</option>
-              <option>才藝選擇</option>
-            </select>
-          </div>
-          <div class="md:col-span-2">
-            <label class="block text-xs font-bold text-slate-400 mb-2 uppercase tracking-wider">補充說明（選填）</label>
-            <textarea rows="3" placeholder="請簡述孩子目前狀況或您的疑問..." class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-3.5 text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500 transition-colors text-sm resize-none"></textarea>
-          </div>
+
+        <!-- SUCCESS STATE -->
+        <div id="form-success" class="hidden text-center py-10">
+          <div class="text-6xl mb-4">🎉</div>
+          <h5 class="text-2xl font-black mb-3" style="color:white;">預約申請已送出！</h5>
+          <p class="text-lg" style="color:rgba(255,255,255,0.85);">我們已收到您的預約，將在 24 小時內與您聯繫。</p>
         </div>
-        <button
-          onclick="handleSubmit()"
-          class="w-full mt-8 py-5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-[28px] font-black text-lg hover:scale-[1.02] transition-all shadow-2xl shadow-indigo-600/40"
-        >
-          <i class="fas fa-brain mr-2"></i> 送出預約申請
-        </button>
+
+        <!-- FORM -->
+        <form id="contact-form" novalidate>
+          <!-- Formspree hidden fields -->
+          <input type="hidden" name="_subject" value="【兒童腦波天賦解碼】新預約申請"/>
+          <input type="hidden" name="_language" value="zh-TW"/>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div>
+              <label class="block text-xs font-bold mb-2 uppercase tracking-wider" style="color:rgba(255,255,255,0.7);">家長姓名 <span style="color:#fda4af;">*</span></label>
+              <input type="text" name="家長姓名" id="field-name" placeholder="請輸入姓名"
+                class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-3.5 text-white placeholder-slate-400 focus:outline-none focus:border-indigo-400 transition-colors text-sm" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold mb-2 uppercase tracking-wider" style="color:rgba(255,255,255,0.7);">聯絡電話 <span style="color:#fda4af;">*</span></label>
+              <input type="tel" name="聯絡電話" id="field-phone" placeholder="09XX-XXX-XXX"
+                class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-3.5 text-white placeholder-slate-400 focus:outline-none focus:border-indigo-400 transition-colors text-sm" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold mb-2 uppercase tracking-wider" style="color:rgba(255,255,255,0.7);">孩子年齡</label>
+              <select name="孩子年齡" class="w-full border border-white/10 rounded-2xl px-5 py-3.5 text-white focus:outline-none focus:border-indigo-400 transition-colors text-sm appearance-none" style="background:#1e1b4b;">
+                <option value="">請選擇</option>
+                <option>3-5 歲（學前）</option>
+                <option>6-8 歲（低年級）</option>
+                <option>9-11 歲（中年級）</option>
+                <option>12-15 歲（青春期）</option>
+                <option>16-18 歲（高中）</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold mb-2 uppercase tracking-wider" style="color:rgba(255,255,255,0.7);">主要關注</label>
+              <select name="主要關注" class="w-full border border-white/10 rounded-2xl px-5 py-3.5 text-white focus:outline-none focus:border-indigo-400 transition-colors text-sm appearance-none" style="background:#1e1b4b;">
+                <option value="">請選擇</option>
+                <option>天賦發現與方向</option>
+                <option>注意力/ADHD</option>
+                <option>學習效率提升</option>
+                <option>情緒管理</option>
+                <option>親子關係</option>
+                <option>才藝選擇</option>
+              </select>
+            </div>
+            <div class="md:col-span-2">
+              <label class="block text-xs font-bold mb-2 uppercase tracking-wider" style="color:rgba(255,255,255,0.7);">補充說明（選填）</label>
+              <textarea name="補充說明" rows="3" placeholder="請簡述孩子目前狀況或您的疑問..."
+                class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-3.5 text-white placeholder-slate-400 focus:outline-none focus:border-indigo-400 transition-colors text-sm resize-none"></textarea>
+            </div>
+          </div>
+
+          <!-- Error message -->
+          <p id="form-error" class="hidden mt-4 text-sm text-center font-bold" style="color:#fda4af;"></p>
+
+          <button
+            type="button"
+            id="submit-btn"
+            onclick="handleSubmit(this)"
+            class="w-full mt-8 py-5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-[28px] font-black text-lg hover:scale-[1.02] transition-all shadow-2xl shadow-indigo-600/40"
+          >
+            <i class="fas fa-brain mr-2"></i> 送出預約申請
+          </button>
+        </form>
       </div>
 
       <!-- Alternative contact -->
@@ -1989,12 +2013,48 @@ document.querySelectorAll('#mobileMenu a').forEach(a => {
   a.addEventListener('click', () => document.getElementById('mobileMenu').classList.remove('open'));
 });
 
-// ---- Submit handler ----
-function handleSubmit() {
-  const btn = event.target;
-  btn.innerHTML = '<i class="fas fa-check mr-2"></i> 預約申請已送出！我們將盡快與您聯繫';
-  btn.style.background = 'linear-gradient(to right, #059669, #10b981)';
+// ---- Submit handler (Formspree) ----
+async function handleSubmit(btn) {
+  const form   = document.getElementById('contact-form');
+  const errEl  = document.getElementById('form-error');
+  const successEl = document.getElementById('form-success');
+
+  // Basic validation
+  const name  = form.querySelector('[name="家長姓名"]').value.trim();
+  const phone = form.querySelector('[name="聯絡電話"]').value.trim();
+  if (!name || !phone) {
+    errEl.textContent = '請填寫家長姓名和聯絡電話（必填）';
+    errEl.classList.remove('hidden');
+    return;
+  }
+  errEl.classList.add('hidden');
+
+  // Loading state
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> 送出中...';
   btn.disabled = true;
+
+  try {
+    const data = new FormData(form);
+    const res = await fetch('https://formspree.io/ReturntoHealth.tw@gmail.com', {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (res.ok) {
+      // Show success, hide form
+      form.classList.add('hidden');
+      successEl.classList.remove('hidden');
+    } else {
+      const json = await res.json().catch(() => ({}));
+      throw new Error(json.error || '伺服器錯誤');
+    }
+  } catch (err) {
+    btn.innerHTML = '<i class="fas fa-brain mr-2"></i> 送出預約申請';
+    btn.disabled = false;
+    errEl.textContent = '送出失敗，請稍後再試，或直接透過 LINE / 電話聯繫我們。';
+    errEl.classList.remove('hidden');
+  }
 }
 
 // ---- Init ----
